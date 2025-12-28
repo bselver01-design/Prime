@@ -4,11 +4,8 @@ import { Link } from "wouter";
 import { Search, ShoppingCart, X } from "lucide-react";
 import { type Product } from "@shared/schema";
 
-type SortMode = "popularity" | "new" | "bestseller" | "priceAsc" | "priceDesc";
-
 export default function Catalog() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortMode, setSortMode] = useState<SortMode>("popularity");
   const [cartCount, setCartCount] = useState(() => {
     const stored = localStorage.getItem("np_cart_count");
     return stored ? parseInt(stored, 10) : 0;
@@ -43,25 +40,8 @@ export default function Catalog() {
       );
     }
 
-    // Sort
-    switch (sortMode) {
-      case "priceAsc":
-        result.sort((a, b) => Number(a.price) - Number(b.price));
-        break;
-      case "priceDesc":
-        result.sort((a, b) => Number(b.price) - Number(a.price));
-        break;
-      case "new":
-        result.sort((a, b) => b.id - a.id);
-        break;
-      case "bestseller":
-      case "popularity":
-      default:
-        break;
-    }
-
     return result;
-  }, [products, searchQuery, sortMode]);
+  }, [products, searchQuery]);
 
   return (
     <div className="min-h-screen" style={{ background: 'radial-gradient(1100px 600px at 18% 18%, rgba(255,255,255,.08), transparent 60%), radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 55%), linear-gradient(180deg, #0b0c10 0%, #0f1118 100%)' }}>
@@ -131,25 +111,9 @@ export default function Catalog() {
           <div className="max-w-[1140px] mx-auto px-[18px] py-3 pb-[26px]">
             {/* Products */}
             <section>
-              <div className="flex justify-between items-center gap-[10px] mb-3 flex-wrap">
+              <div className="mb-3">
                 <div className="text-white/75 font-black uppercase tracking-[.35px] text-[11px]" data-testid="text-product-count">
                   {filteredProducts.length} urun
-                </div>
-                <div className="flex gap-[10px]">
-                  <button 
-                    onClick={() => setSortMode("priceAsc")}
-                    className="border border-white/16 bg-white/[.06] px-3 py-2 rounded-[14px] font-black text-sm hover:-translate-y-px transition-all"
-                    data-testid="button-sort-price"
-                  >
-                    Fiyata Gore
-                  </button>
-                  <button 
-                    onClick={() => setSortMode("new")}
-                    className="border border-white/16 bg-white/[.06] px-3 py-2 rounded-[14px] font-black text-sm hover:-translate-y-px transition-all"
-                    data-testid="button-sort-new"
-                  >
-                    Yeniler
-                  </button>
                 </div>
               </div>
 
@@ -191,11 +155,7 @@ export default function Catalog() {
                       {/* Body */}
                       <div className="p-[14px]">
                         <h3 className="font-black tracking-[.2px] m-0 mb-1.5" data-testid={`product-title-${product.id}`}>{product.title}</h3>
-                        <p className="text-white/70 text-[13px] leading-[1.45] m-0 mb-2.5 line-clamp-2">{product.description}</p>
-                        <div className="flex justify-between items-center text-white/72 font-black uppercase tracking-[.35px] text-[11px] border-t border-dashed border-white/10 pt-2.5 gap-[10px] flex-wrap">
-                          <span>Kargo: 24-48s</span>
-                          <span>Stok: Var</span>
-                        </div>
+                        <p className="text-white/70 text-[13px] leading-[1.45] m-0 line-clamp-2">{product.description}</p>
                       </div>
 
                       {/* Footer */}

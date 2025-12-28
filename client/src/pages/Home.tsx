@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu } from "lucide-react";
+import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -16,6 +17,7 @@ import { useFaqs } from "@/hooks/use-faqs";
 import { Link } from "wouter";
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: products, isLoading: productsLoading } = useProducts();
   const { data: reviews, isLoading: reviewsLoading } = useReviews();
   const { data: faqs, isLoading: faqsLoading } = useFaqs();
@@ -60,13 +62,46 @@ export default function Home() {
                 </button>
               </Link>
               <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors md:hidden"
                 data-testid="button-menu"
               >
-                <Menu className="w-5 h-5" />
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
+          
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-white/10 py-4">
+              <nav className="flex flex-col gap-2">
+                <Link 
+                  href="/" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
+                  data-testid="mobile-nav-home"
+                >
+                  Ana Sayfa
+                </Link>
+                <Link 
+                  href="/catalog" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
+                  data-testid="mobile-nav-catalog"
+                >
+                  Urunler
+                </Link>
+                <a 
+                  href="mailto:naturprime0@gmail.com" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
+                  data-testid="mobile-nav-contact"
+                >
+                  Iletisim
+                </a>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 

@@ -46,9 +46,13 @@ export default function Home() {
               <Link href="/catalog" className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" data-testid="nav-catalog">
                 Urunler
               </Link>
-              <a href="mailto:naturprime0@gmail.com" className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" data-testid="nav-contact">
+              <button 
+                onClick={() => document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" })}
+                className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" 
+                data-testid="nav-contact"
+              >
                 Iletisim
-              </a>
+              </button>
             </nav>
             
             <div className="flex items-center gap-3.5">
@@ -90,14 +94,16 @@ export default function Home() {
                 >
                   Urunler
                 </Link>
-                <a 
-                  href="mailto:naturprime0@gmail.com" 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
+                <button 
+                  onClick={() => { 
+                    setMobileMenuOpen(false); 
+                    document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left"
                   data-testid="mobile-nav-contact"
                 >
                   Iletisim
-                </a>
+                </button>
               </nav>
             </div>
           )}
@@ -145,7 +151,7 @@ export default function Home() {
               <Button 
                 size="lg" 
                 variant="outline" 
-                onClick={() => window.location.href = "mailto:naturprime0@gmail.com"}
+                onClick={() => document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" })}
                 className="w-full border-white/10 bg-white/5 text-foreground hover:bg-white/10 rounded-[16px] h-14 text-lg font-extrabold"
                 data-testid="button-contact"
               >
@@ -260,6 +266,19 @@ export default function Home() {
               ))}
             </Accordion>
           )}
+        </section>
+
+        {/* ILETISIM SECTION */}
+        <section id="iletisim" className="py-10">
+          <h2 className="text-lg font-extrabold uppercase tracking-wide mb-3">Iletisim</h2>
+          <p className="text-white/65 text-sm mb-5">Bizimle dogrudan iletisime gecebilirsiniz.</p>
+          
+          <div className="border border-white/15 rounded-[16px] p-5 max-w-[400px] bg-white/[.04]">
+            <strong className="text-sm">Telefon</strong>
+            <div className="mt-2 text-xl font-extrabold tracking-wide">
+              0506 337 32 67
+            </div>
+          </div>
         </section>
 
         {/* CTA SECTION */}

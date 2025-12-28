@@ -1,12 +1,28 @@
 import { type Product } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { toast } = useToast();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const currentCount = parseInt(localStorage.getItem("np_cart_count") || "0", 10);
+    const newCount = currentCount + 1;
+    localStorage.setItem("np_cart_count", String(newCount));
+    toast({
+      title: "Sepete Eklendi",
+      description: product.title,
+    });
+    window.dispatchEvent(new Event("cartUpdated"));
+  };
+
   return (
     <Link href={`/product/${product.id}`}>
     <div 
@@ -53,13 +69,14 @@ export function ProductCard({ product }: ProductCardProps) {
       
       {/* Footer */}
       <div className="flex items-center justify-between gap-2.5 p-3.5 border-t border-white/10 bg-black/20">
-        <span className="font-extrabold text-[#39d353] text-base" data-testid={`product-price-${product.id}`}>
+        <span className="font-extrabold text-[#c9a962] text-base" data-testid={`product-price-${product.id}`}>
           {Number(product.price).toLocaleString('tr-TR')} TL
         </span>
         <Button 
           size="sm"
           className="border border-white/18 bg-white/7 text-foreground hover:bg-white/12 rounded-xl px-3 h-9 text-xs font-extrabold"
           data-testid={`button-add-to-cart-${product.id}`}
+          onClick={handleAddToCart}
         >
           Sepete Ekle
         </Button>

@@ -85,21 +85,25 @@ export default function Home() {
 
             {/* CTAs */}
             <div className="flex flex-col gap-3.5 mt-6">
-              <Button 
-                size="lg" 
-                className="w-full bg-white/90 text-[#0b0c10] hover:bg-white rounded-[16px] h-14 text-lg font-extrabold justify-center gap-2.5"
-                data-testid="button-browse-products"
-              >
-                Urunleri Incele <ArrowRight className="w-5 h-5" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="w-full border-white/10 bg-white/5 text-foreground hover:bg-white/10 rounded-[16px] h-14 text-lg font-extrabold"
-                data-testid="button-contact"
-              >
-                Iletisime Gec
-              </Button>
+              <Link href="/catalog">
+                <Button 
+                  size="lg" 
+                  className="w-full bg-white/90 text-[#0b0c10] hover:bg-white rounded-[16px] h-14 text-lg font-extrabold justify-center gap-2.5"
+                  data-testid="button-browse-products"
+                >
+                  Urunleri Incele <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
+              <a href="mailto:naturprime0@gmail.com">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="w-full border-white/10 bg-white/5 text-foreground hover:bg-white/10 rounded-[16px] h-14 text-lg font-extrabold"
+                  data-testid="button-contact"
+                >
+                  Iletisime Gec
+                </Button>
+              </a>
             </div>
           </motion.div>
         </section>
@@ -134,9 +138,11 @@ export default function Home() {
               <h2 className="text-lg font-extrabold uppercase tracking-wide mb-1">One Cikan Urunler</h2>
               <p className="text-sm text-white/65 font-semibold">En cok tercih edilen performans urunleri.</p>
             </div>
-            <Button variant="ghost" className="hidden md:flex text-[#39d353] hover:text-[#39d353] hover:bg-[#39d353]/10 text-sm font-extrabold">
-              Tumunu Gor <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <Link href="/catalog">
+              <Button variant="ghost" className="hidden md:flex text-[#39d353] hover:text-[#39d353] hover:bg-[#39d353]/10 text-sm font-extrabold">
+                Tumunu Gor <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
           </div>
 
           {productsLoading ? (
@@ -222,13 +228,15 @@ export default function Home() {
               <p className="text-black/70 text-base md:text-lg mb-6 font-semibold">
                 Sinirli sureli indirimlerden yararlanmak ve performansini artirmak icin hemen siparis ver.
               </p>
-              <Button 
-                size="lg" 
-                className="bg-[#0b0c10] text-white hover:bg-black/80 rounded-[16px] px-10 h-14 text-lg font-extrabold"
-                data-testid="button-order-now"
-              >
-                Hemen Siparis Ver
-              </Button>
+              <Link href="/catalog">
+                <Button 
+                  size="lg" 
+                  className="bg-[#0b0c10] text-white hover:bg-black/80 rounded-[16px] px-10 h-14 text-lg font-extrabold"
+                  data-testid="button-order-now"
+                >
+                  Hemen Siparis Ver
+                </Button>
+              </Link>
             </div>
           </div>
         </section>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NaturPrime</title>
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#0f131b;
+      --text:#eef2ff;
+      --muted:rgba(238,242,255,.65);
+      --line:rgba(255,255,255,.10);
+      --accent:#39d353; /* yeşil vurgu */
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+      background: radial-gradient(900px 500px at 30% 20%, rgba(255,255,255,.08), transparent 55%),
+                  linear-gradient(180deg, #07080c, var(--bg));
+      color:var(--text);
+    }
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,.35);
+      border-bottom:1px solid var(--line);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    .top{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--accent);
+      box-shadow: 0 0 0 6px rgba(57,211,83,.12);
+    }
+    .icons{display:flex;gap:14px;align-items:center;color:rgba(255,255,255,.85)}
+    .iconBtn{
+      width:44px;height:44px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      display:grid;place-items:center;
+    }
+    .hero{
+      padding:28px 18px 48px;
+    }
+    .card{
+      max-width:520px;
+      background:
+        radial-gradient(520px 340px at 20% 10%, rgba(57,211,83,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:26px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.55);
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid rgba(57,211,83,.28);
+      background: rgba(57,211,83,.08);
+      color: rgba(200,255,215,.95);
+      padding:10px 14px;border-radius:999px;
+      font-weight:800;letter-spacing:.6px;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    h1{
+      margin:18px 0 12px;
+      font-size:52px; line-height:1.02;
+      letter-spacing:.2px;
+    }
+    .accent{color:var(--accent)}
+    p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:20px;
+      line-height:1.55;
+    }
+    .btnRow{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+    .btn{
+      width:100%;
+      border-radius:16px;
+      padding:18px 18px;
+      font-weight:800;
+      font-size:18px;
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+    }
+    .btn.primary{
+      background:rgba(255,255,255,.92);
+      color:#0b0c10;
+      border-color:rgba(255,255,255,.92);
+      display:flex;justify-content:center;gap:10px;align-items:center;
+    }
+    .btn.primary span{font-size:22px}
+    .fine{
+      margin-top:18px;
+      color:rgba(238,242,255,.45);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    /* responsive */
+    @media (max-width:520px){
+      h1{font-size:44px}
+      p{font-size:18px}
+      .card{max-width:100%}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <span class="dot"></span>
+        <span style="font-size:22px">NaturPrime</span>
+      </div>
+      <div class="icons">
+        <div class="iconBtn" title="Sepet">🛒</div>
+        <div class="iconBtn" title="Menü">☰</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="hero">
+  <div class="wrap">
+    <div class="card">
+      <div class="badge"><span class="dot" style="box-shadow:none;width:8px;height:8px"></span> YENİ FORMÜL</div>
+
+      <h1>Güç. Netlik.<br><span class="accent">Performans.</span></h1>
+
+      <p>
+        Karanlık yol, net hedef.<br>
+        <b style="color:rgba(238,242,255,.92)">Sadece bitkiler doğal gelişir.</b><br>
+        Disiplinle en iyi versiyonuna çıkman için tasarlandı.
+      </p>
+
+      <div class="btnRow">
+        <button class="btn primary" type="button">
+          Ürünleri İncele <span>→</span>
+        </button>
+        <button class="btn" type="button">İletişime Geç</button>
+      </div>
+
+      <div class="fine">
+     
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

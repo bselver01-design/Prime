@@ -1,4 +1,3 @@
-import { ShoppingCart } from "lucide-react";
 import { type Product } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 
@@ -8,54 +7,47 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="group relative bg-[#121522] rounded-2xl border border-white/5 overflow-hidden hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 flex flex-col h-full">
-      {/* Badge */}
-      {product.badge && (
-        <div className="absolute top-4 left-4 z-10 bg-primary/20 backdrop-blur-md border border-primary/20 text-primary text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-          {product.badge}
-        </div>
-      )}
-
-      {/* Image Area */}
-      <div className="aspect-[4/3] w-full relative overflow-hidden bg-[#1a1d2d]">
-        {/* Abstract Gradient Placeholder if no real image */}
-        <div 
-          className="absolute inset-0 w-full h-full opacity-80 transition-transform duration-700 group-hover:scale-105"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%), 
-                         linear-gradient(135deg, rgba(86, 211, 100, 0.05), rgba(11, 12, 16, 1))`
-          }}
-        />
-        {/* If real image URL exists (and not placeholder text), use it */}
-        {product.image && !product.image.includes("gradient") && (
-          <img 
-            src={product.image} 
-            alt={product.title}
-            className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300 mix-blend-overlay"
-          />
+    <div 
+      className="bg-white/[0.03] border border-white/10 rounded-[16px] overflow-hidden flex flex-col min-h-[280px]"
+      style={{ boxShadow: '0 10px 28px rgba(0,0,0,0.26)' }}
+      data-testid={`product-card-${product.id}`}
+    >
+      {/* Product Image Placeholder */}
+      <div 
+        className="h-[140px] relative border-b border-white/10"
+        style={{
+          background: 'radial-gradient(140px 90px at 30% 30%, rgba(255,255,255,0.12), transparent 60%), linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))'
+        }}
+      >
+        {product.badge && (
+          <span className="absolute top-2.5 left-2.5 text-[11px] px-2.5 py-1.5 rounded-full border border-white/16 bg-black/25 text-white/86 font-extrabold tracking-wide uppercase">
+            {product.badge}
+          </span>
         )}
       </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">{product.title}</h3>
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-2 flex-grow">{product.description}</p>
-        
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-          <div className="flex flex-col">
-            <span className="text-xs text-muted-foreground uppercase tracking-wide">Fiyat</span>
-            <span className="text-xl font-bold text-primary">₺{Number(product.price).toLocaleString('tr-TR')}</span>
-          </div>
-          
-          <Button 
-            size="sm"
-            className="bg-white/5 hover:bg-primary hover:text-black text-white border border-white/10 hover:border-primary transition-all duration-300 rounded-xl px-4"
-            onClick={() => console.log('Add to cart:', product.id)}
-          >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Sepete Ekle
-          </Button>
-        </div>
+      
+      {/* Body */}
+      <div className="p-3.5 flex-1">
+        <h3 className="font-extrabold tracking-wide text-sm mb-1.5" data-testid={`product-title-${product.id}`}>
+          {product.title}
+        </h3>
+        <p className="text-xs text-white/65 leading-relaxed line-clamp-2">
+          {product.description}
+        </p>
+      </div>
+      
+      {/* Footer */}
+      <div className="flex items-center justify-between gap-2.5 p-3.5 border-t border-white/10 bg-black/20">
+        <span className="font-extrabold text-[#39d353] text-base" data-testid={`product-price-${product.id}`}>
+          {Number(product.price).toLocaleString('tr-TR')} TL
+        </span>
+        <Button 
+          size="sm"
+          className="border border-white/18 bg-white/7 text-foreground hover:bg-white/12 rounded-xl px-3 h-9 text-xs font-extrabold"
+          data-testid={`button-add-to-cart-${product.id}`}
+        >
+          Sepete Ekle
+        </Button>
       </div>
     </div>
   );

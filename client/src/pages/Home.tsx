@@ -128,8 +128,11 @@ export default function Home() {
               alt="NaturPrime" 
               className="w-full max-w-[500px] md:max-w-[600px] h-auto mb-4"
             />
-            <p className="text-[18px] md:text-[24px] font-extrabold tracking-[0.2em] uppercase text-white/85">
-              Guc Netlik Performans
+            <p className="text-[18px] md:text-[24px] font-extrabold tracking-[0.15em] uppercase text-white/85">
+              Guc • Motivasyon • Performans
+            </p>
+            <p className="text-[14px] md:text-[16px] font-bold tracking-wide text-white/60 mt-2">
+              Zarari olmayan Steroidler
             </p>
           </motion.div>
         </section>

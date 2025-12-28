@@ -115,32 +115,32 @@ export default function Home() {
 
       <main className="max-w-[1100px] mx-auto px-4">
         {/* HERO SECTION */}
-        <section className="py-7 md:py-12">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-[520px] glass-card rounded-[24px] p-6 md:p-8 premium-shadow"
+        <section className="relative -mx-4 overflow-hidden">
+          <div 
+            className="relative min-h-[400px] md:min-h-[500px] flex items-center"
+            style={{
+              backgroundImage: `url('/attached_assets/1C8BC93D-77D0-4DF4-8B30-F2405E13B567_1766963914912.png')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center left',
+            }}
           >
-            {/* Badge */}
-            <div className="accent-badge mb-6" data-testid="badge-new-formula">
-              <span className="w-2 h-2 rounded-full bg-[#39d353]" />
-              YENI FORMUL
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-[44px] md:text-[52px] font-extrabold leading-[1.02] tracking-wide mb-4">
-              Guc. Netlik.<br />
-              <span className="text-[#39d353]">Performans.</span>
-            </h1>
-
-            {/* Subtext */}
-            <p className="text-[18px] md:text-[20px] text-white/65 leading-relaxed mb-6">
-              Karanlik yol, net hedef.<br />
-              <strong className="text-white/90">Yan etkisi olmayan steroidler.</strong>
-            </p>
-
-          </motion.div>
+            {/* Dark wash overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative z-10 w-full max-w-[1100px] mx-auto px-4 py-12 md:py-16 text-right"
+            >
+              <h1 className="text-[48px] md:text-[72px] font-black leading-[1] tracking-wider mb-3 uppercase" style={{ fontFamily: 'Playfair Display, serif' }}>
+                NaturPrime
+              </h1>
+              <p className="text-[20px] md:text-[28px] font-extrabold tracking-[0.25em] uppercase text-white/90">
+                Guc Netlik Performans
+              </p>
+            </motion.div>
+          </div>
         </section>
 
         {/* FEATURES / TRUST BADGES */}

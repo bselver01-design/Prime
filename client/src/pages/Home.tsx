@@ -115,32 +115,22 @@ export default function Home() {
 
       <main className="max-w-[1100px] mx-auto px-4">
         {/* HERO SECTION */}
-        <section className="relative -mx-4 overflow-hidden">
-          <div 
-            className="relative min-h-[400px] md:min-h-[500px] flex items-center"
-            style={{
-              backgroundImage: `url('/attached_assets/1C8BC93D-77D0-4DF4-8B30-F2405E13B567_1766963914912.png')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center left',
-            }}
+        <section className="py-8 md:py-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center text-center"
           >
-            {/* Dark wash overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="relative z-10 w-full max-w-[1100px] mx-auto px-4 py-12 md:py-16 text-right"
-            >
-              <h1 className="text-[48px] md:text-[72px] font-black leading-[1] tracking-wider mb-3 uppercase" style={{ fontFamily: 'Playfair Display, serif' }}>
-                NaturPrime
-              </h1>
-              <p className="text-[20px] md:text-[28px] font-extrabold tracking-[0.25em] uppercase text-white/90">
-                Guc Netlik Performans
-              </p>
-            </motion.div>
-          </div>
+            <img 
+              src="/attached_assets/C3D93148-029D-42F8-932C-100E54E54328_1766964094516.png" 
+              alt="NaturPrime" 
+              className="w-full max-w-[500px] md:max-w-[600px] h-auto mb-4"
+            />
+            <p className="text-[18px] md:text-[24px] font-extrabold tracking-[0.2em] uppercase text-white/85">
+              Guc Netlik Performans
+            </p>
+          </motion.div>
         </section>
 
         {/* FEATURES / TRUST BADGES */}

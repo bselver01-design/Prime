@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, ArrowLeft, Phone, Mail, Instagram, Minus, Plus } from "lucide-react";
+import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus } from "lucide-react";
 import type { Product } from "@shared/schema";
 
 export default function ProductDetail() {
@@ -245,12 +245,6 @@ export default function ProductDetail() {
                     >
                       Satin Al
                     </Button>
-                    <Link href="/catalog">
-                      <Button variant="outline" className="border-white/15 bg-white/[.06] text-white rounded-[14px] font-black px-4">
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Geri Don
-                      </Button>
-                    </Link>
                   </div>
                 </div>
 

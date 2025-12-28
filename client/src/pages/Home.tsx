@@ -158,7 +158,7 @@ export default function Home() {
                 className="bg-black/20 border border-white/10 rounded-[16px] p-5 text-center"
                 data-testid={`feature-card-${idx}`}
               >
-                <div className="mx-auto w-12 h-12 rounded-full bg-[#39d353]/10 flex items-center justify-center text-[#39d353] mb-3">
+                <div className="mx-auto w-12 h-12 rounded-full bg-[#c9a962]/10 flex items-center justify-center text-[#c9a962] mb-3">
                   <feature.icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-extrabold text-sm mb-1">{feature.title}</h3>
@@ -176,7 +176,7 @@ export default function Home() {
               <p className="text-sm text-white/65 font-semibold">En cok tercih edilen performans urunleri.</p>
             </div>
             <Link href="/catalog">
-              <Button variant="ghost" className="hidden md:flex text-[#39d353] hover:text-[#39d353] hover:bg-[#39d353]/10 text-sm font-extrabold">
+              <Button variant="ghost" className="hidden md:flex text-[#c9a962] hover:text-[#c9a962] hover:bg-[#c9a962]/10 text-sm font-extrabold">
                 Tumunu Gor <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
@@ -216,7 +216,7 @@ export default function Home() {
                   className="bg-black/20 border border-white/10 rounded-[16px] px-4 overflow-hidden"
                   data-testid={`faq-item-${faq.id}`}
                 >
-                  <AccordionTrigger className="text-foreground hover:text-[#39d353] transition-colors py-4 text-left font-extrabold text-sm">
+                  <AccordionTrigger className="text-foreground hover:text-[#c9a962] transition-colors py-4 text-left font-extrabold text-sm">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-white/65 pb-4 pt-1 text-sm">
@@ -258,7 +258,7 @@ export default function Home() {
                   href="https://instagram.com/naturprime" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-[#39d353] transition-colors"
+                  className="hover:text-[#c9a962] transition-colors"
                   data-testid="link-instagram"
                 >
                   @naturprime

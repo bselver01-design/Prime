@@ -86,7 +86,7 @@ export default function ProductDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0b0c10] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#39d353] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#c9a962] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -238,7 +238,7 @@ export default function ProductDetail() {
                 {/* Trust badges */}
                 <div className="flex gap-2.5 flex-wrap my-[14px]">
                   <span className="inline-flex items-center gap-2 px-3 py-2.5 rounded-full border border-white/10 bg-black/15 text-white/80 font-black uppercase tracking-wide text-[11px]">
-                    <span className="w-[9px] h-[9px] rounded-full bg-[#39d353] shadow-[0_0_0_4px_rgba(57,211,83,.16)]" />
+                    <span className="w-[9px] h-[9px] rounded-full bg-[#c9a962] shadow-[0_0_0_4px_rgba(57,211,83,.16)]" />
                     Guvenli Odeme
                   </span>
                   <span className="inline-flex items-center gap-2 px-3 py-2.5 rounded-full border border-white/10 bg-black/15 text-white/80 font-black uppercase tracking-wide text-[11px]">
@@ -417,7 +417,7 @@ export default function ProductDetail() {
                             data-testid={`button-star-${star}`}
                           >
                             <Star 
-                              className={`w-4 h-4 ${star <= reviewRating ? "fill-[#39d353] text-[#39d353]" : "text-white/30"}`} 
+                              className={`w-4 h-4 ${star <= reviewRating ? "fill-[#c9a962] text-[#c9a962]" : "text-white/30"}`} 
                             />
                           </button>
                         ))}
@@ -426,7 +426,7 @@ export default function ProductDetail() {
                         type="submit"
                         size="sm"
                         disabled={createReviewMutation.isPending}
-                        className="bg-[#39d353] text-black font-black hover:bg-[#39d353]/90"
+                        className="bg-[#c9a962] text-black font-black hover:bg-[#c9a962]/90"
                         data-testid="button-submit-review"
                       >
                         <Send className="w-3 h-3 mr-1.5" />
@@ -454,7 +454,7 @@ export default function ProductDetail() {
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <Star 
                                   key={star}
-                                  className={`w-3 h-3 ${star <= (review.rating || 5) ? "fill-[#39d353] text-[#39d353]" : "text-white/30"}`} 
+                                  className={`w-3 h-3 ${star <= (review.rating || 5) ? "fill-[#c9a962] text-[#c9a962]" : "text-white/30"}`} 
                                 />
                               ))}
                             </div>

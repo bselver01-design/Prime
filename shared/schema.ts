@@ -1,18 +1,54 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, decimal } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+// === TABLE DEFINITIONS ===
+
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  image: text("image").notNull(),
+  category: text("category").notNull(),
+  badge: text("badge"), // e.g., "YENİ", "ÇOK SATAN"
+  stock: integer("stock").default(100),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  tag: text("tag").default("ONAYLI ALICI"),
+  rating: integer("rating").default(5),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export const faqs = pgTable("faqs", {
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  order: integer("order").default(0),
+});
+
+// === SCHEMAS ===
+
+export const insertProductSchema = createInsertSchema(products).omit({ id: true });
+export const insertReviewSchema = createInsertSchema(reviews).omit({ id: true, createdAt: true });
+export const insertFaqSchema = createInsertSchema(faqs).omit({ id: true });
+
+// === EXPLICIT TYPES ===
+
+export type Product = typeof products.$inferSelect;
+export type InsertProduct = z.infer<typeof insertProductSchema>;
+
+export type Review = typeof reviews.$inferSelect;
+export type InsertReview = z.infer<typeof insertReviewSchema>;
+
+export type Faq = typeof faqs.$inferSelect;
+export type InsertFaq = z.infer<typeof insertFaqSchema>;
+
+// Request/Response Types
+export type ProductResponse = Product;
+export type ReviewResponse = Review;
+export type FaqResponse = Faq;

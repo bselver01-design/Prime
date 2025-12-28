@@ -9,16 +9,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ProductCard } from "@/components/ProductCard";
-import { ReviewCard } from "@/components/ReviewCard";
 import { useProducts } from "@/hooks/use-products";
-import { useReviews } from "@/hooks/use-reviews";
 import { useFaqs } from "@/hooks/use-faqs";
 import { Link } from "wouter";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: products, isLoading: productsLoading } = useProducts();
-  const { data: reviews, isLoading: reviewsLoading } = useReviews();
   const { data: faqs, isLoading: faqsLoading } = useFaqs();
 
   const features = [
@@ -193,30 +190,6 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {products?.map((product) => (
                 <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* REVIEWS SECTION */}
-        <section className="py-6">
-          <div className="text-center max-w-2xl mx-auto mb-6">
-            <h2 className="text-lg font-extrabold uppercase tracking-wide mb-2">Kullanici Deneyimleri</h2>
-            <p className="text-sm text-white/65 font-semibold">
-              Musterilerimizin gercek yorumlari ve deneyimleri.
-            </p>
-          </div>
-
-          {reviewsLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="h-[180px] bg-white/5 rounded-[16px] animate-pulse" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {reviews?.slice(0, 3).map((review) => (
-                <ReviewCard key={review.id} review={review} />
               ))}
             </div>
           )}

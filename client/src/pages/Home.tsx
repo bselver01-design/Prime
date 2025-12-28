@@ -273,10 +273,37 @@ export default function Home() {
           <h2 className="text-lg font-extrabold uppercase tracking-wide mb-3">Iletisim</h2>
           <p className="text-white/65 text-sm mb-5">Bizimle dogrudan iletisime gecebilirsiniz.</p>
           
-          <div className="border border-white/15 rounded-[16px] p-5 max-w-[400px] bg-white/[.04]">
-            <strong className="text-sm">Telefon</strong>
-            <div className="mt-2 text-xl font-extrabold tracking-wide">
-              0506 337 32 67
+          <div className="grid gap-4 max-w-[420px]">
+            {/* Telefon */}
+            <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
+              <strong className="text-sm">Telefon</strong>
+              <div className="mt-2 text-lg font-extrabold tracking-wide">
+                0506 337 32 67
+              </div>
+            </div>
+            
+            {/* E-posta */}
+            <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
+              <strong className="text-sm">E-posta</strong>
+              <div className="mt-2 text-base">
+                naturprime0@gmail.com
+              </div>
+            </div>
+            
+            {/* Instagram */}
+            <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
+              <strong className="text-sm">Instagram</strong>
+              <div className="mt-2 text-base">
+                <a 
+                  href="https://instagram.com/naturprime" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-[#39d353] transition-colors"
+                  data-testid="link-instagram"
+                >
+                  @naturprime
+                </a>
+              </div>
             </div>
           </div>
         </section>

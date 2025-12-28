@@ -12,6 +12,7 @@ export const products = pgTable("products", {
   image: text("image").notNull(),
   category: text("category").notNull(),
   badge: text("badge"), // e.g., "YENİ", "ÇOK SATAN"
+  tags: text("tags").array(), // e.g., ["Premium", "Minimal"]
   stock: integer("stock").default(100),
 });
 

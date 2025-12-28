@@ -221,11 +221,17 @@ export default function ProductDetail() {
                   <div className="flex gap-2.5 flex-wrap">
                     <Button 
                       onClick={handleAddToCart}
-                      className="flex-1 min-w-[170px] py-[14px] bg-white/90 text-[#0b0c10] border-white/90 font-black hover:bg-white"
+                      className="flex-1 min-w-[140px] py-[14px] bg-white/90 text-[#0b0c10] border-white/90 font-black hover:bg-white"
                       data-testid="button-add-to-cart"
                     >
                       <ShoppingCart className="w-4 h-4 mr-2" />
                       Sepete Ekle
+                    </Button>
+                    <Button 
+                      className="flex-1 min-w-[140px] py-[14px] border-white/20 bg-gradient-to-b from-white/15 to-white/[.06] text-white font-black"
+                      data-testid="button-buy-now"
+                    >
+                      Satin Al
                     </Button>
                     <Link href="/catalog">
                       <Button variant="outline" className="border-white/15 bg-white/[.06] text-white rounded-[14px] font-black px-4">

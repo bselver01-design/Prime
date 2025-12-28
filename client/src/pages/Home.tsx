@@ -44,6 +44,13 @@ export default function Home() {
                 Ana Sayfa
               </Link>
               <button 
+                onClick={() => document.getElementById("sss")?.scrollIntoView({ behavior: "smooth" })}
+                className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" 
+                data-testid="nav-faq"
+              >
+                S.S.S
+              </button>
+              <button 
                 onClick={() => document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" 
                 data-testid="nav-contact"
@@ -83,6 +90,16 @@ export default function Home() {
                 >
                   Ana Sayfa
                 </Link>
+                <button 
+                  onClick={() => { 
+                    setMobileMenuOpen(false); 
+                    document.getElementById("sss")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left"
+                  data-testid="mobile-nav-faq"
+                >
+                  S.S.S
+                </button>
                 <button 
                   onClick={() => { 
                     setMobileMenuOpen(false); 
@@ -206,7 +223,7 @@ export default function Home() {
         </section>
 
         {/* FAQ SECTION */}
-        <section id="faq" className="py-6 max-w-3xl mx-auto">
+        <section id="sss" className="py-6 max-w-3xl mx-auto">
           <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Sikca Sorulan Sorular</h2>
           
           {faqsLoading ? (

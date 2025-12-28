@@ -137,27 +137,6 @@ export default function Home() {
               <strong className="text-white/90">Yan etkisi olmayan steroidler.</strong>
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-col gap-3.5 mt-6">
-              <Link href="/catalog">
-                <Button 
-                  size="lg" 
-                  className="w-full bg-white/90 text-[#0b0c10] hover:bg-white rounded-[16px] h-14 text-lg font-extrabold justify-center gap-2.5"
-                  data-testid="button-browse-products"
-                >
-                  Urunleri Incele <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={() => document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" })}
-                className="w-full border-white/10 bg-white/5 text-foreground hover:bg-white/10 rounded-[16px] h-14 text-lg font-extrabold"
-                data-testid="button-contact"
-              >
-                Iletisime Gec
-              </Button>
-            </div>
           </motion.div>
         </section>
 

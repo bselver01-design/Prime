@@ -1,5 +1,6 @@
 import { type Product } from "@shared/schema";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 interface ProductCardProps {
   product: Product;
@@ -7,8 +8,9 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
+    <Link href={`/product/${product.id}`}>
     <div 
-      className="bg-white/[0.03] border border-white/10 rounded-[16px] overflow-hidden flex flex-col min-h-[280px]"
+      className="bg-white/[0.03] border border-white/10 rounded-[16px] overflow-hidden flex flex-col min-h-[280px] cursor-pointer hover:border-white/20 transition-colors"
       style={{ boxShadow: '0 10px 28px rgba(0,0,0,0.26)' }}
       data-testid={`product-card-${product.id}`}
     >
@@ -50,5 +52,6 @@ export function ProductCard({ product }: ProductCardProps) {
         </Button>
       </div>
     </div>
+    </Link>
   );
 }

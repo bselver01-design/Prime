@@ -1,0 +1,675 @@
+<!-- product.html | NaturPrime - Ürün Detay (Profesyonel Template)
+     Not: ÜRÜNLERİ ellemiyorum. Bu sayfa bir "şablon".
+     - Ürün verisini URL parametresiyle (title, price) veya localStorage ile besleyebilirsin.
+     - Sepet: localStorage ile çalışır (np_cart_items_v1).
+-->
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NaturPrime | Ürün Detay</title>
+  <meta name="description" content="NaturPrime ürün detay sayfası. Net bilgiler, hızlı satın alma akışı." />
+  <meta name="theme-color" content="#0b0c10" />
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --bg2:#0f1118;
+      --text:#e8ebf2;
+      --muted:rgba(232,235,242,.70);
+      --muted2:rgba(232,235,242,.55);
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius:16px;
+      --radius2:24px;
+      --max:1140px;
+      --ok: rgba(86,211,100,.95);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1100px 600px at 18% 18%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      letter-spacing:.2px;
+    }
+    a{color:inherit; text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* Topbar */
+    .topbar{
+      background:rgba(0,0,0,.25);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(10px);
+      position:sticky; top:0; z-index:50;
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      min-height:68px;
+      gap:14px;
+      padding:10px 0;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.9px; text-transform:uppercase;
+      user-select:none;
+    }
+    .mark{
+      width:36px; height:36px; border-radius:12px;
+      background:
+        radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      position:relative; overflow:hidden;
+      flex:0 0 auto;
+    }
+    .nav{
+      display:flex; align-items:center; gap:8px;
+      color:var(--muted);
+      font-weight:800;
+    }
+    .nav a{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:12px;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+    }
+    .pill{
+      font-size:12px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      color:rgba(232,235,242,.85);
+      background:rgba(0,0,0,.25);
+      font-weight:900;
+    }
+
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn:active{transform: translateY(0px)}
+    .btn.primary{
+      border-color: rgba(255,255,255,.22);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+    }
+    .btn.strong{
+      background: rgba(255,255,255,.92);
+      color: #0b0c10;
+      border-color: rgba(255,255,255,.92);
+    }
+
+    /* Page */
+    .pagehead{padding:18px 0 8px;}
+    .crumb{
+      color:rgba(232,235,242,.62);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      font-size:11px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      padding:12px 0 26px;
+      align-items:start;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      border-radius: var(--radius2);
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+
+    /* Gallery */
+    .gallery{padding:16px}
+    .hero-img{
+      height: 420px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(220px 140px at 30% 30%, rgba(255,255,255,.12), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+    }
+    .badge{
+      position:absolute; top:14px; left:14px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.28);
+      color:rgba(232,235,242,.88);
+      font-weight:900;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      font-size:11px;
+    }
+    .thumbs{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+    .thumb{
+      height:74px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      cursor:pointer;
+    }
+    .thumb.active{outline: 3px solid rgba(255,255,255,.14)}
+
+    /* Info */
+    .info{padding:18px}
+    h1{
+      margin:8px 0 8px;
+      font-size:26px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+    .price{
+      font-weight:950;
+      font-size:22px;
+      letter-spacing:.2px;
+      margin:0 0 10px;
+    }
+    .short{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+      max-width: 70ch;
+    }
+    .trust-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin:14px 0 14px;
+    }
+    .trust{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      color:rgba(232,235,242,.82);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background:rgba(255,255,255,.65)}
+    .dot.ok{background: var(--ok); box-shadow: 0 0 0 4px rgba(86,211,100,.16)}
+
+    .buybox{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap:10px;
+      align-items:stretch;
+    }
+    .qty{
+      display:flex; align-items:center; justify-content:space-between;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .qty button{
+      width:42px; height:46px;
+      background:transparent; border:none; color:rgba(232,235,242,.85);
+      font-weight:900; cursor:pointer;
+    }
+    .qty span{min-width:24px; text-align:center; font-weight:950}
+    .primary-actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .primary-actions .btn{flex:1; min-width: 170px; padding:14px 14px}
+
+    .divider{
+      margin:16px 0;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    .tabs{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:4px;
+    }
+    .tab{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:rgba(232,235,242,.86);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tab.active{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)}
+    .tabpanel{
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      border-radius: var(--radius);
+      padding:14px;
+      line-height:1.65;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .specs{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:8px;
+    }
+    .spec{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:12px;
+    }
+    .spec b{
+      display:block;
+      color:rgba(232,235,242,.90);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      margin-bottom:6px;
+    }
+    .spec span{color:rgba(232,235,242,.70); font-weight:700; font-size:13px}
+
+    /* Right column extras */
+    .side{padding:16px}
+    .side h3{
+      margin:0 0 8px;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-weight:950;
+      color:rgba(232,235,242,.86);
+    }
+    .side p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:13px;
+    }
+    .box{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      border-radius: var(--radius);
+      padding:14px;
+      margin-top:12px;
+    }
+    .kv{
+      margin-top:10px;
+      display:flex; flex-direction:column; gap:8px;
+      font-weight:900;
+    }
+    .kv a{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      width:fit-content;
+    }
+    .kv a:hover{background:rgba(255,255,255,.06)}
+    .tiny{margin-top:10px; color:rgba(232,235,242,.45); font-size:12px; line-height:1.45}
+
+    /* Toast */
+    .toast{
+      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      background:rgba(0,0,0,.75);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding:12px 14px;
+      color:rgba(232,235,242,.92);
+      box-shadow: var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition: .18s ease;
+      max-width:min(620px, calc(100% - 24px));
+      backdrop-filter: blur(10px);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      font-weight:900;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px)}
+    .toast small{color:rgba(232,235,242,.75); font-weight:900}
+    .toast .mini{
+      display:flex; gap:10px; align-items:center;
+      border-left:1px solid rgba(255,255,255,.10);
+      padding-left:12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .layout{grid-template-columns: 1fr}
+      .thumbs{grid-template-columns: repeat(4, 1fr)}
+      .buybox{grid-template-columns: 1fr}
+      .specs{grid-template-columns: 1fr}
+      .nav{display:none}
+    }
+    @media (max-width: 560px){
+      .hero-img{height: 320px}
+      .thumbs{grid-template-columns: repeat(4, 1fr)}
+      h1{font-size:22px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="NaturPrime Ana Sayfa">
+        <span class="mark" aria-hidden="true"></span>
+        <span>NaturPrime</span>
+        <span class="pill">Ürün</span>
+      </a>
+
+      <nav class="nav" aria-label="Ana Menü">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="catalog.html">Ürünler</a>
+        <a href="#iletisim" id="navContact">İletişim</a>
+      </nav>
+
+      <button class="btn primary" id="cartBtn" type="button">
+        Sepet <span class="pill" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="pagehead">
+      <div class="container">
+        <div class="crumb"><a href="catalog.html" style="opacity:.9">Ürünler</a> / <span id="crumbName">Ürün Detay</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container layout">
+        <!-- Left: Gallery + Core Info -->
+        <div class="card">
+          <div class="gallery">
+            <div class="hero-img" id="heroImg" role="img" aria-label="Ürün görseli">
+              <span class="badge" id="badge">Öne Çıkan</span>
+            </div>
+            <div class="thumbs" id="thumbs">
+              <div class="thumb active" data-thumb="1" aria-label="Görsel 1"></div>
+              <div class="thumb" data-thumb="2" aria-label="Görsel 2"></div>
+              <div class="thumb" data-thumb="3" aria-label="Görsel 3"></div>
+              <div class="thumb" data-thumb="4" aria-label="Görsel 4"></div>
+            </div>
+          </div>
+
+          <div class="info">
+            <h1 id="name">ÜRÜN ADI</h1>
+            <p class="price" id="price">₺0</p>
+            <p class="short" id="short">
+              Kısa açıklama buraya. Net, ikna edici ve kısa. (Sen dolduracaksın.)
+            </p>
+
+            <div class="trust-row" aria-label="Güven rozetleri">
+              <span class="trust"><span class="dot ok"></span>Güvenli Ödeme</span>
+              <span class="trust"><span class="dot"></span>Kolay İade</span>
+              <span class="trust"><span class="dot"></span>Hızlı Destek</span>
+            </div>
+
+            <div class="buybox" aria-label="Satın alma alanı">
+              <div class="qty" aria-label="Adet seçimi">
+                <button type="button" id="dec">−</button>
+                <span id="qty">1</span>
+                <button type="button" id="inc">+</button>
+              </div>
+
+              <div class="primary-actions">
+                <button class="btn strong" id="addToCart" type="button">Sepete Ekle</button>
+                <a class="btn" href="catalog.html">Geri Dön</a>
+                <a class="btn" href="#iletisim" id="goIletisim">İletişime Geç</a>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="tabs" role="tablist" aria-label="Ürün bilgi sekmeleri">
+              <div class="tab active" role="tab" tabindex="0" data-tab="specs">Teknik</div>
+              <div class="tab" role="tab" tabindex="0" data-tab="benefits">Faydalar</div>
+              <div class="tab" role="tab" tabindex="0" data-tab="shipping">Kargo/İade</div>
+            </div>
+
+            <div class="tabpanel" id="tabpanel">
+              <div id="panel-specs">
+                <div class="specs">
+                  <div class="spec"><b>İçerik</b><span>Sen doldur</span></div>
+                  <div class="spec"><b>Kullanım</b><span>Sen doldur</span></div>
+                  <div class="spec"><b>Net Miktar</b><span>Sen doldur</span></div>
+                  <div class="spec"><b>Uyarı</b><span>Sen doldur</span></div>
+                </div>
+              </div>
+
+              <div id="panel-benefits" style="display:none">
+                <ul style="margin:0; padding-left:18px;">
+                  <li>Sen doldur</li>
+                  <li>Sen doldur</li>
+                  <li>Sen doldur</li>
+                </ul>
+              </div>
+
+              <div id="panel-shipping" style="display:none">
+                <b style="color:rgba(232,235,242,.88)">Kargo:</b> <span>Sen doldur</span><br>
+                <b style="color:rgba(232,235,242,.88)">İade:</b> <span>Sen doldur</span>
+              </div>
+            </div>
+
+            <div class="tiny">
+              *Bu sayfa proje amaçlı şablondur. Metinleri ve ürün bilgilerini sen dolduracaksın.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Support + Contact (site içi) -->
+        <aside class="card">
+          <div class="side">
+            <h3>Net Bilgi</h3>
+            <p>Ürün detayında sadece gerekli olanı göster: açıklama, teknik bilgi, fayda ve net satın alma.</p>
+
+            <div class="box">
+              <h3>İletişim</h3>
+              <p>Site içi iletişim. Mail uygulaması açılmaz.</p>
+              <div class="kv">
+                <a href="#iletisim">📞 0506 337 32 67</a>
+                <a href="#iletisim">✉️ naturprime0@gmail.com</a>
+                <a href="#iletisim">📸 @naturprime</a>
+              </div>
+              <div class="tiny">Bölüme kaydırmak için alttaki iletişim alanını kullan.</div>
+            </div>
+
+            <div class="box" id="iletisim">
+              <h3>İletişim Bölümü</h3>
+              <p>Telefon / E-posta / Instagram:</p>
+              <div class="kv">
+                <div style="padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);width:fit-content;">
+                  📞 0506 337 32 67
+                </div>
+                <div style="padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);width:fit-content;">
+                  ✉️ naturprime0@gmail.com
+                </div>
+                <div style="padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);width:fit-content;">
+                  📸 <a href="https://instagram.com/naturprime" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">@naturprime</a>
+                </div>
+              </div>
+              <div class="tiny">Instagram linki dışarı açılır, mail açılmaz.</div>
+            </div>
+
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <div>
+      <div id="toastTitle">Bilgi</div>
+      <small id="toastDesc">—</small>
+    </div>
+    <div class="mini">
+      <span class="pill">Sepet</span>
+      <strong id="toastCart">0</strong>
+      <button class="btn" id="toastClose" type="button" style="padding:8px 10px">Kapat</button>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // ===== Helpers =====
+    const $ = (sel) => document.querySelector(sel);
+    function moneyTRY(n){
+      return new Intl.NumberFormat('tr-TR', { style:'currency', currency:'TRY', maximumFractionDigits:0 }).format(n);
+    }
+    function toast(title, desc){
+      const el = $("#toast");
+      $("#toastTitle").textContent = title;
+      $("#toastDesc").textContent = desc;
+      $("#toastCart").textContent = getCartCount();
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=> el.classList.remove("show"), 2400);
+    }
+
+    // ===== Cart storage (items) =====
+    const LS_CART_ITEMS = "np_cart_items_v1";
+    function getCart(){
+      try{
+        const raw = localStorage.getItem(LS_CART_ITEMS);
+        return raw ? JSON.parse(raw) : [];
+      }catch{ return []; }
+    }
+    function setCart(items){
+      localStorage.setItem(LS_CART_ITEMS, JSON.stringify(items));
+    }
+    function getCartCount(){
+      return getCart().reduce((sum, it) => sum + (it.qty || 0), 0);
+    }
+    function updateCartBadge(){
+      $("#cartCount").textContent = getCartCount();
+    }
+
+    // ===== Product data bootstrap (DO NOT touch your products) =====
+    // You can pass product data like:
+    // product.html?title=NP%20CORE&price=1299&badge=Pop%C3%BCler
+    function getParam(name){
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    const product = {
+      id: getParam("id") || "demo-01",
+      title: getParam("title") || "ÜRÜN ADI",
+      price: Number(getParam("price") || 0),
+      badge: getParam("badge") || "Öne Çıkan"
+    };
+
+    // ===== UI Init =====
+    $("#name").textContent = product.title;
+    $("#crumbName").textContent = product.title;
+    $("#price").textContent = moneyTRY(product.price);
+    $("#badge").textContent = product.badge;
+
+    // Gallery thumbs (visual only)
+    $("#thumbs").addEventListener("click", (e) => {
+      const t = e.target.closest(".thumb");
+      if(!t) return;
+      document.querySelectorAll(".thumb").forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      toast("Görsel", "Görsel değişimi (demo).");
+    });
+
+    // Qty
+    let qty = 1;
+    function setQty(n){
+      qty = Math.max(1, Math.min(99, n));
+      $("#qty").textContent = qty;
+    }
+    $("#inc").addEventListener("click", () => setQty(qty + 1));
+    $("#dec").addEventListener("click", () => setQty(qty - 1));
+
+    // Tabs
+    function showTab(key){
+      document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x.dataset.tab === key));
+      $("#panel-specs").style.display = (key === "specs") ? "block" : "none";
+      $("#panel-benefits").style.display = (key === "benefits") ? "block" : "none";
+      $("#panel-shipping").style.display = (key === "shipping") ? "block" : "none";
+    }
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => showTab(tab.dataset.tab));
+      tab.addEventListener("keydown", (e) => { if(e.key === "Enter") showTab(tab.dataset.tab); });
+    });
+
+    // Add to cart (stores only minimal info; you will map to your real products later)
+    $("#addToCart").addEventListener("click", () => {
+      const items = getCart();
+      const idx = items.findIndex(it => it.id === product.id);
+      if(idx >= 0){
+        items[idx].qty += qty;
+      }else{
+        items.push({ id: product.id, title: product.title, price: product.price, qty });
+      }
+      setCart(items);
+      updateCartBadge();
+      toast("Sepete eklendi", `${product.title} • Adet: ${qty}`);
+    });
+
+    // Cart button
+    $("#cartBtn").addEventListener("click", () => {
+      toast("Sepet", "cart.html sonraki dosyada gelecek.");
+    });
+
+    // Contact scroll
+    $("#navContact")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      $("#iletisim").scrollIntoView({ behavior:"smooth" });
+    });
+    $("#goIletisim")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      $("#iletisim").scrollIntoView({ behavior:"smooth" });
+    });
+
+    // Toast close
+    $("#toastClose").addEventListener("click", () => $("#toast").classList.remove("show"));
+
+    updateCartBadge();
+  </script>
+</body>
+</html>

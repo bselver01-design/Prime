@@ -142,16 +142,15 @@ export default function Home() {
                   Urunleri Incele <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <a href="mailto:naturprime0@gmail.com">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="w-full border-white/10 bg-white/5 text-foreground hover:bg-white/10 rounded-[16px] h-14 text-lg font-extrabold"
-                  data-testid="button-contact"
-                >
-                  Iletisime Gec
-                </Button>
-              </a>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={() => window.location.href = "mailto:naturprime0@gmail.com"}
+                className="w-full border-white/10 bg-white/5 text-foreground hover:bg-white/10 rounded-[16px] h-14 text-lg font-extrabold"
+                data-testid="button-contact"
+              >
+                Iletisime Gec
+              </Button>
             </div>
           </motion.div>
         </section>

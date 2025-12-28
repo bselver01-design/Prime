@@ -116,24 +116,32 @@ export default function Home() {
 
       <main className="max-w-[1100px] mx-auto px-4">
         {/* HERO SECTION */}
-        <section className="py-8 md:py-12">
+        <section className="py-4 md:py-6 -mx-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col items-center text-center"
+            className="flex flex-col items-center text-center relative"
           >
-            <img 
-              src={heroImage} 
-              alt="NaturPrime" 
-              className="w-full max-w-[500px] md:max-w-[600px] h-auto mb-4"
-            />
-            <p className="text-[18px] md:text-[24px] font-extrabold tracking-[0.15em] uppercase text-white/85">
-              Guc • Motivasyon • Performans
-            </p>
-            <p className="text-[14px] md:text-[16px] font-bold tracking-wide text-white/60 mt-2">
-              Zarari olmayan Steroidler
-            </p>
+            <div className="relative w-full max-w-[600px] md:max-w-[700px]">
+              <img 
+                src={heroImage} 
+                alt="NaturPrime" 
+                className="w-full h-auto"
+                style={{
+                  maskImage: 'radial-gradient(ellipse 85% 80% at 50% 45%, black 40%, transparent 75%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 85% 80% at 50% 45%, black 40%, transparent 75%)',
+                }}
+              />
+            </div>
+            <div className="-mt-8 relative z-10">
+              <p className="text-[18px] md:text-[24px] font-extrabold tracking-[0.15em] uppercase text-white/85">
+                Guc • Motivasyon • Performans
+              </p>
+              <p className="text-[14px] md:text-[16px] font-bold tracking-wide text-white/60 mt-2">
+                Zarari olmayan Steroidler
+              </p>
+            </div>
           </motion.div>
         </section>
 

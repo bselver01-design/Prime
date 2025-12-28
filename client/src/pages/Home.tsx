@@ -293,31 +293,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA SECTION */}
-        <section className="py-8 pb-16">
-          <div className="rounded-[24px] bg-[#39d353] text-[#0b0c10] p-10 md:p-12 text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
-            
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-extrabold mb-4 tracking-wide">
-                Degisimi Bugun Baslat.
-              </h2>
-              <p className="text-black/70 text-base md:text-lg mb-6 font-semibold">
-                Sinirli sureli indirimlerden yararlanmak ve performansini artirmak icin hemen siparis ver.
-              </p>
-              <Link href="/catalog">
-                <Button 
-                  size="lg" 
-                  className="bg-[#0b0c10] text-white hover:bg-black/80 rounded-[16px] px-10 h-14 text-lg font-extrabold"
-                  data-testid="button-order-now"
-                >
-                  Hemen Siparis Ver
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );

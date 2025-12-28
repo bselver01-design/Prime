@@ -80,8 +80,7 @@ export default function Home() {
             {/* Subtext */}
             <p className="text-[18px] md:text-[20px] text-white/65 leading-relaxed mb-6">
               Karanlik yol, net hedef.<br />
-              <strong className="text-white/90">Yan etkisi olmayan steroidler.</strong><br />
-              Dogal formul, maksimum performans.
+              <strong className="text-white/90">Yan etkisi olmayan steroidler.</strong>
             </p>
 
             {/* CTAs */}

@@ -43,9 +43,6 @@ export default function Home() {
               <Link href="/" className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" data-testid="nav-home">
                 Ana Sayfa
               </Link>
-              <Link href="/catalog" className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" data-testid="nav-catalog">
-                Urunler
-              </Link>
               <button 
                 onClick={() => document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" 
@@ -85,14 +82,6 @@ export default function Home() {
                   data-testid="mobile-nav-home"
                 >
                   Ana Sayfa
-                </Link>
-                <Link 
-                  href="/catalog" 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
-                  data-testid="mobile-nav-catalog"
-                >
-                  Urunler
                 </Link>
                 <button 
                   onClick={() => { 

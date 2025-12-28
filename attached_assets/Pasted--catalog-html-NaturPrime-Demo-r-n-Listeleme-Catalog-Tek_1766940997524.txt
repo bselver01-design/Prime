@@ -1,0 +1,852 @@
+<!-- catalog.html | NaturPrime (Demo) - Ürün Listeleme (Catalog)
+     Tek dosya: HTML + CSS + JS
+     Özellikler: Filtre (fiyat), Sıralama (popüler/yeni/çok satan/fiyat), arama, ürün kartları, "Ürünü İncele", "Sepete Ekle"
+     Sepet sayacı localStorage ile kalıcı.
+-->
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NaturPrime | Ürünler</title>
+  <meta name="description" content="NaturPrime ürün kataloğu. Filtrele, sırala, hızlı sepete ekle." />
+  <meta name="theme-color" content="#0b0c10" />
+
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --bg2:#0f1118;
+      --text:#e8ebf2;
+      --muted:rgba(232,235,242,.70);
+      --muted2:rgba(232,235,242,.55);
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius:16px;
+      --radius2:24px;
+      --max:1140px;
+      --ok: rgba(86,211,100,.95);
+      --warn: rgba(245,197,66,.95);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1100px 600px at 18% 18%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      letter-spacing:.2px;
+    }
+    a{color:inherit; text-decoration:none}
+    button, select, input{font:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* ===== Topbar ===== */
+    .topbar{
+      background:rgba(0,0,0,.25);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(10px);
+      position:sticky; top:0; z-index:50;
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      min-height:68px;
+      gap:14px;
+      padding:10px 0;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.9px; text-transform:uppercase;
+      user-select:none;
+    }
+    .mark{
+      width:36px; height:36px; border-radius:12px;
+      background:
+        radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .mark:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transform: rotate(25deg);
+      animation: shine 4.2s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%,40%{transform:translateX(-40%) rotate(25deg); opacity:.0}
+      55%{opacity:.8}
+      80%,100%{transform:translateX(70%) rotate(25deg); opacity:0}
+    }
+
+    .nav{
+      display:flex; align-items:center; gap:8px;
+      color:var(--muted);
+      font-weight:800;
+    }
+    .nav a{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:12px;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+    }
+    .pill{
+      font-size:12px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      color:rgba(232,235,242,.85);
+      background:rgba(0,0,0,.25);
+      font-weight:900;
+    }
+
+    .actions{
+      display:flex; align-items:center; gap:10px;
+      margin-left:auto;
+      width:min(640px, 100%);
+    }
+    .search{
+      display:flex; align-items:center; gap:10px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:10px 12px;
+      flex:1;
+      min-width: 220px;
+    }
+    .search input{
+      width:100%;
+      border:none; outline:none;
+      background:transparent;
+      color:var(--text);
+    }
+    .search input::placeholder{color:rgba(232,235,242,.45)}
+    .icon{width:18px; height:18px; opacity:.85; flex:0 0 auto;}
+
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn:active{transform: translateY(0px)}
+    .btn.primary{
+      border-color: rgba(255,255,255,.22);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+    }
+
+    /* ===== Page Head ===== */
+    .pagehead{padding:22px 0 10px;}
+    .crumb{
+      color:rgba(232,235,242,.62);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      font-size:11px;
+    }
+    .title-row{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      margin-top:8px;
+    }
+    h1{
+      margin:0;
+      font-size:26px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+    .hint{
+      margin:0;
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+      max-width:60ch;
+    }
+
+    /* ===== Layout ===== */
+    .layout{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:14px;
+      padding:12px 0 26px;
+      align-items:start;
+    }
+
+    /* ===== Sidebar filters ===== */
+    .panel{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      border-radius: var(--radius2);
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .panel-head{
+      padding:16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .panel-head strong{
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .panel-body{padding:16px}
+
+    .field{margin-bottom:14px}
+    label{
+      display:block;
+      color:rgba(232,235,242,.75);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+      margin-bottom:8px;
+    }
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    input[type="range"]{width:100%}
+    .mini{
+      color:rgba(232,235,242,.72);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+    }
+    .select, .input{
+      width:100%;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+    }
+    .select:focus, .input:focus{box-shadow: 0 0 0 4px rgba(255,255,255,.08); border-color:rgba(255,255,255,.20)}
+    .chipbar{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{
+      padding:9px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:rgba(232,235,242,.86);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip.active{
+      border-color: rgba(255,255,255,.22);
+      background:rgba(255,255,255,.10);
+    }
+
+    /* ===== Products ===== */
+    .products-head{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .count{
+      color:rgba(232,235,242,.75);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+
+    .p-card{
+      grid-column: span 4;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      background:rgba(255,255,255,.03);
+      box-shadow: 0 10px 28px rgba(0,0,0,.26);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+      min-height: 320px;
+      transition:.18s ease;
+    }
+    .p-card:hover{transform: translateY(-2px); border-color:rgba(255,255,255,.16)}
+    .p-img{
+      height:160px;
+      background:
+        radial-gradient(160px 100px at 30% 30%, rgba(255,255,255,.12), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-bottom:1px solid rgba(255,255,255,.10);
+      position:relative;
+    }
+    .p-badge{
+      position:absolute; top:10px; left:10px;
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.25);
+      color:rgba(232,235,242,.88);
+      font-weight:900;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .p-badge.warn{
+      border-color: rgba(245,197,66,.30);
+      background: rgba(245,197,66,.08);
+      color: rgba(255,240,200,.95);
+    }
+    .p-badge.ok{
+      border-color: rgba(86,211,100,.30);
+      background: rgba(86,211,100,.08);
+      color: rgba(210,255,222,.95);
+    }
+
+    .p-body{padding:14px}
+    .p-title{margin:0 0 6px; font-weight:950; letter-spacing:.2px}
+    .p-desc{margin:0 0 10px; color:var(--muted); font-size:13px; line-height:1.45}
+
+    .p-meta{
+      display:flex; justify-content:space-between; align-items:center;
+      color:rgba(232,235,242,.72);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+      border-top:1px dashed rgba(255,255,255,.10);
+      padding-top:10px;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .p-row{
+      margin-top:auto;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      padding:14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      flex-wrap:wrap;
+    }
+    .price{font-weight:950; letter-spacing:.2px}
+    .p-actions{display:flex; gap:8px; flex-wrap:wrap}
+    .p-btn{
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.07);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      cursor:pointer;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .p-btn:hover{transform: translateY(-1px)}
+    .p-btn:active{transform: translateY(0px)}
+    .p-btn.outline{background:transparent}
+    .p-btn.outline:hover{background:rgba(255,255,255,.05)}
+
+    /* Empty state */
+    .empty{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius: var(--radius2);
+      padding:18px;
+      color:rgba(232,235,242,.72);
+      background:rgba(0,0,0,.18);
+      font-weight:800;
+      line-height:1.6;
+      grid-column: span 12;
+    }
+
+    /* Footer */
+    footer{
+      padding:26px 0 36px;
+      color:var(--muted);
+      border-top:1px solid rgba(255,255,255,.10);
+      margin-top:18px;
+    }
+    .foot{
+      display:grid; grid-template-columns:1.2fr .8fr; gap:14px;
+      align-items:start;
+    }
+    .foot strong{color:rgba(232,235,242,.92)}
+    .foot-links{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:12px;
+    }
+    .foot-links a{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+    }
+    .foot-links a:hover{background:rgba(255,255,255,.05); color:var(--text)}
+
+    /* Toast */
+    .toast{
+      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      background:rgba(0,0,0,.75);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding:12px 14px;
+      color:rgba(232,235,242,.92);
+      box-shadow: var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition: .18s ease;
+      max-width:min(620px, calc(100% - 24px));
+      backdrop-filter: blur(10px);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      font-weight:900;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px)}
+    .toast small{color:rgba(232,235,242,.75); font-weight:900}
+    .toast .mini{
+      display:flex; gap:10px; align-items:center;
+      border-left:1px solid rgba(255,255,255,.10);
+      padding-left:12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .layout{grid-template-columns: 1fr; }
+      .panel{order:0}
+      .actions{width:100%}
+      .p-card{grid-column: span 6}
+      .foot{grid-template-columns:1fr}
+      .foot-links{justify-content:flex-start}
+    }
+    @media (max-width: 560px){
+      .p-card{grid-column: span 12}
+      h1{font-size:22px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="NaturPrime Ana Sayfa">
+        <span class="mark" aria-hidden="true"></span>
+        <span>NaturPrime</span>
+        <span class="pill">Ürünler</span>
+      </a>
+
+      <nav class="nav" aria-label="Ana Menü">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="catalog.html" aria-current="page">Ürünler</a>
+        <a href="#" id="navContact">İletişim</a>
+      </nav>
+
+      <div class="actions">
+        <div class="search" role="search">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" opacity=".9"/>
+            <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+          </svg>
+          <input id="searchInput" placeholder="Ürün ara..." autocomplete="off" />
+        </div>
+
+        <button class="btn primary" id="cartBtn" type="button" title="Sepet (sonraki dosyada)">
+          Sepet <span class="pill" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="pagehead">
+      <div class="container">
+        <div class="crumb">NaturPrime / Ürünler</div>
+        <div class="title-row">
+          <div>
+            <h1>Katalog</h1>
+            <p class="hint">Filtrele, sırala, hızlı ekle. Net arayüz — hızlı karar.</p>
+          </div>
+
+          <div class="row" style="gap:10px">
+            <div class="mini" id="activeFilters">Filtre: Yok</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container layout">
+        <!-- Filters -->
+        <aside class="panel" aria-label="Filtreler">
+          <div class="panel-head">
+            <strong>Filtreler</strong>
+            <button class="btn" type="button" id="resetBtn" style="padding:9px 12px">Sıfırla</button>
+          </div>
+
+          <div class="panel-body">
+            <div class="field">
+              <label>Sıralama</label>
+              <select class="select" id="sortSelect">
+                <option value="popularity">Popülerlik</option>
+                <option value="new">Yeni Ürünler</option>
+                <option value="bestseller">En Çok Satanlar</option>
+                <option value="priceAsc">Fiyat (Artan)</option>
+                <option value="priceDesc">Fiyat (Azalan)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Hızlı Filtre</label>
+              <div class="chipbar" id="chipbar">
+                <div class="chip" data-chip="all">Hepsi</div>
+                <div class="chip" data-chip="new">Yeni</div>
+                <div class="chip" data-chip="popular">Popüler</div>
+                <div class="chip" data-chip="bestseller">Çok Satan</div>
+                <div class="chip" data-chip="limited">Sınırlı</div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Maksimum Fiyat</label>
+              <input type="range" id="priceRange" min="999" max="2499" step="50" value="2499" />
+              <div class="row" style="justify-content:space-between; margin-top:8px">
+                <div class="mini">Min: <span id="minPriceLabel">₺999</span></div>
+                <div class="mini">Max: <span id="maxPriceLabel">₺2.499</span></div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Not</label>
+              <div style="color:rgba(232,235,242,.70); line-height:1.6; font-weight:800; font-size:13px">
+                Bu sayfa “gerçek site” hissinde demo akışıdır. Ürün detay ve sepet/ödeme sayfaları sonraki dosyalarda.
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Products -->
+        <section aria-label="Ürünler">
+          <div class="products-head">
+            <div class="count" id="countText">0 ürün</div>
+            <div class="row" style="gap:10px">
+              <button class="btn" type="button" id="quickSortPrice" style="padding:9px 12px">Fiyata Göre</button>
+              <button class="btn" type="button" id="quickSortNew" style="padding:9px 12px">Yeniler</button>
+            </div>
+          </div>
+
+          <div class="grid" id="grid"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="mark" aria-hidden="true" style="width:30px;height:30px;border-radius:10px"></span>
+          <strong>NaturPrime</strong>
+        </div>
+        <p style="margin:10px 0 0; line-height:1.65; max-width:72ch;">
+          İletişim: <strong>naturprime0@gmail.com</strong> • Instagram: <strong>@naturprime</strong>
+        </p>
+      </div>
+      <div class="foot-links">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="catalog.html">Ürünler</a>
+        <a href="#" id="footContact">İletişim</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <div>
+      <div id="toastTitle">Bilgi</div>
+      <small id="toastDesc">—</small>
+    </div>
+    <div class="mini">
+      <span class="pill">Sepet</span>
+      <strong id="toastCart">0</strong>
+      <button class="btn" id="toastClose" type="button" style="padding:8px 10px">Kapat</button>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // ===== Data (6+ products) =====
+    const PRODUCTS = [
+      { id:"np-01", name:"NP CORE",   desc:"Temel performans paketi. Net içerik, net hedef.", price:1299, tag:"new",       ship:"24–48s", popularity:92, sold:780, created: 6  },
+      { id:"np-02", name:"NP PRIME",  desc:"Günlük rutin için minimal çözüm.",                price:1599, tag:"popular",   ship:"24s",    popularity:98, sold:1120, created: 10 },
+      { id:"np-03", name:"NP EDGE",   desc:"Yoğun günler için odaklı destek.",               price:1899, tag:"bestseller",ship:"24–48s", popularity:95, sold:1640, created: 14 },
+      { id:"np-04", name:"NP SHIELD", desc:"Dengeli kullanım, sade formül.",                 price:1399, tag:"limited",   ship:"48s",    popularity:86, sold:540, created: 18 },
+      { id:"np-05", name:"NP FOCUS",  desc:"Odak ve disiplin için net plan.",                price:1749, tag:"popular",   ship:"24s",    popularity:93, sold:980, created: 4  },
+      { id:"np-06", name:"NP NIGHT",  desc:"Karanlık yol: gece rutini, net hedef.",          price:1499, tag:"new",       ship:"24–48s", popularity:90, sold:610, created: 2  },
+      { id:"np-07", name:"NP ULTRA",  desc:"Premium set. Minimal ama güçlü kurgu.",          price:2299, tag:"bestseller",ship:"24–48s", popularity:97, sold:1320, created: 20 },
+      { id:"np-08", name:"NP LITE",   desc:"Sade başlangıç. Net deneyim.",                   price:1099, tag:"all",       ship:"48s",    popularity:80, sold:430, created: 22 }
+    ];
+
+    // ===== Storage helpers =====
+    const LS_CART = "np_cart_count_v1";
+    function getCartCount(){
+      const v = Number(localStorage.getItem(LS_CART));
+      return Number.isFinite(v) ? v : 0;
+    }
+    function setCartCount(n){
+      localStorage.setItem(LS_CART, String(n));
+    }
+
+    // ===== UI helpers =====
+    const $ = (sel) => document.querySelector(sel);
+
+    function moneyTRY(n){
+      return new Intl.NumberFormat('tr-TR', { style:'currency', currency:'TRY', maximumFractionDigits:0 }).format(n);
+    }
+
+    function toast(title, desc){
+      const el = $("#toast");
+      $("#toastTitle").textContent = title;
+      $("#toastDesc").textContent = desc;
+      $("#toastCart").textContent = cartCount;
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=> el.classList.remove("show"), 2500);
+    }
+
+    function badgeClass(tag){
+      if(tag === "new") return "ok";
+      if(tag === "limited") return "warn";
+      return "";
+    }
+
+    function badgeText(tag){
+      if(tag === "new") return "Yeni";
+      if(tag === "popular") return "Popüler";
+      if(tag === "bestseller") return "Çok Satan";
+      if(tag === "limited") return "Sınırlı";
+      return "Ürün";
+    }
+
+    // ===== State =====
+    let cartCount = getCartCount();
+    let activeChip = "all";
+    let maxPrice = 2499;
+    let query = "";
+    let sortMode = "popularity";
+
+    // ===== Rendering =====
+    function computeActiveFiltersText(){
+      const parts = [];
+      if(activeChip && activeChip !== "all") parts.push(`Etiket: ${activeChip}`);
+      if(maxPrice < 2499) parts.push(`Max: ${moneyTRY(maxPrice)}`);
+      if(query) parts.push(`Arama: "${query}"`);
+      return parts.length ? parts.join(" • ") : "Filtre: Yok";
+    }
+
+    function applySort(list){
+      const arr = [...list];
+      switch(sortMode){
+        case "new":        return arr.sort((a,b)=> a.created - b.created); // smaller = newer
+        case "bestseller": return arr.sort((a,b)=> b.sold - a.sold);
+        case "priceAsc":   return arr.sort((a,b)=> a.price - b.price);
+        case "priceDesc":  return arr.sort((a,b)=> b.price - a.price);
+        case "popularity":
+        default:           return arr.sort((a,b)=> b.popularity - a.popularity);
+      }
+    }
+
+    function filterProducts(){
+      let list = PRODUCTS;
+
+      // chip filter
+      if(activeChip && activeChip !== "all"){
+        list = list.filter(p => p.tag === activeChip);
+      }
+
+      // price filter
+      list = list.filter(p => p.price <= maxPrice);
+
+      // search
+      if(query){
+        const q = query.toLowerCase();
+        list = list.filter(p => (p.name + " " + p.desc).toLowerCase().includes(q));
+      }
+
+      // sort
+      list = applySort(list);
+      return list;
+    }
+
+    function render(){
+      $("#cartCount").textContent = cartCount;
+      $("#minPriceLabel").textContent = moneyTRY(999).replace(",00","");
+      $("#maxPriceLabel").textContent = moneyTRY(maxPrice).replace(",00","");
+      $("#activeFilters").textContent = computeActiveFiltersText();
+
+      const list = filterProducts();
+      $("#countText").textContent = `${list.length} ürün`;
+
+      const grid = $("#grid");
+      grid.innerHTML = "";
+
+      if(list.length === 0){
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.innerHTML = `
+          Sonuç bulunamadı.<br>
+          Filtreleri gevşet veya aramayı değiştir.
+        `;
+        grid.appendChild(empty);
+        return;
+      }
+
+      list.forEach(p => {
+        const card = document.createElement("article");
+        card.className = "p-card";
+        card.innerHTML = `
+          <div class="p-img" aria-hidden="true">
+            <span class="p-badge ${badgeClass(p.tag)}">${badgeText(p.tag)}</span>
+          </div>
+          <div class="p-body">
+            <p class="p-title">${p.name}</p>
+            <p class="p-desc">${p.desc}</p>
+            <div class="p-meta">
+              <span>Hızlı Kargo</span>
+              <span>${p.ship}</span>
+            </div>
+          </div>
+          <div class="p-row">
+            <div class="price">${moneyTRY(p.price)}</div>
+            <div class="p-actions">
+              <button class="p-btn outline" data-view="${p.id}">Ürünü İncele</button>
+              <button class="p-btn" data-add="${p.id}">Sepete Ekle</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ===== Events =====
+    function setActiveChip(chip){
+      activeChip = chip;
+      document.querySelectorAll("#chipbar .chip").forEach(el => {
+        el.classList.toggle("active", el.getAttribute("data-chip") === activeChip);
+      });
+      render();
+    }
+
+    function resetAll(){
+      activeChip = "all";
+      maxPrice = 2499;
+      query = "";
+      sortMode = "popularity";
+      $("#sortSelect").value = "popularity";
+      $("#priceRange").value = "2499";
+      $("#searchInput").value = "";
+      setActiveChip("all");
+      render();
+      toast("Sıfırlandı", "Filtreler temizlendi.");
+    }
+
+    function wire(){
+      // init
+      $("#sortSelect").addEventListener("change", (e) => {
+        sortMode = e.target.value;
+        render();
+      });
+
+      $("#priceRange").addEventListener("input", (e) => {
+        maxPrice = Number(e.target.value);
+        render();
+      });
+
+      $("#searchInput").addEventListener("input", (e) => {
+        query = e.target.value.trim();
+        render();
+      });
+
+      $("#chipbar").addEventListener("click", (e) => {
+        const chip = e.target.closest("[data-chip]");
+        if(!chip) return;
+        setActiveChip(chip.getAttribute("data-chip"));
+      });
+
+      $("#resetBtn").addEventListener("click", resetAll);
+
+      $("#quickSortPrice").addEventListener("click", () => {
+        sortMode = (sortMode === "priceAsc") ? "priceDesc" : "priceAsc";
+        $("#sortSelect").value = sortMode;
+        render();
+        toast("Sıralama", sortMode === "priceAsc" ? "Fiyat artan." : "Fiyat azalan.");
+      });
+
+      $("#quickSortNew").addEventListener("click", () => {
+        sortMode = "new";
+        $("#sortSelect").value = "new";
+        render();
+        toast("Sıralama", "Yeni ürünler öne alındı.");
+      });
+
+      document.addEventListener("click", (e) => {
+        const addBtn = e.target.closest("[data-add]");
+        if(addBtn){
+          cartCount += 1;
+          setCartCount(cartCount);
+          $("#cartCount").textContent = cartCount;
+          const id = addBtn.getAttribute("data-add");
+          const p = PRODUCTS.find(x => x.id === id);
+          toast("Sepete eklendi", `${p ? p.name : "Ürün"} eklendi.`);
+        }
+
+        const viewBtn = e.target.closest("[data-view]");
+        if(viewBtn){
+          e.preventDefault();
+          // product.html sonraki dosyada gelecek
+          toast("Ürün Detay", "product.html sonraki dosyada gelecek.");
+        }
+      });
+
+      $("#cartBtn").addEventListener("click", () => {
+        toast("Sepet", "cart.html / checkout.html sonraki dosyada gelecek.");
+      });
+
+      const contactMsg = "İletişim: naturprime0@gmail.com • Instagram: @naturprime";
+      $("#navContact").addEventListener("click", (e) => { e.preventDefault(); toast("İletişim", contactMsg); });
+      $("#footContact").addEventListener("click", (e) => { e.preventDefault(); toast("İletişim", contactMsg); });
+
+      $("#toastClose").addEventListener("click", () => $("#toast").classList.remove("show"));
+    }
+
+    // ===== Start =====
+    $("#cartCount").textContent = cartCount;
+    setActiveChip("all");
+    wire();
+    render();
+  </script>
+</body>
+</html>

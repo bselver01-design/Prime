@@ -15,14 +15,21 @@ export function ProductCard({ product }: ProductCardProps) {
       data-testid={`product-card-${product.id}`}
     >
       {/* Product Image */}
-      <div 
-        className="h-[140px] relative border-b border-white/10"
-        style={{
-          background: product.image && !product.image.startsWith('gradient') 
-            ? `url('${product.image}') center/cover` 
-            : 'radial-gradient(140px 90px at 30% 30%, rgba(255,255,255,0.12), transparent 60%), linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))'
-        }}
-      >
+      <div className="h-[140px] relative border-b border-white/10 overflow-hidden bg-black/20">
+        {product.image && !product.image.startsWith('gradient') ? (
+          <img 
+            src={product.image} 
+            alt={product.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div 
+            className="w-full h-full"
+            style={{
+              background: 'radial-gradient(140px 90px at 30% 30%, rgba(255,255,255,0.12), transparent 60%), linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))'
+            }}
+          />
+        )}
         {product.badge && (
           <span className="absolute top-2.5 left-2.5 text-[11px] px-2.5 py-1.5 rounded-full border border-white/16 bg-black/25 text-white/86 font-extrabold tracking-wide uppercase">
             {product.badge}

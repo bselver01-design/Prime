@@ -173,11 +173,21 @@ export default function ProductDetail() {
             <div className="border border-white/10 bg-black/[.18] rounded-3xl shadow-2xl overflow-hidden">
               {/* Gallery */}
               <div className="p-4">
-                <div className="h-[320px] md:h-[420px] rounded-3xl border border-white/10 relative overflow-hidden" style={{
-                  background: product.image && !product.image.startsWith('gradient')
-                    ? `url('${product.image}') center/cover`
-                    : `radial-gradient(220px 140px at 30% 30%, rgba(255,255,255,.12), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02))`
-                }}>
+                <div className="h-[320px] md:h-[420px] rounded-3xl border border-white/10 relative overflow-hidden bg-black/20">
+                  {product.image && !product.image.startsWith('gradient') ? (
+                    <img 
+                      src={product.image} 
+                      alt={product.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full"
+                      style={{
+                        background: `radial-gradient(220px 140px at 30% 30%, rgba(255,255,255,.12), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02))`
+                      }}
+                    />
+                  )}
                   {product.badge && (
                     <span className="absolute top-[14px] left-[14px] px-3 py-2 rounded-full border border-white/15 bg-black/30 text-white/90 font-black tracking-wide uppercase text-[11px]">
                       {product.badge}

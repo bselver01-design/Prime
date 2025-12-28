@@ -12,6 +12,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { useProducts } from "@/hooks/use-products";
 import { useFaqs } from "@/hooks/use-faqs";
 import { Link } from "wouter";
+import heroImage from "@assets/C3D93148-029D-42F8-932C-100E54E54328_1766964094516.png";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -123,7 +124,7 @@ export default function Home() {
             className="flex flex-col items-center text-center"
           >
             <img 
-              src="/attached_assets/C3D93148-029D-42F8-932C-100E54E54328_1766964094516.png" 
+              src={heroImage} 
               alt="NaturPrime" 
               className="w-full max-w-[500px] md:max-w-[600px] h-auto mb-4"
             />

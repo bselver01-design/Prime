@@ -173,12 +173,16 @@ export default function ProductDetail() {
             <div className="border border-white/10 bg-black/[.18] rounded-3xl shadow-2xl overflow-hidden">
               {/* Gallery */}
               <div className="p-4">
-                <div className="h-[320px] md:h-[420px] rounded-3xl border border-white/10 relative overflow-hidden bg-black/20">
+                <div className="h-[320px] md:h-[420px] rounded-3xl border border-white/10 relative overflow-hidden bg-black/30">
                   {product.image && !product.image.startsWith('gradient') ? (
                     <img 
                       src={product.image} 
                       alt={product.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain p-4"
+                      style={{
+                        maskImage: 'radial-gradient(ellipse 85% 80% at 50% 50%, black 50%, transparent 80%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse 85% 80% at 50% 50%, black 50%, transparent 80%)',
+                      }}
                     />
                   ) : (
                     <div 

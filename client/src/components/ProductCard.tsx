@@ -15,12 +15,16 @@ export function ProductCard({ product }: ProductCardProps) {
       data-testid={`product-card-${product.id}`}
     >
       {/* Product Image */}
-      <div className="h-[140px] relative border-b border-white/10 overflow-hidden bg-black/20">
+      <div className="h-[160px] relative border-b border-white/10 overflow-hidden bg-black/30">
         {product.image && !product.image.startsWith('gradient') ? (
           <img 
             src={product.image} 
             alt={product.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
+            style={{
+              maskImage: 'radial-gradient(ellipse 90% 85% at 50% 50%, black 50%, transparent 85%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 90% 85% at 50% 50%, black 50%, transparent 85%)',
+            }}
           />
         ) : (
           <div 

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus } from "lucide-react";
-import type { Product } from "@shared/schema";
+import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus, Star, Send } from "lucide-react";
+import type { Product, Review } from "@shared/schema";
+import { queryClient, apiRequest } from "@/lib/queryClient";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -12,10 +13,37 @@ export default function ProductDetail() {
   const [cartCount, setCartCount] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState({ title: "", desc: "" });
+  const [reviewName, setReviewName] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
 
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: ["/api/products", id],
   });
+
+  const { data: reviews = [], isLoading: reviewsLoading } = useQuery<Review[]>({
+    queryKey: ["/api/products", id, "reviews"],
+    queryFn: () => fetch(`/api/products/${id}/reviews`).then(r => r.json()),
+  });
+
+  const createReviewMutation = useMutation({
+    mutationFn: async (data: { name: string; content: string; rating: number }) => {
+      return apiRequest("POST", `/api/products/${id}/reviews`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/products", id, "reviews"] });
+      setReviewName("");
+      setReviewContent("");
+      setReviewRating(5);
+      showToastMessage("Yorum eklendi", "Yorumunuz icin tesekkurler!");
+    },
+  });
+
+  const handleSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reviewName.trim() || !reviewContent.trim()) return;
+    createReviewMutation.mutate({ name: reviewName, content: reviewContent, rating: reviewRating });
+  };
 
   useEffect(() => {
     const count = parseInt(localStorage.getItem("np_cart_count") || "0", 10);
@@ -337,6 +365,95 @@ export default function ProductDetail() {
                       <Instagram className="w-4 h-4" />
                       @naturprime
                     </a>
+                  </div>
+                </div>
+
+                {/* Reviews Section */}
+                <div className="border border-white/10 bg-black/15 rounded-2xl p-[14px] mt-3">
+                  <h3 className="text-xs uppercase tracking-wide font-black text-white/85 mb-3">
+                    Yorumlar ({reviews.length})
+                  </h3>
+
+                  {/* Review Form */}
+                  <form onSubmit={handleSubmitReview} className="mb-4">
+                    <input
+                      type="text"
+                      placeholder="Adiniz"
+                      value={reviewName}
+                      onChange={(e) => setReviewName(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] text-white placeholder:text-white/40 text-sm mb-2 outline-none focus:border-white/20"
+                      data-testid="input-review-name"
+                    />
+                    <textarea
+                      placeholder="Yorumunuz..."
+                      value={reviewContent}
+                      onChange={(e) => setReviewContent(e.target.value)}
+                      rows={3}
+                      className="w-full px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] text-white placeholder:text-white/40 text-sm mb-2 outline-none focus:border-white/20 resize-none"
+                      data-testid="input-review-content"
+                    />
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setReviewRating(star)}
+                            className="p-1"
+                            data-testid={`button-star-${star}`}
+                          >
+                            <Star 
+                              className={`w-4 h-4 ${star <= reviewRating ? "fill-[#39d353] text-[#39d353]" : "text-white/30"}`} 
+                            />
+                          </button>
+                        ))}
+                      </div>
+                      <Button
+                        type="submit"
+                        size="sm"
+                        disabled={createReviewMutation.isPending}
+                        className="bg-[#39d353] text-black font-black hover:bg-[#39d353]/90"
+                        data-testid="button-submit-review"
+                      >
+                        <Send className="w-3 h-3 mr-1.5" />
+                        Gonder
+                      </Button>
+                    </div>
+                  </form>
+
+                  {/* Reviews List */}
+                  <div className="space-y-3 max-h-[300px] overflow-y-auto">
+                    {reviewsLoading ? (
+                      <p className="text-white/50 text-sm">Yukleniyor...</p>
+                    ) : reviews.length === 0 ? (
+                      <p className="text-white/50 text-sm">Henuz yorum yapilmamis. Ilk yorumu siz yapin!</p>
+                    ) : (
+                      reviews.map((review) => (
+                        <div 
+                          key={review.id} 
+                          className="border border-white/10 bg-white/[.04] rounded-[14px] p-3"
+                          data-testid={`review-${review.id}`}
+                        >
+                          <div className="flex items-center justify-between gap-2 mb-1.5">
+                            <span className="font-black text-sm text-white/90">{review.name}</span>
+                            <div className="flex gap-0.5">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <Star 
+                                  key={star}
+                                  className={`w-3 h-3 ${star <= (review.rating || 5) ? "fill-[#39d353] text-[#39d353]" : "text-white/30"}`} 
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="text-white/70 text-sm leading-relaxed">{review.content}</p>
+                          {review.tag && (
+                            <span className="inline-block mt-2 text-[10px] px-2 py-1 rounded-full border border-white/10 bg-white/5 text-white/60 font-bold uppercase tracking-wide">
+                              {review.tag}
+                            </span>
+                          )}
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               </div>

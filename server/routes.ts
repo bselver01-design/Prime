@@ -32,6 +32,19 @@ export async function registerRoutes(
     res.json(reviews);
   });
 
+  app.get('/api/products/:productId/reviews', async (req, res) => {
+    const reviews = await storage.getReviewsByProduct(Number(req.params.productId));
+    res.json(reviews);
+  });
+
+  app.post('/api/products/:productId/reviews', async (req, res) => {
+    const review = await storage.createReview({
+      ...req.body,
+      productId: Number(req.params.productId),
+    });
+    res.status(201).json(review);
+  });
+
   // FAQs
   app.get(api.faqs.list.path, async (req, res) => {
     const faqs = await storage.getFaqs();

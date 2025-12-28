@@ -40,6 +40,21 @@ export const api = {
         200: z.array(z.custom<typeof reviews.$inferSelect>()),
       },
     },
+    byProduct: {
+      method: 'GET' as const,
+      path: '/api/products/:productId/reviews',
+      responses: {
+        200: z.array(z.custom<typeof reviews.$inferSelect>()),
+      },
+    },
+    create: {
+      method: 'POST' as const,
+      path: '/api/products/:productId/reviews',
+      body: insertReviewSchema,
+      responses: {
+        201: z.custom<typeof reviews.$inferSelect>(),
+      },
+    },
   },
   faqs: {
     list: {

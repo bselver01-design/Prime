@@ -8,6 +8,7 @@ export interface IStorage {
   createProduct(product: InsertProduct): Promise<Product>;
   
   getReviews(): Promise<Review[]>;
+  getReviewsByProduct(productId: number): Promise<Review[]>;
   createReview(review: InsertReview): Promise<Review>;
   
   getFaqs(): Promise<Faq[]>;
@@ -31,6 +32,10 @@ export class DatabaseStorage implements IStorage {
 
   async getReviews(): Promise<Review[]> {
     return await db.select().from(reviews);
+  }
+
+  async getReviewsByProduct(productId: number): Promise<Review[]> {
+    return await db.select().from(reviews).where(eq(reviews.productId, productId));
   }
 
   async createReview(insertReview: InsertReview): Promise<Review> {

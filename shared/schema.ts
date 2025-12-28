@@ -18,6 +18,7 @@ export const products = pgTable("products", {
 
 export const reviews = pgTable("reviews", {
   id: serial("id").primaryKey(),
+  productId: integer("product_id").notNull(),
   name: text("name").notNull(),
   tag: text("tag").default("ONAYLI ALICI"),
   rating: integer("rating").default(5),

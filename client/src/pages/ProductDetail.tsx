@@ -39,6 +39,14 @@ export default function ProductDetail() {
     showToastMessage("Sepete eklendi", `${product?.title} • Adet: ${qty}`);
   };
 
+  const handleBuyNow = () => {
+    if (!product) return;
+    const newCount = cartCount + qty;
+    localStorage.setItem("np_cart_count", String(newCount));
+    setCartCount(newCount);
+    window.location.href = "/checkout";
+  };
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("tr-TR", {
       style: "currency",
@@ -228,6 +236,7 @@ export default function ProductDetail() {
                       Sepete Ekle
                     </Button>
                     <Button 
+                      onClick={handleBuyNow}
                       className="flex-1 min-w-[140px] py-[14px] border-white/20 bg-gradient-to-b from-white/15 to-white/[.06] text-white font-black"
                       data-testid="button-buy-now"
                     >

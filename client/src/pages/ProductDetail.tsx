@@ -110,16 +110,19 @@ export default function ProductDetail() {
             </Link>
           </nav>
 
-          <Button 
-            variant="outline" 
-            className="border-white/15 bg-white/[.06] text-white rounded-[14px] font-black gap-2.5"
-            data-testid="button-cart-header"
-          >
-            Sepet
-            <span className="text-xs px-2 py-0.5 rounded-full border border-white/[.18] bg-black/25 text-white/85 font-black">
-              {cartCount}
-            </span>
-          </Button>
+          <Link href="/cart">
+            <Button 
+              variant="outline" 
+              className="border-white/15 bg-white/[.06] text-white rounded-[14px] font-black gap-2.5"
+              data-testid="button-cart-header"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              Sepet
+              <span className="text-xs px-2 py-0.5 rounded-full border border-white/[.18] bg-black/25 text-white/85 font-black">
+                {cartCount}
+              </span>
+            </Button>
+          </Link>
         </div>
       </header>
 

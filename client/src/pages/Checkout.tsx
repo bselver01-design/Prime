@@ -193,14 +193,14 @@ export default function Checkout() {
 
                 <div className="mt-3.5 flex gap-2.5 flex-wrap">
                   <a 
-                    href="https://buy.moonpay.com?currencyCode=usdt_trc20&walletAddress=TYbLY52BxS5X82zUDzmnUq3jsdA1WuhQtQ"
+                    href="https://buy.moonpay.com?currencyCode=usdt_bsc&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-5 py-3 rounded-[14px] font-black text-white border border-purple-500/50"
-                    style={{ background: 'linear-gradient(180deg, rgba(124,58,237,.6), rgba(124,58,237,.3))' }}
+                    className="inline-flex items-center justify-center px-5 py-3 rounded-[14px] font-black text-white border border-[#00d084]/50"
+                    style={{ background: 'linear-gradient(180deg, rgba(0,208,132,.6), rgba(0,208,132,.3))' }}
                     data-testid="button-moonpay"
                   >
-                    Kredi Karti ile Ode
+                    Kredi Karti ile Guvenli Ode (USDT)
                   </a>
                   <Link href="/cart">
                     <Button 
@@ -280,7 +280,7 @@ export default function Checkout() {
               </div>
 
               <p className="mt-2.5 text-white/45 text-xs leading-relaxed">
-                Siparis butonuna basinca WhatsApp uzerinden siparis bilgileri iletilir.
+                Kredi karti ile guvenli odeme MoonPay uzerinden gerceklestirilir.
               </p>
             </div>
           </aside>

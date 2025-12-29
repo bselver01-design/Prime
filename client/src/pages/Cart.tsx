@@ -102,8 +102,7 @@ export default function Cart() {
             </Link>
             <Link href="/checkout">
               <Button 
-                className="border border-[#c9a962]/38 font-black rounded-[14px]"
-                style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
+                className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-black rounded-[14px]"
                 data-testid="button-checkout-header"
               >
                 Odemeye Gec
@@ -269,7 +268,7 @@ export default function Cart() {
                 </Link>
                 <Link href="/checkout" className="w-full">
                   <Button 
-                    className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white border-green-600 font-black h-11"
                     data-testid="button-checkout"
                   >
                     Odemeye Gec

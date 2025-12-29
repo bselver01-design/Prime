@@ -201,13 +201,13 @@ export default function Checkout() {
                         return;
                       }
                       setError("");
-                      window.open("https://buy.moonpay.com/?apiKey=pk_live_123&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&currencyCode=usdt", "_blank");
+                      window.open("https://buy.moonpay.com?currencyCode=usdt_bsc&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3", "_blank");
                     }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
-                    style={{ background: '#7D00FF' }}
+                    style={{ background: '#00d084' }}
                     data-testid="button-moonpay"
                   >
-                    MoonPay ile Ode
+                    Kredi Karti ile Guvenli Ode (USDT)
                   </button>
 
                   <button

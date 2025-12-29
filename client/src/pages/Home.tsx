@@ -128,6 +128,8 @@ export default function Home() {
                 src={heroImage} 
                 alt="NaturPrime" 
                 className="w-full h-auto"
+                loading="eager"
+                decoding="async"
                 style={{
                   maskImage: 'radial-gradient(ellipse 85% 80% at 50% 45%, black 40%, transparent 75%)',
                   WebkitMaskImage: 'radial-gradient(ellipse 85% 80% at 50% 45%, black 40%, transparent 75%)',

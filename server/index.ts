@@ -3,12 +3,19 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 import path from "path";
+import compression from "compression";
 
 const app = express();
 const httpServer = createServer(app);
 
-// Serve attached_assets folder
-app.use('/attached_assets', express.static(path.resolve(process.cwd(), 'attached_assets')));
+// Enable gzip compression
+app.use(compression());
+
+// Serve attached_assets folder with caching
+app.use('/attached_assets', express.static(path.resolve(process.cwd(), 'attached_assets'), {
+  maxAge: '7d',
+  etag: true
+}));
 
 declare module "http" {
   interface IncomingMessage {

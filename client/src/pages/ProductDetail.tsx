@@ -219,6 +219,8 @@ export default function ProductDetail() {
                       src={product.image} 
                       alt={product.title}
                       className="w-full h-full object-contain p-4"
+                      loading="eager"
+                      decoding="async"
                       style={{
                         maskImage: 'radial-gradient(ellipse 85% 80% at 50% 50%, black 50%, transparent 80%)',
                         WebkitMaskImage: 'radial-gradient(ellipse 85% 80% at 50% 50%, black 50%, transparent 80%)',

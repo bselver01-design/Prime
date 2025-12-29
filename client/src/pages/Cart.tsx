@@ -170,6 +170,8 @@ export default function Cart() {
                             src={item.image} 
                             alt={item.title}
                             className="w-full h-full object-contain"
+                            loading="lazy"
+                            decoding="async"
                           />
                         )}
                       </div>

@@ -192,18 +192,16 @@ export default function Checkout() {
                 )}
 
                 {/* Payment Options */}
-                <div className="mt-4 p-4 rounded-2xl border border-white/10" style={{ background: 'rgba(30,41,59,.6)' }}>
-                  <h3 className="text-center font-black text-white/90 mb-4">Guvenli Odeme Secenekleri</h3>
-                  
+                <div className="mt-4 flex flex-col gap-2">
                   <a 
                     href="https://changenow.io/tr/fiat-currencies?from=usd&to=usdtbsc&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center px-5 py-3.5 rounded-[12px] font-black text-black mb-3"
+                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-black text-sm"
                     style={{ background: '#00d084' }}
                     data-testid="button-changenow"
                   >
-                    Kredi Karti ile Hizli Ode
+                    Kredi Karti ile Ode
                   </a>
 
                   <button
@@ -213,29 +211,18 @@ export default function Checkout() {
                       const message = `Merhaba, siparis vermek istiyorum.\n\nAd Soyad: ${formData.fullName}\nTelefon: ${formData.phone}\nE-posta: ${formData.email}\nIl/Ilce: ${formData.city}\nAdres: ${formData.address}\n\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
                       window.open(`https://wa.me/905345872637?text=${encodeURIComponent(message)}`, '_blank');
                     }}
-                    className="block w-full text-center px-5 py-3.5 rounded-[12px] font-black text-white mb-3 border border-[#25D366]/50"
-                    style={{ background: 'linear-gradient(180deg, rgba(37,211,102,.5), rgba(37,211,102,.25))' }}
+                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
+                    style={{ background: '#25D366' }}
                     data-testid="button-whatsapp"
                   >
                     WhatsApp ile Siparis Ver
                   </button>
 
-                  <div className="p-3 rounded-[12px] mt-3" style={{ background: 'rgba(51,65,85,.6)' }}>
-                    <p className="text-xs text-white/60 mb-2 text-center">Kripto Cuzdanindan Gonder (BEP20):</p>
-                    <code className="block text-[11px] text-[#38bdf8] text-center break-all">0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3</code>
-                  </div>
-
-                  <p className="text-[11px] text-white/50 mt-3 text-center leading-relaxed">
-                    * ChangeNOW uzerinden kayit olmadan kartla alim yapabilirsiniz. Sorun yasarsaniz lutfen bizimle iletisime gecin.
-                  </p>
-                </div>
-
-                <div className="mt-3 flex justify-center">
-                  <Link href="/cart">
+                  <Link href="/cart" className="block">
                     <Button 
                       type="button"
                       variant="outline" 
-                      className="border-white/16 bg-white/6 text-white font-black rounded-[14px]"
+                      className="w-full border-white/16 bg-white/6 text-white font-black rounded-[12px]"
                     >
                       Geri
                     </Button>

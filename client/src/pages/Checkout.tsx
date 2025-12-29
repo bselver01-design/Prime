@@ -194,14 +194,14 @@ export default function Checkout() {
                 {/* Payment Options */}
                 <div className="mt-4 flex flex-col gap-2">
                   <a 
-                    href="https://changenow.io/tr/fiat-currencies?from=usd&to=usdtbsc&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
+                    href="https://fixedfloat.com/?to=USDTBSC&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-black text-sm"
-                    style={{ background: '#00d084' }}
-                    data-testid="button-changenow"
+                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
+                    style={{ background: '#3d59f2' }}
+                    data-testid="button-fixedfloat"
                   >
-                    Kredi Karti ile Ode
+                    Kripto ile Hizli Ode
                   </a>
 
                   <button

@@ -1,0 +1,430 @@
+<!-- cart.html | NaturPrime - Sepet
+     - localStorage: np_cart_items_v1 (product.html ile uyumlu)
+     - Özellikler: ürün listesi, adet +/-, sil, toplam, "Ödemeye Geç"
+-->
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NaturPrime | Sepet</title>
+  <meta name="theme-color" content="#0b0c10" />
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --bg2:#0f1118;
+      --text:#e8ebf2;
+      --muted:rgba(232,235,242,.70);
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --r:16px;
+      --r2:24px;
+      --max:1140px;
+
+      --gold:#c8a86a;
+      --gold2:#b28a4e;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1100px 600px at 18% 18%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      letter-spacing:.2px;
+    }
+    a{color:inherit; text-decoration:none}
+    button,input{font:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* Topbar */
+    .topbar{
+      background:rgba(0,0,0,.25);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(10px);
+      position:sticky; top:0; z-index:50;
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      min-height:68px; gap:14px; padding:10px 0; flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.9px; text-transform:uppercase;
+      user-select:none;
+    }
+    .mark{
+      width:36px; height:36px; border-radius:12px;
+      background:
+        radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      flex:0 0 auto;
+    }
+    .pill{
+      font-size:12px; padding:2px 8px; border-radius:999px;
+      border:1px solid rgba(200,168,106,.35);
+      background:rgba(200,168,106,.10);
+      color:rgba(232,235,242,.90);
+      font-weight:900;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn:active{transform: translateY(0px)}
+    .btn.primary{
+      border-color: rgba(200,168,106,.38);
+      background: linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05));
+    }
+    .btn.strong{
+      background: rgba(255,255,255,.92);
+      color: #0b0c10;
+      border-color: rgba(255,255,255,.92);
+    }
+
+    /* Page */
+    .pagehead{padding:18px 0 10px}
+    .crumb{
+      color:rgba(232,235,242,.62);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      font-size:11px;
+    }
+    h1{
+      margin:8px 0 0;
+      font-size:26px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+    .hint{margin:8px 0 0; color:var(--muted); font-weight:700; font-size:13px}
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:14px;
+      padding:12px 0 28px;
+      align-items:start;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 260px at 35% 20%, rgba(200,168,106,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.12)),
+        rgba(0,0,0,.18);
+      border-radius: var(--r2);
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .card-head{
+      padding:16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .card-head strong{
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:12px;
+      font-weight:950;
+      color:rgba(232,235,242,.86);
+    }
+    .card-body{padding:16px}
+
+    /* Items */
+    .item{
+      display:grid;
+      grid-template-columns: 70px 1fr auto;
+      gap:12px;
+      padding:14px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      align-items:center;
+    }
+    .thumb{
+      width:70px; height:70px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(120px 80px at 35% 25%, rgba(200,168,106,.22), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    .iname{
+      margin:0;
+      font-weight:950;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+    .iprice{
+      margin:6px 0 0;
+      color:var(--gold);
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .controls{
+      display:flex; flex-direction:column; gap:10px; align-items:flex-end;
+    }
+    .qty{
+      display:flex; align-items:center; justify-content:space-between;
+      width:120px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .qty button{
+      width:38px; height:40px;
+      background:transparent; border:none;
+      color:rgba(232,235,242,.85);
+      font-weight:950;
+      cursor:pointer;
+    }
+    .qty span{
+      min-width:22px;
+      text-align:center;
+      font-weight:950;
+    }
+    .remove{
+      border:1px solid rgba(255,255,255,.14);
+      background:transparent;
+      color:rgba(232,235,242,.85);
+      padding:8px 10px;
+      border-radius:12px;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .remove:hover{background:rgba(255,255,255,.05)}
+
+    /* Summary */
+    .row{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:10px 0;
+      color:rgba(232,235,242,.78);
+      font-weight:900;
+    }
+    .row b{color:rgba(232,235,242,.92)}
+    .total{
+      font-size:18px;
+      color:rgba(232,235,242,.92);
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .actions{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .tiny{margin-top:10px; color:rgba(232,235,242,.45); font-size:12px; line-height:1.45}
+
+    .empty{
+      padding:18px;
+      color:rgba(232,235,242,.70);
+      font-weight:900;
+      line-height:1.6;
+    }
+
+    @media (max-width: 980px){
+      .layout{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="NaturPrime Ana Sayfa">
+        <span class="mark" aria-hidden="true"></span>
+        <span>NaturPrime</span>
+        <span class="pill">Sepet</span>
+      </a>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="catalog.html">← Ürünlere Dön</a>
+        <button class="btn primary" id="goCheckout" type="button">Ödemeye Geç</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="pagehead">
+      <div class="container">
+        <div class="crumb">NaturPrime / Sepet</div>
+        <h1>Sepet</h1>
+        <p class="hint">Ürün adedi ve toplam tutar burada.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container layout">
+        <!-- Items -->
+        <div class="card">
+          <div class="card-head">
+            <strong>Ürünler</strong>
+            <span class="pill" id="cartCount">0</span>
+          </div>
+          <div class="card-body" id="items"></div>
+        </div>
+
+        <!-- Summary -->
+        <aside class="card">
+          <div class="card-head">
+            <strong>Özet</strong>
+            <button class="btn" id="clearCart" type="button" style="padding:9px 12px">Temizle</button>
+          </div>
+          <div class="card-body">
+            <div class="row"><span>Ara Toplam</span><b id="subtotal">₺0</b></div>
+            <div class="row"><span>İndirim</span><b id="discount">₺0</b></div>
+            <div class="row"><span>Kargo</span><b id="shipping">₺0</b></div>
+            <div class="row" style="border-top:1px solid rgba(255,255,255,.10); margin-top:8px; padding-top:14px;">
+              <span class="total">Toplam</span>
+              <b class="total" id="total">₺0</b>
+            </div>
+
+            <div class="actions">
+              <button class="btn strong" id="checkoutBtn" type="button">Ödemeye Geç</button>
+              <a class="btn" href="catalog.html">Alışverişe Devam</a>
+            </div>
+
+            <div class="tiny">
+              *Proje amaçlı demo sepet. Ürünler cihazda (localStorage) tutulur.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    'use strict';
+
+    // ===== Storage =====
+    const LS_CART_ITEMS = "np_cart_items_v1";
+
+    function getCart(){
+      try{
+        const raw = localStorage.getItem(LS_CART_ITEMS);
+        return raw ? JSON.parse(raw) : [];
+      }catch{ return []; }
+    }
+    function setCart(items){
+      localStorage.setItem(LS_CART_ITEMS, JSON.stringify(items));
+    }
+
+    // ===== Helpers =====
+    const $ = (s) => document.querySelector(s);
+
+    function moneyTRY(n){
+      return new Intl.NumberFormat('tr-TR', { style:'currency', currency:'TRY', maximumFractionDigits:0 }).format(n || 0);
+    }
+
+    function calc(){
+      const items = getCart();
+      const count = items.reduce((a,it)=> a + (it.qty||0), 0);
+      const subtotal = items.reduce((a,it)=> a + (Number(it.price)||0) * (it.qty||0), 0);
+
+      // Demo: kargo 0, indirim 0 (istersen sonra kurgu ekleriz)
+      const discount = 0;
+      const shipping = 0;
+      const total = Math.max(0, subtotal - discount + shipping);
+
+      $("#cartCount").textContent = count;
+      $("#subtotal").textContent = moneyTRY(subtotal);
+      $("#discount").textContent = moneyTRY(discount);
+      $("#shipping").textContent = moneyTRY(shipping);
+      $("#total").textContent = moneyTRY(total);
+
+      return { items, count, subtotal, total };
+    }
+
+    function render(){
+      const { items } = calc();
+      const wrap = $("#items");
+      wrap.innerHTML = "";
+
+      if(items.length === 0){
+        wrap.innerHTML = `
+          <div class="empty">
+            Sepet boş.<br>
+            Kataloğa gidip ürün ekleyebilirsin.
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(it => {
+        const el = document.createElement("div");
+        el.className = "item";
+        el.innerHTML = `
+          <div class="thumb" aria-hidden="true"></div>
+
+          <div>
+            <p class="iname">${it.title || "ÜRÜN"}</p>
+            <p class="iprice">${moneyTRY(it.price)}</p>
+          </div>
+
+          <div class="controls">
+            <div class="qty">
+              <button type="button" data-dec="${it.id}">−</button>
+              <span>${it.qty || 1}</span>
+              <button type="button" data-inc="${it.id}">+</button>
+            </div>
+            <button class="remove" type="button" data-remove="${it.id}">Sil</button>
+          </div>
+        `;
+        wrap.appendChild(el);
+      });
+    }
+
+    function changeQty(id, delta){
+      const items = getCart();
+      const idx = items.findIndex(x => x.id === id);
+      if(idx < 0) return;
+
+      const next = (items[idx].qty || 1) + delta;
+      if(next <= 0){
+        items.splice(idx, 1);
+      }else{
+        items[idx].qty = Math.min(99, next);
+      }
+      setCart(items);
+      render();
+    }
+
+    function removeItem(id){
+      const items = getCart().filter(x => x.id !== id);
+      setCart(items);
+      render();
+    }
+
+    // Events
+    document.addEventListener("click", (e) => {
+      const inc = e.target.closest("[data-inc]");
+      if(inc){ changeQty(inc.getAttribute("data-inc"), +1); return; }
+
+      const dec = e.target.closest("[data-dec]");
+      if(dec){ changeQty(dec.getAttribute("data-dec"), -1); return; }
+
+      const rem = e.target.closest("[data-remove]");
+      if(rem){ removeItem(rem.getAttribute("data-remove")); return; }
+    });
+
+    $("#clearCart").addEventListener("click", () => {
+      localStorage.removeItem(LS_CART_ITEMS);
+      render();
+    });
+
+    function goCheckout(){
+      // checkout.html sonraki dosyada gelecek; şimdiden

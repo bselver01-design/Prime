@@ -256,20 +256,20 @@ export default function Cart() {
               </div>
 
               <div className="grid gap-2.5 mt-2.5">
-                <Link href="/checkout" className="w-full">
-                  <Button 
-                    className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
-                    data-testid="button-checkout"
-                  >
-                    Odemeye Gec
-                  </Button>
-                </Link>
                 <Link href="/">
                   <Button 
                     variant="outline" 
                     className="w-full border-white/16 bg-white/6 text-white font-black rounded-[14px]"
                   >
                     Alisverise Devam
+                  </Button>
+                </Link>
+                <Link href="/checkout" className="w-full">
+                  <Button 
+                    className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
+                    data-testid="button-checkout"
+                  >
+                    Odemeye Gec
                   </Button>
                 </Link>
               </div>

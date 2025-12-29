@@ -363,7 +363,7 @@ export default function ProductDetail() {
                       </div>
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Net Miktar</b>
-                        <span className="text-white/70 font-bold text-[13px]">60 kapsul</span>
+                        <span className="text-white/70 font-bold text-[13px]">100 tablet</span>
                       </div>
                     </div>
                   )}

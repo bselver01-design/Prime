@@ -201,13 +201,13 @@ export default function Checkout() {
                         return;
                       }
                       setError("");
-                      window.open(`https://buy.moonpay.com?currencyCode=usdt_bsc&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&baseCurrencyAmount=${Math.round(total)}&baseCurrencyCode=try`, "_blank");
+                      window.open(`https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=${Math.round(total)}&fiat_currency=TRY`, "_blank");
                     }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
-                    style={{ background: '#00d084' }}
-                    data-testid="button-moonpay"
+                    style={{ background: '#4e57ff' }}
+                    data-testid="button-wert"
                   >
-                    Kredi Karti ile Guvenli Ode (USDT)
+                    Kredi Karti ile Guvenli Ode
                   </button>
 
                   <button

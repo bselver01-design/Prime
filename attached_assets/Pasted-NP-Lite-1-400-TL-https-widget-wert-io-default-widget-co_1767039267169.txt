@@ -1,0 +1,27 @@
+NP Lite (1.400 TL):
+https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=1400&fiat_currency=TRY
+• NP Prime (2.250 TL):
+https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=2250&fiat_currency=TRY
+• NP Prime (Premium) (2.500 TL):
+https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=2500&fiat_currency=TRY
+
+
+<div style="background: #121212; color: white; padding: 20px; border-radius: 15px; text-align: center; font-family: sans-serif; max-width: 450px; margin: auto;">
+    <h3 style="color: #4e57ff;">Hızlı Ödeme (Wert.io)</h3>
+    <p style="font-size: 13px; color: #888;">Kartla ödeme yapmak için paketinizi seçin:</p>
+
+    <a href="https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=1400&fiat_currency=TRY" 
+       target="_blank" style="display: block; background: #2a2a2a; color: white; padding: 12px; margin: 10px 0; border-radius: 8px; text-decoration: none; font-weight: bold; border: 1px solid #444;">
+       NP Lite - 1.400 TL
+    </a>
+
+    <a href="https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=2250&fiat_currency=TRY" 
+       target="_blank" style="display: block; background: #4e57ff; color: white; padding: 12px; margin: 10px 0; border-radius: 8px; text-decoration: none; font-weight: bold;">
+       NP Prime - 2.250 TL
+    </a>
+
+    <a href="https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=2500&fiat_currency=TRY" 
+       target="_blank" style="display: block; background: #2a2a2a; color: white; padding: 12px; margin: 10px 0; border-radius: 8px; text-decoration: none; font-weight: bold; border: 1px solid #444;">
+       NP Prime (Premium) - 2.500 TL
+    </a>
+</div>

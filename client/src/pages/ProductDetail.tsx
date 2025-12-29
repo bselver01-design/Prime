@@ -352,7 +352,7 @@ export default function ProductDetail() {
 
                 <div className="mt-3 border border-white/10 bg-black/15 rounded-2xl p-[14px] text-white/70 text-sm leading-relaxed">
                   {activeTab === "specs" && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-2">
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Icerik</b>
                         <span className="text-white/70 font-bold text-[13px]">Ozel formul</span>
@@ -364,10 +364,6 @@ export default function ProductDetail() {
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Net Miktar</b>
                         <span className="text-white/70 font-bold text-[13px]">60 kapsul</span>
-                      </div>
-                      <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
-                        <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Uyari</b>
-                        <span className="text-white/70 font-bold text-[13px]">18 yas ustu</span>
                       </div>
                     </div>
                   )}

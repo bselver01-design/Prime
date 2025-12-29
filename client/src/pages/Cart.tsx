@@ -256,13 +256,14 @@ export default function Cart() {
               </div>
 
               <div className="grid gap-2.5 mt-2.5">
-                <Button 
-                  className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
-                  onClick={() => window.open('https://wa.me/905063373267', '_blank')}
-                  data-testid="button-checkout"
-                >
-                  Odemeye Gec
-                </Button>
+                <Link href="/checkout" className="w-full">
+                  <Button 
+                    className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
+                    data-testid="button-checkout"
+                  >
+                    Odemeye Gec
+                  </Button>
+                </Link>
                 <Link href="/">
                   <Button 
                     variant="outline" 

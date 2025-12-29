@@ -1,0 +1,525 @@
+<!-- checkout.html | NaturPrime - One Page Checkout (PROJE)
+     - localStorage sepet anahtarı: np_cart_items_v1 (product/cart ile uyumlu)
+     - Form doğrulama + özet + siparişi tamamla -> success.html
+-->
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NaturPrime | Ödeme</title>
+  <meta name="theme-color" content="#0b0c10" />
+  <style>
+    :root{
+      --bg:#0b0c10; --bg2:#0f1118;
+      --text:#e8ebf2; --muted:rgba(232,235,242,.70);
+      --line:rgba(255,255,255,.10);
+      --r:16px; --r2:24px; --max:1140px;
+      --gold:#c8a86a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1100px 600px at 18% 18%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      letter-spacing:.2px;
+      min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* Topbar */
+    .topbar{
+      background:rgba(0,0,0,.25);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(10px);
+      position:sticky; top:0; z-index:50;
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      min-height:68px; gap:14px; padding:10px 0; flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.9px; text-transform:uppercase;
+      user-select:none;
+    }
+    .mark{
+      width:36px; height:36px; border-radius:12px;
+      background:
+        radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      flex:0 0 auto;
+    }
+    .pill{
+      font-size:12px; padding:2px 8px; border-radius:999px;
+      border:1px solid rgba(200,168,106,.35);
+      background:rgba(200,168,106,.10);
+      color:rgba(232,235,242,.90);
+      font-weight:900;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn:active{transform: translateY(0px)}
+    .btn.primary{
+      border-color: rgba(200,168,106,.38);
+      background: linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05));
+    }
+    .btn.strong{
+      background: rgba(255,255,255,.92);
+      color: #0b0c10;
+      border-color: rgba(255,255,255,.92);
+    }
+
+    /* Page */
+    .pagehead{padding:18px 0 10px}
+    .crumb{
+      color:rgba(232,235,242,.62);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      font-size:11px;
+    }
+    h1{
+      margin:8px 0 0;
+      font-size:26px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+    .hint{margin:8px 0 0; color:var(--muted); font-weight:700; font-size:13px}
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:14px;
+      padding:12px 0 28px;
+      align-items:start;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 260px at 35% 20%, rgba(200,168,106,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.12)),
+        rgba(0,0,0,.18);
+      border-radius: var(--r2);
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .card-head{
+      padding:16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .card-head strong{
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:12px;
+      font-weight:950;
+      color:rgba(232,235,242,.86);
+    }
+    .card-body{padding:16px}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .field{display:flex; flex-direction:column; gap:6px}
+    label{
+      font-size:12px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      color:rgba(232,235,242,.78);
+      font-weight:950;
+    }
+    input, select, textarea{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:inherit;
+      outline:none;
+    }
+    textarea{resize:vertical; min-height:92px}
+    input:focus,select:focus,textarea:focus{
+      border-color: rgba(200,168,106,.35);
+      box-shadow: 0 0 0 4px rgba(200,168,106,.10);
+    }
+    .note{
+      margin-top:10px;
+      color:rgba(232,235,242,.55);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    /* Summary */
+    .item{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-weight:900;
+    }
+    .item small{display:block; color:rgba(232,235,242,.60); font-weight:900; margin-top:4px}
+    .row{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:10px 0;
+      color:rgba(232,235,242,.78);
+      font-weight:900;
+    }
+    .row b{color:rgba(232,235,242,.92)}
+    .total{
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .trust{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .chip{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      color:rgba(232,235,242,.82);
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+    }
+    .error{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,120,120,.25);
+      background: rgba(255,120,120,.08);
+      color: rgba(255,200,200,.95);
+      font-weight:900;
+      display:none;
+      line-height:1.45;
+    }
+
+    @media (max-width: 980px){
+      .layout{grid-template-columns: 1fr}
+      .grid{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="NaturPrime Ana Sayfa">
+        <span class="mark" aria-hidden="true"></span>
+        <span>NaturPrime</span>
+        <span class="pill">Ödeme</span>
+      </a>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="cart.html">← Sepete Dön</a>
+        <a class="btn primary" href="catalog.html">Ürünler</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="pagehead">
+      <div class="container">
+        <div class="crumb">NaturPrime / Ödeme</div>
+        <h1>Tek Sayfa Ödeme</h1>
+        <p class="hint">Adres bilgisi + ödeme bilgisi + sipariş özeti.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container layout">
+        <!-- FORM -->
+        <div class="card">
+          <div class="card-head"><strong>Bilgiler</strong><span class="pill" id="cartCount">0</span></div>
+          <div class="card-body">
+            <form id="checkoutForm" novalidate>
+              <div class="grid">
+                <div class="field">
+                  <label>Ad Soyad</label>
+                  <input id="fullName" required placeholder="Örn: Kasım Bilgili" />
+                </div>
+                <div class="field">
+                  <label>Telefon</label>
+                  <input id="phone" required placeholder="05xx xxx xx xx" inputmode="tel" />
+                </div>
+              </div>
+
+              <div class="grid" style="margin-top:10px;">
+                <div class="field">
+                  <label>E-posta</label>
+                  <input id="email" required placeholder="ornek@mail.com" inputmode="email" />
+                </div>
+                <div class="field">
+                  <label>İl / İlçe</label>
+                  <input id="city" required placeholder="Örn: Ankara / Çankaya" />
+                </div>
+              </div>
+
+              <div class="field" style="margin-top:10px;">
+                <label>Adres</label>
+                <textarea id="address" required placeholder="Açık adres..."></textarea>
+              </div>
+
+              <div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+                <strong style="text-transform:uppercase; letter-spacing:.35px; font-size:12px; color:rgba(232,235,242,.86);">
+                  Ödeme Bilgisi (Demo)
+                </strong>
+                <span class="pill">Proje</span>
+              </div>
+
+              <div class="grid" style="margin-top:10px;">
+                <div class="field">
+                  <label>Kart Üzerindeki İsim</label>
+                  <input id="cardName" required placeholder="Örn: KASIM BILGILI" />
+                </div>
+                <div class="field">
+                  <label>Kart Numarası</label>
+                  <input id="cardNumber" required placeholder="0000 0000 0000 0000" inputmode="numeric" />
+                </div>
+              </div>
+
+              <div class="grid" style="margin-top:10px;">
+                <div class="field">
+                  <label>SKT (AA/YY)</label>
+                  <input id="cardExp" required placeholder="08/28" inputmode="numeric" />
+                </div>
+                <div class="field">
+                  <label>CVV</label>
+                  <input id="cardCvv" required placeholder="123" inputmode="numeric" />
+                </div>
+              </div>
+
+              <div class="error" id="errBox"></div>
+
+              <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn strong" type="submit" id="placeOrder">Siparişi Tamamla</button>
+                <a class="btn" href="cart.html">Geri</a>
+              </div>
+
+              <div class="note">
+                *Bu ödeme ekranı proje amaçlıdır. Gerçek ödeme işlemi yapılmaz.
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- SUMMARY -->
+        <aside class="card">
+          <div class="card-head"><strong>Sipariş Özeti</strong></div>
+          <div class="card-body">
+            <div id="summary"></div>
+
+            <div class="row"><span>Ara Toplam</span><b id="subtotal">₺0</b></div>
+            <div class="row"><span>İndirim</span><b id="discount">₺0</b></div>
+            <div class="row"><span>Kargo</span><b id="shipping">₺0</b></div>
+
+            <div class="row" style="border-top:1px solid rgba(255,255,255,.10); margin-top:8px; padding-top:14px;">
+              <span class="total">Toplam</span>
+              <b class="total" id="total">₺0</b>
+            </div>
+
+            <div class="trust" aria-label="Güven rozetleri">
+              <span class="chip">Güvenli Ödeme</span>
+              <span class="chip">SSL</span>
+              <span class="chip">Hızlı Destek</span>
+            </div>
+
+            <div class="note">
+              Ödeme butonuna basınca sipariş “başarılı” ekranına yönlendirilir ve sepet temizlenir.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    'use strict';
+
+    const LS_CART_ITEMS = "np_cart_items_v1";
+    const LS_LAST_ORDER = "np_last_order_v1";
+
+    const $ = (s) => document.querySelector(s);
+
+    function moneyTRY(n){
+      return new Intl.NumberFormat('tr-TR', { style:'currency', currency:'TRY', maximumFractionDigits:0 }).format(n || 0);
+    }
+
+    function getCart(){
+      try{
+        const raw = localStorage.getItem(LS_CART_ITEMS);
+        return raw ? JSON.parse(raw) : [];
+      }catch{ return []; }
+    }
+
+    function setCart(items){
+      localStorage.setItem(LS_CART_ITEMS, JSON.stringify(items));
+    }
+
+    function cartCount(items){
+      return items.reduce((a,it)=> a + (it.qty||0), 0);
+    }
+
+    function calc(items){
+      const subtotal = items.reduce((a,it)=> a + (Number(it.price)||0) * (it.qty||0), 0);
+      const discount = 0;
+      const shipping = 0;
+      const total = Math.max(0, subtotal - discount + shipping);
+      return { subtotal, discount, shipping, total };
+    }
+
+    function render(){
+      const items = getCart();
+      $("#cartCount").textContent = cartCount(items);
+
+      const sum = $("#summary");
+      sum.innerHTML = "";
+
+      if(items.length === 0){
+        sum.innerHTML = `<div style="opacity:.7; font-weight:900; line-height:1.6;">Sepet boş. Ödeme yapabilmek için sepete ürün ekleyin.</div>`;
+        const c = calc(items);
+        $("#subtotal").textContent = moneyTRY(c.subtotal);
+        $("#discount").textContent = moneyTRY(c.discount);
+        $("#shipping").textContent = moneyTRY(c.shipping);
+        $("#total").textContent = moneyTRY(c.total);
+        return;
+      }
+
+      items.forEach(it => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <div>
+            ${it.title || "ÜRÜN"}
+            <small>Adet: ${it.qty || 1}</small>
+          </div>
+          <div>${moneyTRY((Number(it.price)||0) * (it.qty||0))}</div>
+        `;
+        sum.appendChild(div);
+      });
+
+      const c = calc(items);
+      $("#subtotal").textContent = moneyTRY(c.subtotal);
+      $("#discount").textContent = moneyTRY(c.discount);
+      $("#shipping").textContent = moneyTRY(c.shipping);
+      $("#total").textContent = moneyTRY(c.total);
+    }
+
+    // Basic validators (demo)
+    function showError(msg){
+      const box = $("#errBox");
+      box.style.display = "block";
+      box.textContent = msg;
+    }
+    function clearError(){
+      const box = $("#errBox");
+      box.style.display = "none";
+      box.textContent = "";
+    }
+
+    function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||"").trim()); }
+    function digits(v){ return String(v||"").replace(/\D/g,""); }
+
+    $("#checkoutForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      clearError();
+
+      const items = getCart();
+      if(items.length === 0){
+        showError("Sepet boş. Lütfen önce sepete ürün ekleyin.");
+        return;
+      }
+
+      const fullName = $("#fullName").value.trim();
+      const phone = digits($("#phone").value);
+      const email = $("#email").value.trim();
+      const city = $("#city").value.trim();
+      const address = $("#address").value.trim();
+
+      const cardName = $("#cardName").value.trim();
+      const cardNumber = digits($("#cardNumber").value);
+      const cardExp = $("#cardExp").value.trim();
+      const cardCvv = digits($("#cardCvv").value);
+
+      if(!fullName || !phone || !email || !city || !address || !cardName || !cardNumber || !cardExp || !cardCvv){
+        showError("Lütfen tüm zorunlu alanları doldurun.");
+        return;
+      }
+      if(phone.length < 10){
+        showError("Telefon numarası geçersiz görünüyor.");
+        return;
+      }
+      if(!isEmail(email)){
+        showError("E-posta formatı geçersiz.");
+        return;
+      }
+      if(cardNumber.length < 12){
+        showError("Kart numarası geçersiz görünüyor.");
+        return;
+      }
+      if(cardCvv.length < 3){
+        showError("CVV geçersiz görünüyor.");
+        return;
+      }
+
+      // Save a demo order (no sensitive storage beyond demo)
+      const totals = calc(items);
+      const order = {
+        id: "NP-" + Math.random().toString(16).slice(2,10).toUpperCase(),
+        createdAt: new Date().toISOString(),
+        customer: { fullName, phone, email, city, address },
+        totals,
+        items: items.map(x => ({ id:x.id, title:x.title, price:x.price, qty:x.qty }))
+      };
+      localStorage.setItem(LS_LAST_ORDER, JSON.stringify(order));
+
+      // Clear cart, redirect success
+      setCart([]);
+      window.location.href = "success.html";
+    });
+
+    // Pretty input masks (light)
+    $("#cardNumber").addEventListener("input", (e) => {
+      const d = digits(e.target.value).slice(0,19);
+      e.target.value = d.replace(/(.{4})/g,"$1 ").trim();
+    });
+    $("#cardCvv").addEventListener("input", (e) => {
+      e.target.value = digits(e.target.value).slice(0,4);
+    });
+    $("#cardExp").addEventListener("input", (e) => {
+      let d = digits(e.target.value).slice(0,4);
+      if(d.length >= 3) d = d.slice(0,2) + "/" + d.slice(2);
+      e.target.value = d;
+    });
+    $("#phone").addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/[^\d\s]/g,"").slice(0,16);
+    });
+
+    render();
+  </script>
+</body>
+</html>

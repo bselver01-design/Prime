@@ -355,7 +355,7 @@ export default function ProductDetail() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-2">
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Icerik</b>
-                        <span className="text-white/70 font-bold text-[13px]">Ozel formul</span>
+                        <span className="text-white/70 font-bold text-[13px]">Anavar</span>
                       </div>
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Kullanim</b>

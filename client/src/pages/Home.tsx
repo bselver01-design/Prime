@@ -202,11 +202,11 @@ export default function Home() {
         {/* REVIEWS SECTION */}
         <section className="py-6">
           <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Musteri Yorumlari</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { name: "Emre K.", text: "2 haftadir kullaniyorum, gucumde gozle gorulur artis var. Yan etki yok, tavsiye ederim.", rating: 5 },
-              { name: "Burak T.", text: "Kargo cok hizli geldi, urun orijinal. Motivasyonum artti, antrenman performansim yukseldi.", rating: 5 },
-              { name: "Serkan A.", text: "Premium versiyonu denedim, sonuclar mukemmel. Gizli paketleme icin tesekkurler.", rating: 5 },
+              { name: "Emre K.", text: "2 haftadir kullaniyorum, henuz buyuk bir fark gormedim ama enerji seviyem artti. Bekliyorum.", rating: 3 },
+              { name: "Burak T.", text: "Kargo hizli geldi, urun orijinal gorunuyor. Kullanima yeni basladim, sonuclari bekleyecegim.", rating: 4 },
+              { name: "Serkan A.", text: "3. kutuyu bitirdim, guc artisi ve kas sertligi gozle gorulur seviyede. Memnunum.", rating: 5 },
             ].map((review, idx) => (
               <motion.div
                 key={idx}

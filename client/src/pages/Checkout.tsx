@@ -191,17 +191,46 @@ export default function Checkout() {
                   </div>
                 )}
 
-                <div className="mt-3.5 flex gap-2.5 flex-wrap">
+                {/* Payment Options */}
+                <div className="mt-4 p-4 rounded-2xl border border-white/10" style={{ background: 'rgba(30,41,59,.6)' }}>
+                  <h3 className="text-center font-black text-white/90 mb-4">Guvenli Odeme Secenekleri</h3>
+                  
                   <a 
-                    href="https://buy.moonpay.com?currencyCode=usdt_bsc&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
+                    href="https://changenow.io/tr/fiat-currencies?from=usd&to=usdtbsc&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-5 py-3 rounded-[14px] font-black text-white border border-[#00d084]/50"
-                    style={{ background: 'linear-gradient(180deg, rgba(0,208,132,.6), rgba(0,208,132,.3))' }}
-                    data-testid="button-moonpay"
+                    className="block w-full text-center px-5 py-3.5 rounded-[12px] font-black text-black mb-3"
+                    style={{ background: '#00d084' }}
+                    data-testid="button-changenow"
                   >
-                    Kredi Karti ile Guvenli Ode (USDT)
+                    Kredi Karti ile Hizli Ode
                   </a>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const orderSummary = items.map(i => `${i.title} x${i.quantity}`).join(', ');
+                      const message = `Merhaba, siparis vermek istiyorum.\n\nAd Soyad: ${formData.fullName}\nTelefon: ${formData.phone}\nE-posta: ${formData.email}\nIl/Ilce: ${formData.city}\nAdres: ${formData.address}\n\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
+                      window.open(`https://wa.me/905345872637?text=${encodeURIComponent(message)}`, '_blank');
+                    }}
+                    className="block w-full text-center px-5 py-3.5 rounded-[12px] font-black text-white mb-3 border border-[#25D366]/50"
+                    style={{ background: 'linear-gradient(180deg, rgba(37,211,102,.5), rgba(37,211,102,.25))' }}
+                    data-testid="button-whatsapp"
+                  >
+                    WhatsApp ile Siparis Ver
+                  </button>
+
+                  <div className="p-3 rounded-[12px] mt-3" style={{ background: 'rgba(51,65,85,.6)' }}>
+                    <p className="text-xs text-white/60 mb-2 text-center">Kripto Cuzdanindan Gonder (BEP20):</p>
+                    <code className="block text-[11px] text-[#38bdf8] text-center break-all">0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3</code>
+                  </div>
+
+                  <p className="text-[11px] text-white/50 mt-3 text-center leading-relaxed">
+                    * ChangeNOW uzerinden kayit olmadan kartla alim yapabilirsiniz. Sorun yasarsaniz lutfen bizimle iletisime gecin.
+                  </p>
+                </div>
+
+                <div className="mt-3 flex justify-center">
                   <Link href="/cart">
                     <Button 
                       type="button"
@@ -212,10 +241,6 @@ export default function Checkout() {
                     </Button>
                   </Link>
                 </div>
-
-                <p className="mt-2.5 text-white/55 text-xs leading-relaxed">
-                  *Kredi karti ile guvenli odeme yapabilirsiniz.
-                </p>
               </div>
             </div>
           </div>
@@ -280,7 +305,7 @@ export default function Checkout() {
               </div>
 
               <p className="mt-2.5 text-white/45 text-xs leading-relaxed">
-                Kredi karti ile guvenli odeme MoonPay uzerinden gerceklestirilir.
+                ChangeNOW veya WhatsApp uzerinden siparisinizi tamamlayabilirsiniz.
               </p>
             </div>
           </aside>

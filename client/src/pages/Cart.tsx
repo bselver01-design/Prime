@@ -134,9 +134,14 @@ export default function Cart() {
             </div>
             <div className="p-4">
               {items.length === 0 ? (
-                <div className="py-6 text-white/70 font-bold leading-relaxed">
-                  <ShoppingCart className="w-12 h-12 mx-auto text-white/20 mb-4" />
-                  <p className="text-center">Sepet bos.<br />Kataloga gidip urun ekleyebilirsin.</p>
+                <div className="py-8 text-white/70 font-bold leading-relaxed text-center">
+                  <ShoppingCart className="w-14 h-14 mx-auto text-white/20 mb-4" />
+                  <p className="mb-5">Sepet bos.<br />Urunlere goz at ve sepetine ekle.</p>
+                  <Link href="/">
+                    <Button className="bg-[#c9a962] hover:bg-[#b8944d] text-black font-black rounded-[14px]" data-testid="button-browse-products">
+                      Urunleri Incele
+                    </Button>
+                  </Link>
                 </div>
               ) : (
                 <div className="space-y-0">

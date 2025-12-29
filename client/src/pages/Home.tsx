@@ -199,6 +199,36 @@ export default function Home() {
           )}
         </section>
 
+        {/* REVIEWS SECTION */}
+        <section className="py-6">
+          <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Musteri Yorumlari</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { name: "Emre K.", text: "2 haftadir kullaniyorum, gucumde gozle gorulur artis var. Yan etki yok, tavsiye ederim.", rating: 5 },
+              { name: "Burak T.", text: "Kargo cok hizli geldi, urun orijinal. Motivasyonum artti, antrenman performansim yukseldi.", rating: 5 },
+              { name: "Serkan A.", text: "Premium versiyonu denedim, sonuclar mukemmel. Gizli paketleme icin tesekkurler.", rating: 5 },
+            ].map((review, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-black/20 border border-white/10 rounded-[16px] p-5"
+                data-testid={`review-card-${idx}`}
+              >
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <span key={i} className="text-[#c9a962] text-sm">★</span>
+                  ))}
+                </div>
+                <p className="text-sm text-white/75 mb-3 leading-relaxed">"{review.text}"</p>
+                <p className="text-xs text-white/55 font-bold">— {review.name}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
         {/* FAQ SECTION */}
         <section id="sss" className="py-6 max-w-3xl mx-auto">
           <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Sikca Sorulan Sorular</h2>
@@ -237,40 +267,82 @@ export default function Home() {
           
           <div className="grid gap-4 max-w-[420px]">
             {/* Telefon */}
-            <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
+            <a 
+              href="tel:+905345872637"
+              className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04] hover:bg-white/[.08] transition-colors block"
+              data-testid="link-phone"
+            >
               <strong className="text-sm">Telefon</strong>
               <div className="mt-2 text-lg font-extrabold tracking-wide">
                 0534 587 26 37
               </div>
-            </div>
+            </a>
             
             {/* E-posta */}
-            <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
+            <a 
+              href="mailto:naturprime0@gmail.com"
+              className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04] hover:bg-white/[.08] transition-colors block"
+              data-testid="link-email"
+            >
               <strong className="text-sm">E-posta</strong>
               <div className="mt-2 text-base">
                 naturprime0@gmail.com
               </div>
-            </div>
+            </a>
             
             {/* Instagram */}
-            <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
+            <a 
+              href="https://instagram.com/naturprime" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04] hover:bg-white/[.08] transition-colors block"
+              data-testid="link-instagram"
+            >
               <strong className="text-sm">Instagram</strong>
               <div className="mt-2 text-base">
-                <a 
-                  href="https://instagram.com/naturprime" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-[#c9a962] transition-colors"
-                  data-testid="link-instagram"
-                >
-                  @naturprime
-                </a>
+                @naturprime
               </div>
-            </div>
+            </a>
+
+            {/* WhatsApp */}
+            <a 
+              href="https://wa.me/905345872637" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="border border-green-500/30 rounded-[16px] p-[18px] bg-green-500/10 hover:bg-green-500/15 transition-colors block"
+              data-testid="link-whatsapp"
+            >
+              <strong className="text-sm text-green-400">WhatsApp</strong>
+              <div className="mt-2 text-base font-bold">
+                Hizli Destek Icin Yazin
+              </div>
+            </a>
           </div>
         </section>
 
       </main>
+
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 mt-8 py-8 bg-black/20">
+        <div className="max-w-[1100px] mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2.5 font-extrabold tracking-wide text-lg">
+              <span className="green-dot" />
+              <span>NaturPrime</span>
+            </div>
+            <div className="flex items-center gap-6 text-white/50 text-sm">
+              <span>Guvenli Alisveris</span>
+              <span>|</span>
+              <span>Gizli Gonderim</span>
+              <span>|</span>
+              <span>7/24 Destek</span>
+            </div>
+            <p className="text-white/40 text-xs">
+              2025 NaturPrime. Tum haklari saklidir.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

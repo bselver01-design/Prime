@@ -13,9 +13,27 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const currentCount = parseInt(localStorage.getItem("np_cart_count") || "0", 10);
-    const newCount = currentCount + 1;
-    localStorage.setItem("np_cart_count", String(newCount));
+    
+    const stored = localStorage.getItem("np_cart_items");
+    const items = stored ? JSON.parse(stored) : [];
+    
+    const existingIndex = items.findIndex((item: any) => item.id === product.id);
+    if (existingIndex >= 0) {
+      items[existingIndex].quantity += 1;
+    } else {
+      items.push({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        quantity: 1
+      });
+    }
+    
+    localStorage.setItem("np_cart_items", JSON.stringify(items));
+    const count = items.reduce((sum: number, item: any) => sum + item.quantity, 0);
+    localStorage.setItem("np_cart_count", String(count));
+    
     toast({
       title: "Sepete Eklendi",
       description: product.title,

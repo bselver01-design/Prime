@@ -58,7 +58,7 @@ export default function Home() {
             </nav>
             
             <div className="flex items-center gap-3.5">
-              <Link href="/catalog">
+              <Link href="/cart">
                 <button 
                   className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
                   data-testid="button-cart"

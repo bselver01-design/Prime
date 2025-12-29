@@ -61,18 +61,58 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = () => {
-    const newCount = cartCount + qty;
-    localStorage.setItem("np_cart_count", String(newCount));
-    setCartCount(newCount);
+    if (!product) return;
+    
+    const stored = localStorage.getItem("np_cart_items");
+    const items = stored ? JSON.parse(stored) : [];
+    
+    const existingIndex = items.findIndex((item: any) => item.id === product.id);
+    if (existingIndex >= 0) {
+      items[existingIndex].quantity += qty;
+    } else {
+      items.push({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        quantity: qty
+      });
+    }
+    
+    localStorage.setItem("np_cart_items", JSON.stringify(items));
+    const count = items.reduce((sum: number, item: any) => sum + item.quantity, 0);
+    localStorage.setItem("np_cart_count", String(count));
+    setCartCount(count);
+    
     showToastMessage("Sepete eklendi", `${product?.title} • Adet: ${qty}`);
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
   const handleBuyNow = () => {
     if (!product) return;
-    const newCount = cartCount + qty;
-    localStorage.setItem("np_cart_count", String(newCount));
-    setCartCount(newCount);
-    window.location.href = "/checkout";
+    
+    const stored = localStorage.getItem("np_cart_items");
+    const items = stored ? JSON.parse(stored) : [];
+    
+    const existingIndex = items.findIndex((item: any) => item.id === product.id);
+    if (existingIndex >= 0) {
+      items[existingIndex].quantity += qty;
+    } else {
+      items.push({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        quantity: qty
+      });
+    }
+    
+    localStorage.setItem("np_cart_items", JSON.stringify(items));
+    const count = items.reduce((sum: number, item: any) => sum + item.quantity, 0);
+    localStorage.setItem("np_cart_count", String(count));
+    setCartCount(count);
+    
+    window.location.href = "/cart";
   };
 
   const formatPrice = (price: number) => {

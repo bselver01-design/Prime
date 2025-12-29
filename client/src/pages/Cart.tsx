@@ -100,14 +100,6 @@ export default function Cart() {
                 Urunlere Don
               </Button>
             </Link>
-            <Link href="/checkout">
-              <Button 
-                className="bg-green-600 hover:bg-green-700 text-white border-green-600 font-black rounded-[14px]"
-                data-testid="button-checkout-header"
-              >
-                Odemeye Gec
-              </Button>
-            </Link>
           </div>
         </div>
       </header>
@@ -264,14 +256,6 @@ export default function Cart() {
                     className="w-full border-white/16 bg-white/6 text-white font-black rounded-[14px]"
                   >
                     Alisverise Devam
-                  </Button>
-                </Link>
-                <Link href="/checkout" className="w-full">
-                  <Button 
-                    className="w-full bg-green-600 hover:bg-green-700 text-white border-green-600 font-black h-11"
-                    data-testid="button-checkout"
-                  >
-                    Odemeye Gec
                   </Button>
                 </Link>
               </div>

@@ -100,14 +100,15 @@ export default function Cart() {
                 Urunlere Don
               </Button>
             </Link>
-            <Button 
-              className="border border-[#c9a962]/38 font-black rounded-[14px]"
-              style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
-              data-testid="button-checkout-header"
-              onClick={() => window.open('https://wa.me/905063373267', '_blank')}
-            >
-              Odemeye Gec
-            </Button>
+            <Link href="/checkout">
+              <Button 
+                className="border border-[#c9a962]/38 font-black rounded-[14px]"
+                style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
+                data-testid="button-checkout-header"
+              >
+                Odemeye Gec
+              </Button>
+            </Link>
           </div>
         </div>
       </header>

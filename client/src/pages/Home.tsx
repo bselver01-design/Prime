@@ -238,7 +238,7 @@ export default function Home() {
             <div className="border border-white/15 rounded-[16px] p-[18px] bg-white/[.04]">
               <strong className="text-sm">Telefon</strong>
               <div className="mt-2 text-lg font-extrabold tracking-wide">
-                0506 337 32 67
+                0534 587 26 37
               </div>
             </div>
             

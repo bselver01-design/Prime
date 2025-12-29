@@ -399,7 +399,7 @@ export default function ProductDetail() {
                   <div className="flex flex-col gap-2 font-black">
                     <div className="inline-flex items-center gap-2.5 px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] w-fit text-sm">
                       <Phone className="w-4 h-4" />
-                      0506 337 32 67
+                      0534 587 26 37
                     </div>
                     <div className="inline-flex items-center gap-2.5 px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] w-fit text-sm">
                       <Mail className="w-4 h-4" />

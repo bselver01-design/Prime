@@ -237,8 +237,18 @@ export default function Checkout() {
                     className="bg-white/92 text-[#0b0c10] border-white/92 font-black"
                     data-testid="button-submit-order"
                   >
-                    Siparisi Tamamla
+                    Siparisi Tamamla (WhatsApp)
                   </Button>
+                  <a 
+                    href="https://buy.moonpay.com?currencyCode=usdt_trc20&walletAddress=TYbLY52BxS5X82zUDzmnUq3jsdA1WuhQtQ"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-4 py-2 rounded-[14px] font-black text-white border border-purple-500/50"
+                    style={{ background: 'linear-gradient(180deg, rgba(124,58,237,.6), rgba(124,58,237,.3))' }}
+                    data-testid="button-moonpay"
+                  >
+                    Kredi Karti ile Ode
+                  </a>
                   <Link href="/cart">
                     <Button 
                       type="button"
@@ -251,7 +261,7 @@ export default function Checkout() {
                 </div>
 
                 <p className="mt-2.5 text-white/55 text-xs leading-relaxed">
-                  *Siparis bilgileri WhatsApp uzerinden iletilecektir.
+                  *WhatsApp ile siparis verebilir veya kredi karti ile dogrudan odeme yapabilirsiniz.
                 </p>
               </form>
             </div>

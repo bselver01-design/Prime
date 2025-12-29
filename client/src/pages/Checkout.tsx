@@ -193,20 +193,31 @@ export default function Checkout() {
 
                 {/* Payment Options */}
                 <div className="mt-4 flex flex-col gap-2">
-                  <a 
-                    href="https://buy.moonpay.com/?apiKey=pk_live_123&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&currencyCode=usdt"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!formData.fullName.trim() || !formData.phone.trim() || !formData.email.trim() || !formData.city.trim() || !formData.address.trim()) {
+                        setError("Lutfen tum alanlari doldurun.");
+                        return;
+                      }
+                      setError("");
+                      window.open("https://buy.moonpay.com/?apiKey=pk_live_123&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&currencyCode=usdt", "_blank");
+                    }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
                     style={{ background: '#7D00FF' }}
                     data-testid="button-moonpay"
                   >
                     MoonPay ile Ode
-                  </a>
+                  </button>
 
                   <button
                     type="button"
                     onClick={() => {
+                      if (!formData.fullName.trim() || !formData.phone.trim() || !formData.email.trim() || !formData.city.trim() || !formData.address.trim()) {
+                        setError("Lutfen tum alanlari doldurun.");
+                        return;
+                      }
+                      setError("");
                       const orderSummary = items.map(i => `${i.title} x${i.quantity}`).join(', ');
                       const message = `Merhaba, siparis vermek istiyorum.\n\nAd Soyad: ${formData.fullName}\nTelefon: ${formData.phone}\nE-posta: ${formData.email}\nIl/Ilce: ${formData.city}\nAdres: ${formData.address}\n\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
                       window.open(`https://wa.me/905345872637?text=${encodeURIComponent(message)}`, '_blank');

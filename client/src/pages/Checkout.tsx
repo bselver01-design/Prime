@@ -201,11 +201,11 @@ export default function Checkout() {
                         return;
                       }
                       setError("");
-                      window.open(`https://widget.wert.io/default/widget/?commodity=USDT&network=binance&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat_amount=${Math.round(total)}&fiat_currency=TRY`, "_blank");
+                      window.open(`https://paybis.com/?crypto=USDT&network=BEP20&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat=TRY&amount=${Math.round(total)}`, "_blank");
                     }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
-                    style={{ background: '#4e57ff' }}
-                    data-testid="button-wert"
+                    style={{ background: '#00e676' }}
+                    data-testid="button-paybis"
                   >
                     Kredi Karti ile Guvenli Ode
                   </button>

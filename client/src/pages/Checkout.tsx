@@ -204,7 +204,7 @@ export default function Checkout() {
                       window.open(`https://paybis.com/?crypto=USDT&network=BEP20&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&fiat=TRY&amount=${Math.round(total)}`, "_blank");
                     }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
-                    style={{ background: '#00e676' }}
+                    style={{ background: '#4e57ff' }}
                     data-testid="button-paybis"
                   >
                     Kredi Karti ile Guvenli Ode

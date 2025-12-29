@@ -275,7 +275,7 @@ export default function Cart() {
               </div>
 
               <p className="mt-2.5 text-white/45 text-xs leading-relaxed">
-                *Siparis vermek icin WhatsApp uzerinden iletisime gecin.
+                *Kredi karti ile guvenli odeme yapabilirsiniz.
               </p>
             </div>
           </aside>

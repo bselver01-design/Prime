@@ -43,46 +43,6 @@ export default function Checkout() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.fullName || !formData.phone || !formData.city || !formData.address) {
-      setError("Lutfen tum alanlari doldurun.");
-      return;
-    }
-
-    const orderId = `NP-${Date.now().toString(36).toUpperCase()}`;
-    const order = {
-      id: orderId,
-      createdAt: new Date().toISOString(),
-      items: items,
-      totals: {
-        subtotal,
-        discount,
-        shipping,
-        total
-      },
-      customer: formData
-    };
-
-    localStorage.setItem("np_last_order", JSON.stringify(order));
-    localStorage.removeItem("np_cart_items");
-    localStorage.setItem("np_cart_count", "0");
-
-    const message = `Merhaba, siparis vermek istiyorum:%0A%0A` +
-      `Siparis No: ${orderId}%0A` +
-      `Ad Soyad: ${formData.fullName}%0A` +
-      `Telefon: ${formData.phone}%0A` +
-      `E-posta: ${formData.email}%0A` +
-      `Sehir: ${formData.city}%0A` +
-      `Adres: ${formData.address}%0A%0A` +
-      `Urunler:%0A` +
-      items.map(item => `- ${item.title} x${item.quantity} = ${formatMoney(Number(item.price) * item.quantity)}`).join('%0A') +
-      `%0A%0AToplam: ${formatMoney(total)}`;
-
-    window.open(`https://wa.me/905063373267?text=${message}`, '_blank');
-    window.location.href = "/success";
-  };
 
   return (
     <div className="min-h-screen" style={{
@@ -162,7 +122,7 @@ export default function Checkout() {
               </span>
             </div>
             <div className="p-4">
-              <form onSubmit={handleSubmit}>
+              <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs uppercase tracking-wide text-white/78 font-black">Ad Soyad</label>
@@ -256,7 +216,7 @@ export default function Checkout() {
                 <p className="mt-2.5 text-white/55 text-xs leading-relaxed">
                   *Kredi karti ile guvenli odeme yapabilirsiniz.
                 </p>
-              </form>
+              </div>
             </div>
           </div>
 

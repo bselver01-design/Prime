@@ -90,15 +90,6 @@ export default function Cart() {
           </Link>
 
           <div className="flex gap-2.5 flex-wrap">
-            <Link href="/checkout">
-              <Button 
-                className="border border-[#c9a962]/38 font-black rounded-[14px]"
-                style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
-                data-testid="button-checkout-header"
-              >
-                Odemeye Gec
-              </Button>
-            </Link>
             <Link href="/">
               <Button 
                 variant="outline" 
@@ -107,6 +98,15 @@ export default function Cart() {
               >
                 <ArrowLeft className="w-4 h-4" />
                 Urunlere Don
+              </Button>
+            </Link>
+            <Link href="/checkout">
+              <Button 
+                className="border border-[#c9a962]/38 font-black rounded-[14px]"
+                style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
+                data-testid="button-checkout-header"
+              >
+                Odemeye Gec
               </Button>
             </Link>
           </div>
@@ -259,20 +259,20 @@ export default function Cart() {
               </div>
 
               <div className="grid gap-2.5 mt-2.5">
-                <Link href="/checkout" className="w-full">
-                  <Button 
-                    className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
-                    data-testid="button-checkout"
-                  >
-                    Odemeye Gec
-                  </Button>
-                </Link>
                 <Link href="/">
                   <Button 
                     variant="outline" 
                     className="w-full border-white/16 bg-white/6 text-white font-black rounded-[14px]"
                   >
                     Alisverise Devam
+                  </Button>
+                </Link>
+                <Link href="/checkout" className="w-full">
+                  <Button 
+                    className="w-full bg-white/92 text-[#0b0c10] border-white/92 font-black h-11"
+                    data-testid="button-checkout"
+                  >
+                    Odemeye Gec
                   </Button>
                 </Link>
               </div>

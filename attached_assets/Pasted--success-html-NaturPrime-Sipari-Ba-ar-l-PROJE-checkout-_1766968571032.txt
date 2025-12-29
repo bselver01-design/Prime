@@ -1,0 +1,267 @@
+<!-- success.html | NaturPrime - Sipariş Başarılı (PROJE)
+     - checkout.html kaydı: np_last_order_v1
+     - Sepet temizlenmiş olur, burada özet gösterir.
+-->
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NaturPrime | Sipariş Alındı</title>
+  <meta name="theme-color" content="#0b0c10" />
+  <style>
+    :root{
+      --bg:#0b0c10; --bg2:#0f1118;
+      --text:#e8ebf2; --muted:rgba(232,235,242,.70);
+      --line:rgba(255,255,255,.10);
+      --r:16px; --r2:24px; --max:900px;
+      --gold:#c8a86a;
+      --ok: rgba(86,211,100,.95);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1100px 600px at 18% 18%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      letter-spacing:.2px;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:24px 18px; width:100%}
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 260px at 35% 20%, rgba(200,168,106,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.12)),
+        rgba(0,0,0,.18);
+      border-radius: var(--r2);
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .head{
+      padding:18px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      flex-wrap:wrap;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(86,211,100,.25);
+      background:rgba(86,211,100,.10);
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      font-size:11px;
+      color: rgba(232,235,242,.92);
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background: var(--ok); box-shadow: 0 0 0 4px rgba(86,211,100,.14)}
+    h1{
+      margin:10px 0 0;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      font-size:26px;
+    }
+    .sub{margin:8px 0 0; color:var(--muted); font-weight:800; line-height:1.55}
+    .body{padding:18px}
+    .pill{
+      font-size:12px; padding:2px 8px; border-radius:999px;
+      border:1px solid rgba(200,168,106,.35);
+      background:rgba(200,168,106,.10);
+      color:rgba(232,235,242,.90);
+      font-weight:900;
+    }
+
+    .box{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      border-radius: var(--r);
+      padding:14px;
+      margin-top:12px;
+    }
+    .row{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:8px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-weight:900;
+      color:rgba(232,235,242,.82);
+    }
+    .row:last-child{border-bottom:none}
+    .row b{color:rgba(232,235,242,.92)}
+    .items{margin-top:10px}
+    .item{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-weight:900;
+    }
+    .item:last-child{border-bottom:none}
+    .item small{display:block; margin-top:4px; color:rgba(232,235,242,.60); font-weight:900}
+
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn.strong{
+      background: rgba(255,255,255,.92);
+      color: #0b0c10;
+      border-color: rgba(255,255,255,.92);
+    }
+    .btn.primary{
+      border-color: rgba(200,168,106,.38);
+      background: linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05));
+    }
+    .actions{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tiny{margin-top:12px; color:rgba(232,235,242,.45); font-size:12px; line-height:1.45}
+
+    @media (max-width: 520px){
+      h1{font-size:22px}
+      .row, .item{flex-direction:column; align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="head">
+        <div>
+          <div class="badge"><span class="dot"></span> Sipariş Alındı</div>
+          <h1>Teşekkürler</h1>
+          <p class="sub">Siparişiniz başarıyla oluşturuldu. Bu sayfa proje amaçlı demo çıktıdır.</p>
+        </div>
+        <div class="pill" id="orderId">NP-—</div>
+      </div>
+
+      <div class="body">
+        <div class="box">
+          <div class="row"><span>Tarih</span><b id="orderDate">—</b></div>
+          <div class="row"><span>Ara Toplam</span><b id="subtotal">₺0</b></div>
+          <div class="row"><span>İndirim</span><b id="discount">₺0</b></div>
+          <div class="row"><span>Kargo</span><b id="shipping">₺0</b></div>
+          <div class="row"><span>Toplam</span><b id="total">₺0</b></div>
+        </div>
+
+        <div class="box">
+          <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap;">
+            <strong style="text-transform:uppercase; letter-spacing:.35px; font-size:12px; font-weight:950; color:rgba(232,235,242,.86);">
+              Ürünler
+            </strong>
+            <span class="pill" id="itemCount">0</span>
+          </div>
+
+          <div class="items" id="items"></div>
+        </div>
+
+        <div class="actions">
+          <a class="btn strong" href="catalog.html">Ürünlere Dön</a>
+          <a class="btn primary" href="index.html">Ana Sayfa</a>
+          <button class="btn" id="clearOrder" type="button">Sipariş Kaydını Sil</button>
+        </div>
+
+        <div class="tiny">
+          *Gerçek ödeme yapılmaz. Sipariş verisi sadece tarayıcıda tutulur.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    const LS_LAST_ORDER = "np_last_order_v1";
+    const $ = (s) => document.querySelector(s);
+
+    function moneyTRY(n){
+      return new Intl.NumberFormat('tr-TR', { style:'currency', currency:'TRY', maximumFractionDigits:0 }).format(n || 0);
+    }
+
+    function safeText(el, v){ el.textContent = (v == null ? "—" : String(v)); }
+
+    function renderEmpty(){
+      safeText($("#orderId"), "NP-—");
+      safeText($("#orderDate"), "—");
+      $("#subtotal").textContent = moneyTRY(0);
+      $("#discount").textContent = moneyTRY(0);
+      $("#shipping").textContent = moneyTRY(0);
+      $("#total").textContent = moneyTRY(0);
+      $("#itemCount").textContent = "0";
+      $("#items").innerHTML = `<div style="opacity:.7; font-weight:900; line-height:1.6;">Kayıtlı sipariş bulunamadı.</div>`;
+    }
+
+    function render(){
+      let order = null;
+      try{
+        const raw = localStorage.getItem(LS_LAST_ORDER);
+        order = raw ? JSON.parse(raw) : null;
+      }catch{ order = null; }
+
+      if(!order){ renderEmpty(); return; }
+
+      safeText($("#orderId"), order.id || "NP-—");
+
+      const d = order.createdAt ? new Date(order.createdAt) : null;
+      safeText($("#orderDate"), d ? d.toLocaleString("tr-TR") : "—");
+
+      const t = order.totals || {};
+      $("#subtotal").textContent = moneyTRY(t.subtotal);
+      $("#discount").textContent = moneyTRY(t.discount);
+      $("#shipping").textContent = moneyTRY(t.shipping);
+      $("#total").textContent = moneyTRY(t.total);
+
+      const items = Array.isArray(order.items) ? order.items : [];
+      $("#itemCount").textContent = String(items.reduce((a,it)=>a+(it.qty||0),0));
+
+      const wrap = $("#items");
+      wrap.innerHTML = "";
+      if(items.length === 0){
+        wrap.innerHTML = `<div style="opacity:.7; font-weight:900;">Ürün bulunamadı.</div>`;
+        return;
+      }
+
+      items.forEach(it => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <div>
+            ${it.title || "ÜRÜN"}
+            <small>Adet: ${it.qty || 1}</small>
+          </div>
+          <div>${moneyTRY((Number(it.price)||0) * (it.qty||0))}</div>
+        `;
+        wrap.appendChild(div);
+      });
+    }
+
+    $("#clearOrder").addEventListener("click", () => {
+      localStorage.removeItem(LS_LAST_ORDER);
+      render();
+      alert("Sipariş kaydı silindi (demo).");
+    });
+
+    render();
+  </script>
+</body>
+</html>

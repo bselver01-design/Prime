@@ -236,15 +236,6 @@ export default function Checkout() {
                     WhatsApp ile Siparis Ver
                   </button>
 
-                  <Link href="/cart" className="block">
-                    <Button 
-                      type="button"
-                      variant="outline" 
-                      className="w-full border-white/16 bg-white/6 text-white font-black rounded-[12px]"
-                    >
-                      Geri
-                    </Button>
-                  </Link>
                 </div>
               </div>
             </div>

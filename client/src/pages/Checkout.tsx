@@ -201,7 +201,7 @@ export default function Checkout() {
                         return;
                       }
                       setError("");
-                      window.open("https://buy.moonpay.com?currencyCode=usdt_bsc&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3", "_blank");
+                      window.open(`https://buy.moonpay.com?currencyCode=usdt_bsc&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&baseCurrencyAmount=${Math.round(total)}&baseCurrencyCode=try`, "_blank");
                     }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
                     style={{ background: '#00d084' }}

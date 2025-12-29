@@ -213,13 +213,9 @@ export default function Checkout() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (!formData.fullName.trim() || !formData.phone.trim() || !formData.email.trim() || !formData.city.trim() || !formData.address.trim()) {
-                        setError("Lutfen tum alanlari doldurun.");
-                        return;
-                      }
-                      setError("");
                       const orderSummary = items.map(i => `${i.title} x${i.quantity}`).join(', ');
-                      const message = `Merhaba, siparis vermek istiyorum.\n\nAd Soyad: ${formData.fullName}\nTelefon: ${formData.phone}\nE-posta: ${formData.email}\nIl/Ilce: ${formData.city}\nAdres: ${formData.address}\n\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
+                      const phoneDigits = formData.phone.replace(/\D/g, '');
+                      const message = `Merhaba, siparis vermek istiyorum.\n\nAd Soyad: ${formData.fullName || '-'}\nTelefon: ${phoneDigits || '-'}\nE-posta: ${formData.email || '-'}\nIl/Ilce: ${formData.city || '-'}\nAdres: ${formData.address || '-'}\n\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
                       window.open(`https://wa.me/905345872637?text=${encodeURIComponent(message)}`, '_blank');
                     }}
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"

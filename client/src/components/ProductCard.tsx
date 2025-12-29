@@ -87,9 +87,16 @@ export function ProductCard({ product }: ProductCardProps) {
       
       {/* Footer */}
       <div className="flex items-center justify-between gap-2.5 p-3.5 border-t border-white/10 bg-black/20">
-        <span className="font-extrabold text-[#c9a962] text-base" data-testid={`product-price-${product.id}`}>
-          {Number(product.price).toLocaleString('tr-TR')} TL
-        </span>
+        <div className="flex items-center gap-2">
+          {product.originalPrice && Number(product.originalPrice) > Number(product.price) && (
+            <span className="text-white/40 text-sm line-through" data-testid={`product-original-price-${product.id}`}>
+              {Number(product.originalPrice).toLocaleString('tr-TR')} TL
+            </span>
+          )}
+          <span className="font-extrabold text-[#c9a962] text-base" data-testid={`product-price-${product.id}`}>
+            {Number(product.price).toLocaleString('tr-TR')} TL
+          </span>
+        </div>
         <Button 
           size="sm"
           className="border border-white/18 bg-white/7 text-foreground hover:bg-white/12 rounded-xl px-3 h-9 text-xs font-extrabold"

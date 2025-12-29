@@ -9,6 +9,7 @@ export const products = pgTable("products", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  originalPrice: decimal("original_price", { precision: 10, scale: 2 }),
   image: text("image").notNull(),
   category: text("category").notNull(),
   badge: text("badge"), // e.g., "YENİ", "ÇOK SATAN"

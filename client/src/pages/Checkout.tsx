@@ -21,6 +21,14 @@ export default function Checkout() {
     address: "",
   });
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+  const walletAddress = "0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3";
+
+  const copyAddress = () => {
+    navigator.clipboard.writeText(walletAddress);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
     const stored = localStorage.getItem("np_cart_items");
@@ -192,37 +200,46 @@ export default function Checkout() {
                 )}
 
                 {/* Payment Options */}
-                <div className="mt-4 flex flex-col gap-2">
-                  <a 
-                    href="https://fixedfloat.com/?to=USDTBSC&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
-                    style={{ background: '#3d59f2' }}
-                    data-testid="button-fixedfloat"
+                <div className="mt-4 p-4 rounded-2xl bg-white/[.03] border border-white/10">
+                  <h3 className="text-center font-black text-white/90 mb-3 text-sm">Odeme Yap</h3>
+                  <p className="text-xs text-white/60 text-center mb-3">Asagidaki USDT adresine odemenizi gonderin:</p>
+                  
+                  <div className="p-3 rounded-xl bg-white/5 border border-dashed border-white/20 mb-3">
+                    <small className="text-[11px] text-white/50 block text-center mb-1">Ag: <b className="text-white/70">BNB Smart Chain (BEP20)</b></small>
+                    <code className="block text-[12px] text-[#c9a962] text-center break-all font-bold">{walletAddress}</code>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={copyAddress}
+                    className="block w-full text-center px-4 py-3 rounded-[10px] font-black text-white text-sm mb-2"
+                    style={{ background: '#111' }}
+                    data-testid="button-copy"
                   >
-                    Kripto ile Hizli Ode
-                  </a>
+                    {copied ? "Kopyalandi!" : "Adresi Kopyala"}
+                  </button>
 
                   <button
                     type="button"
                     onClick={() => {
                       const orderSummary = items.map(i => `${i.title} x${i.quantity}`).join(', ');
-                      const message = `Merhaba, siparis vermek istiyorum.\n\nAd Soyad: ${formData.fullName}\nTelefon: ${formData.phone}\nE-posta: ${formData.email}\nIl/Ilce: ${formData.city}\nAdres: ${formData.address}\n\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
+                      const message = `Merhaba, odemeyi yaptim.\n\nAd Soyad: ${formData.fullName}\nTelefon: ${formData.phone}\nUrunler: ${orderSummary}\nToplam: ${formatMoney(total)}`;
                       window.open(`https://wa.me/905345872637?text=${encodeURIComponent(message)}`, '_blank');
                     }}
-                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
+                    className="block w-full text-center px-4 py-3 rounded-[10px] font-black text-white text-sm"
                     style={{ background: '#25D366' }}
                     data-testid="button-whatsapp"
                   >
-                    WhatsApp ile Siparis Ver
+                    Odemeyi Yaptim Bildir
                   </button>
+                </div>
 
-                  <Link href="/cart" className="block">
+                <div className="mt-3 flex justify-center">
+                  <Link href="/cart">
                     <Button 
                       type="button"
                       variant="outline" 
-                      className="w-full border-white/16 bg-white/6 text-white font-black rounded-[12px]"
+                      className="border-white/16 bg-white/6 text-white font-black rounded-[12px]"
                     >
                       Geri
                     </Button>

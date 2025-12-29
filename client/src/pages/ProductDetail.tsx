@@ -240,16 +240,7 @@ export default function ProductDetail() {
                     </span>
                   )}
                 </div>
-                <div className="mt-3 grid grid-cols-4 gap-2.5">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div 
-                      key={i}
-                      className={`h-[74px] rounded-[14px] border border-white/10 bg-white/5 cursor-pointer ${i === 1 ? "outline outline-[3px] outline-white/15" : ""}`}
-                      data-testid={`thumb-${i}`}
-                    />
-                  ))}
-                </div>
-              </div>
+                              </div>
 
               {/* Info */}
               <div className="p-[18px] pt-0">

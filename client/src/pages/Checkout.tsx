@@ -194,14 +194,14 @@ export default function Checkout() {
                 {/* Payment Options */}
                 <div className="mt-4 flex flex-col gap-2">
                   <a 
-                    href="https://fixedfloat.com/?to=USDTBSC&address=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3"
+                    href="https://buy.moonpay.com/?apiKey=pk_live_123&walletAddress=0xf9178a843e2ce22113fa6a8a90de67a7c3f6d4d3&currencyCode=usdt"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm"
-                    style={{ background: '#3d59f2' }}
-                    data-testid="button-fixedfloat"
+                    style={{ background: '#7D00FF' }}
+                    data-testid="button-moonpay"
                   >
-                    Kripto ile Hizli Ode
+                    MoonPay ile Ode
                   </a>
 
                   <button
@@ -292,7 +292,7 @@ export default function Checkout() {
               </div>
 
               <p className="mt-2.5 text-white/45 text-xs leading-relaxed">
-                ChangeNOW veya WhatsApp uzerinden siparisinizi tamamlayabilirsiniz.
+                MoonPay veya WhatsApp uzerinden siparisinizi tamamlayabilirsiniz.
               </p>
             </div>
           </aside>

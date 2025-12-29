@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus, Star, Send } from "lucide-react";
+import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus, Star, Send, Trash2 } from "lucide-react";
 import type { Product, Review } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 
@@ -36,6 +36,16 @@ export default function ProductDetail() {
       setReviewContent("");
       setReviewRating(5);
       showToastMessage("Yorum eklendi", "Yorumunuz icin tesekkurler!");
+    },
+  });
+
+  const deleteReviewMutation = useMutation({
+    mutationFn: async (reviewId: number) => {
+      return apiRequest("DELETE", `/api/reviews/${reviewId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/products", id, "reviews"] });
+      showToastMessage("Yorum silindi", "Yorum basariyla kaldirildi.");
     },
   });
 
@@ -483,13 +493,22 @@ export default function ProductDetail() {
                         >
                           <div className="flex items-center justify-between gap-2 mb-1.5">
                             <span className="font-black text-sm text-white/90">{review.name}</span>
-                            <div className="flex gap-0.5">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <Star 
-                                  key={star}
-                                  className={`w-3 h-3 ${star <= (review.rating || 5) ? "fill-[#c9a962] text-[#c9a962]" : "text-white/30"}`} 
-                                />
-                              ))}
+                            <div className="flex items-center gap-2">
+                              <div className="flex gap-0.5">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <Star 
+                                    key={star}
+                                    className={`w-3 h-3 ${star <= (review.rating || 5) ? "fill-[#c9a962] text-[#c9a962]" : "text-white/30"}`} 
+                                  />
+                                ))}
+                              </div>
+                              <button
+                                onClick={() => deleteReviewMutation.mutate(review.id)}
+                                className="p-1 rounded-md hover:bg-white/10 text-white/40 hover:text-red-400 transition-colors"
+                                data-testid={`button-delete-review-${review.id}`}
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
                             </div>
                           </div>
                           <p className="text-white/70 text-sm leading-relaxed">{review.content}</p>

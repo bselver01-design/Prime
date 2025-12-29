@@ -45,6 +45,11 @@ export async function registerRoutes(
     res.status(201).json(review);
   });
 
+  app.delete('/api/reviews/:id', async (req, res) => {
+    await storage.deleteReview(Number(req.params.id));
+    res.status(204).send();
+  });
+
   // FAQs
   app.get(api.faqs.list.path, async (req, res) => {
     const faqs = await storage.getFaqs();

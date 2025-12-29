@@ -90,6 +90,15 @@ export default function Cart() {
           </Link>
 
           <div className="flex gap-2.5 flex-wrap">
+            <Link href="/checkout">
+              <Button 
+                className="border border-[#c9a962]/38 font-black rounded-[14px]"
+                style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
+                data-testid="button-checkout-header"
+              >
+                Odemeye Gec
+              </Button>
+            </Link>
             <Link href="/">
               <Button 
                 variant="outline" 
@@ -98,15 +107,6 @@ export default function Cart() {
               >
                 <ArrowLeft className="w-4 h-4" />
                 Urunlere Don
-              </Button>
-            </Link>
-            <Link href="/checkout">
-              <Button 
-                className="border border-[#c9a962]/38 font-black rounded-[14px]"
-                style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.26), rgba(255,255,255,.05))' }}
-                data-testid="button-checkout-header"
-              >
-                Odemeye Gec
               </Button>
             </Link>
           </div>

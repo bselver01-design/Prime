@@ -258,6 +258,14 @@ export default function Cart() {
                     Alisverise Devam
                   </Button>
                 </Link>
+                <Link href="/checkout" className="w-full">
+                  <Button 
+                    className="w-full bg-green-600 hover:bg-green-700 text-white border-green-600 font-black h-11"
+                    data-testid="button-checkout"
+                  >
+                    Odemeye Gec
+                  </Button>
+                </Link>
               </div>
 
               <p className="mt-2.5 text-white/45 text-xs leading-relaxed">

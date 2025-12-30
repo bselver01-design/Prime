@@ -210,17 +210,6 @@ export default function Checkout() {
                     Kredi Karti ile Guvenli Ode
                   </button>
 
-                  <a
-                    href="https://plisio.net/payment-button/new/DBDofPr3Pc2a"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center px-4 py-3 rounded-[12px] font-black text-white text-sm border-2 border-green-500"
-                    style={{ background: '#1a1a1a' }}
-                    data-testid="button-plisio"
-                  >
-                    Kripto ile Guvenli Ode
-                  </a>
-
                   <button
                     type="button"
                     onClick={() => {

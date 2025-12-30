@@ -56,22 +56,24 @@ export async function seedDatabase() {
   try {
     console.log("Seeding database...");
 
+    const validProductIds = seedProducts.map(p => p.id);
+    const validFaqIds = seedFaqs.map(f => f.id);
+
+    await db.delete(products).where(eq(products.id, products.id));
+    await db.delete(faqs).where(eq(faqs.id, faqs.id));
+
     for (const product of seedProducts) {
-      const existing = await db.select().from(products).where(eq(products.id, product.id));
-      if (existing.length > 0) {
-        await db.update(products).set(product).where(eq(products.id, product.id));
-      } else {
-        await db.insert(products).values(product);
-      }
+      await db.insert(products).values(product).onConflictDoUpdate({
+        target: products.id,
+        set: product
+      });
     }
 
     for (const faq of seedFaqs) {
-      const existing = await db.select().from(faqs).where(eq(faqs.id, faq.id));
-      if (existing.length > 0) {
-        await db.update(faqs).set(faq).where(eq(faqs.id, faq.id));
-      } else {
-        await db.insert(faqs).values(faq);
-      }
+      await db.insert(faqs).values(faq).onConflictDoUpdate({
+        target: faqs.id,
+        set: faq
+      });
     }
 
     console.log("Database seeded successfully!");

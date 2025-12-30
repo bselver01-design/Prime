@@ -204,9 +204,9 @@ export default function Home() {
           <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Musteri Yorumlari</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { name: "Emre K.", text: "2 haftadir kullaniyorum, henuz buyuk bir fark gormedim ama enerji seviyem artti. Bekliyorum.", rating: 3 },
-              { name: "Burak T.", text: "Kargo hizli geldi, urun orijinal gorunuyor. Kullanima yeni basladim, sonuclari bekleyecegim.", rating: 4 },
-              { name: "Serkan A.", text: "3. kutuyu bitirdim, guc artisi ve kas sertligi gozle gorulur seviyede. Memnunum.", rating: 5 },
+              { name: "Ahmet Komus", text: "2 haftadir kullaniyorum, henuz buyuk bir fark gormedim ama enerji seviyem artti. Bekliyorum.", rating: 3 },
+              { name: "Memati Bas", text: "Kargo hizli geldi, urun orijinal gorunuyor. Kullanima yeni basladim, sonuclari bekleyecegim.", rating: 4 },
+              { name: "Ahmet Simsek", text: "3. kutuyu bitirdim, guc artisi ve kas sertligi gozle gorulur seviyede. Memnunum.", rating: 5 },
             ].map((review, idx) => (
               <motion.div
                 key={idx}

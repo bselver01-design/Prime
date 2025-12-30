@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
+import { seedDatabase } from "./seed";
 import { createServer } from "http";
 import path from "path";
 import compression from "compression";
@@ -71,6 +72,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  await seedDatabase();
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

@@ -22,7 +22,7 @@ export default function Home() {
   const features = [
     { icon: ShieldCheck, title: "Orijinal Urun", desc: "100% garantili ve sertifikali" },
     { icon: Truck, title: "Ayni Gun Kargo", desc: "16:00'a kadar verilen siparislerde" },
-    { icon: Lock, title: "Gizli Gonderim", desc: "Icerigi belli olmayan paketleme" },
+    { icon: Lock, title: "Yan Etkisi Yok", desc: "Guvenli ve test edilmis formuller" },
     { icon: HeadphonesIcon, title: "7/24 Destek", desc: "Uzman ekipten aninda yanit" },
   ];
 
@@ -333,7 +333,7 @@ export default function Home() {
             <div className="flex items-center gap-6 text-white/50 text-sm">
               <span>Guvenli Alisveris</span>
               <span>|</span>
-              <span>Gizli Gonderim</span>
+              <span>Yan Etkisi Yok</span>
               <span>|</span>
               <span>7/24 Destek</span>
             </div>

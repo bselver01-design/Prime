@@ -359,7 +359,7 @@ export default function ProductDetail() {
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Icerik</b>
                         <span className="text-white/70 font-bold text-[13px]">
-                          {product.title.includes("LITE") ? "Proviron mesterolone" : "Oksandrolone (Anavar)"}
+                          {product.title.includes("LITE") ? "Proviron mesterolone" : "Anavar"}
                         </span>
                       </div>
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">

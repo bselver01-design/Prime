@@ -17,7 +17,7 @@ const seedProducts = [
   },
   {
     id: 10,
-    title: "NP PRIME - Oksandrolone (Ithal)",
+    title: "NP PRIME (Ithal)",
     description: "Saf kas kutlesi ekler. Yag yakim surecini hizlandirir. Kuru ve damarli bir gorunum verir. Kemik dokusunda artis, daha iri bir vucut. Yan etkileri: Yanlis dozda ve duzensiz kullanimda kolesterolu yorar. Karaciğer enzimlerini arttırır. Genetikte varsa sac dokulmesi, akne.",
     price: "2250.00",
     originalPrice: null,
@@ -29,7 +29,7 @@ const seedProducts = [
   },
   {
     id: 11,
-    title: "NP PRIME - Oksandrolone (Premium)",
+    title: "NP PRIME (Premium)",
     description: "Gözle görülür güç artışı. ARTTIRILMIS ANABOLIK ETKI. Saf kas kutlesi ekler. Yag yakim surecini hizlandirir. Kuru ve damarli bir gorunum verir. Kemik dokusunda artis, daha iri bir vucut. Yan etkileri: Yanlis dozda ve duzensiz kullanimda kolesterolu yorar. Karaciğer enzimlerini arttırır. Genetikte varsa sac dokulmesi, akne.",
     price: "2599.00",
     originalPrice: "2899.00",

@@ -138,7 +138,7 @@ export default function Home() {
             </div>
             <div className="-mt-8 relative z-10">
               <p className="text-[18px] md:text-[24px] font-extrabold tracking-[0.15em] uppercase text-white/85">
-                Guc • Motivasyon • Performans
+                TOPLARININ FINDIK KADAR KALMASINDAN KORKUYOR MUSUN
               </p>
               <p className="text-[14px] md:text-[16px] font-bold tracking-wide text-white/60 mt-2">
                 Zarari olmayan Steroidler

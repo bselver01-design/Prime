@@ -384,6 +384,12 @@ export default function ProductDetail() {
                           <li>Guclu erkeklik hissi</li>
                           <li>Yan etkisi olmayan steroid etkisi</li>
                         </>
+                      ) : product.title.includes("Premium") ? (
+                        <>
+                          <li>Artirilmis Anabolik etki</li>
+                          <li>Patlayici guc artisi</li>
+                          <li>Yag yakim destegi</li>
+                        </>
                       ) : (
                         <>
                           <li>Yan etkisi olmayan steroid etkisi</li>

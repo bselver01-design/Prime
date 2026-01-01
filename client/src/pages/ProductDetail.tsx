@@ -359,17 +359,19 @@ export default function ProductDetail() {
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Icerik</b>
                         <span className="text-white/70 font-bold text-[13px]">
-                          {product.title.includes("LITE") ? "Proviron mesterolone" : "Oksandrolone (Anavar)"}
+                          {product.title.includes("LITE") ? "Proviron mesterolone" : product.title.includes("UP CORE") ? "Primobolan" : "Oksandrolone (Anavar)"}
                         </span>
                       </div>
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Kullanim</b>
-                        <span className="text-white/70 font-bold text-[13px]">Gunde 1-2 tablet</span>
+                        <span className="text-white/70 font-bold text-[13px]">
+                          {product.title.includes("UP CORE") ? "Haftada 1-2 enjekte" : "Gunde 1-2 tablet"}
+                        </span>
                       </div>
                       <div className="border border-white/10 bg-white/[.04] rounded-[14px] p-3">
                         <b className="block text-white/90 text-xs uppercase tracking-wide mb-1.5">Net Miktar</b>
                         <span className="text-white/70 font-bold text-[13px]">
-                          {product.title.includes("LITE") ? "60 tablet" : "100 tablet"}
+                          {product.title.includes("LITE") ? "60 tablet" : product.title.includes("UP CORE") ? "10 ampul" : "100 tablet"}
                         </span>
                       </div>
                     </div>

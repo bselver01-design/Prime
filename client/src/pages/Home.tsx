@@ -83,7 +83,7 @@ export default function Home() {
             </button>
             
             {/* Center: Logo */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
+            <Link href="/" className="absolute left-[42%] -translate-x-1/2 flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
               <span className="green-dot" />
               <span>NaturPrime</span>
             </Link>

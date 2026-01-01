@@ -8,6 +8,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ProductCard } from "@/components/ProductCard";
 import { useProducts } from "@/hooks/use-products";
 import { useFaqs } from "@/hooks/use-faqs";
@@ -93,29 +99,51 @@ export default function Home() {
             </nav>
             
             <div className="flex items-center gap-3.5">
-              {/* Auth buttons */}
-              {!authLoading && (
-                isAuthenticated ? (
-                  <div className="hidden md:flex items-center gap-2">
-                    <span className="text-sm text-white/70">{user?.firstName || user?.email}</span>
-                    <button 
-                      onClick={() => logout()}
-                      className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
-                      data-testid="button-logout"
-                    >
-                      <LogOut className="w-5 h-5" />
-                    </button>
-                  </div>
-                ) : (
-                  <a 
-                    href="/api/login"
-                    className="hidden md:flex px-4 py-2 rounded-[12px] bg-[#c9a962] text-black font-extrabold text-sm hover:bg-[#d4b872] transition-colors"
-                    data-testid="button-login"
+              {/* Profile Icon with Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
+                    data-testid="button-profile"
                   >
-                    Giris Yap
-                  </a>
-                )
-              )}
+                    <User className="w-5 h-5" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  {!authLoading && (
+                    isAuthenticated ? (
+                      <>
+                        <DropdownMenuItem className="text-muted-foreground text-sm" disabled>
+                          {user?.firstName || user?.email}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => logout()}
+                          className="cursor-pointer"
+                          data-testid="dropdown-logout"
+                        >
+                          <LogOut className="w-4 h-4 mr-2" />
+                          Cikis Yap
+                        </DropdownMenuItem>
+                      </>
+                    ) : (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <a href="/api/login" className="cursor-pointer" data-testid="dropdown-login">
+                            <User className="w-4 h-4 mr-2" />
+                            Giris Yap
+                          </a>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <a href="/api/login" className="cursor-pointer" data-testid="dropdown-signup">
+                            <User className="w-4 h-4 mr-2" />
+                            Kayit Ol
+                          </a>
+                        </DropdownMenuItem>
+                      </>
+                    )
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Link href="/cart">
                 <button 
                   className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"

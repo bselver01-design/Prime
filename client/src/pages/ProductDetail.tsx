@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus, Star, Send, Trash2 } from "lucide-react";
+import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus, Star, Send, Trash2, ArrowLeft } from "lucide-react";
 import type { Product, Review } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 
@@ -163,12 +163,23 @@ export default function ProductDetail() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-white/10 backdrop-blur-xl bg-black/25">
         <div className="max-w-[1140px] mx-auto px-[18px] flex items-center justify-between min-h-[68px] gap-[14px] flex-wrap py-[10px]">
-          <Link href="/" className="flex items-center gap-[10px] font-black tracking-wider uppercase select-none">
-            <span>NaturPrime</span>
-            <span className="text-xs px-2 py-0.5 rounded-full border border-white/[.18] bg-black/25 text-white/85 font-black">
-              Urun
-            </span>
-          </Link>
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="icon"
+              className="border-white/15 bg-white/[.06] text-white rounded-xl"
+              onClick={() => window.history.back()}
+              data-testid="button-back"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <Link href="/" className="flex items-center gap-[10px] font-black tracking-wider uppercase select-none">
+              <span>NaturPrime</span>
+              <span className="text-xs px-2 py-0.5 rounded-full border border-white/[.18] bg-black/25 text-white/85 font-black">
+                Urun
+              </span>
+            </Link>
+          </div>
 
           <nav className="hidden md:flex items-center gap-2 text-white/70 font-extrabold">
             <Link href="/" className="px-3 py-2.5 rounded-xl border border-transparent uppercase tracking-wide text-xs hover:text-white hover:border-white/10 hover:bg-white/[.04] transition-colors">

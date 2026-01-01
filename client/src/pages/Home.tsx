@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -30,8 +30,27 @@ export default function Home() {
     return product?.title || "";
   };
 
-  // Get 3 most recent reviews
-  const displayReviews = allReviews.slice(0, 3);
+  // Filter only 5-star reviews
+  const fiveStarReviews = allReviews.filter(r => r.rating === 5);
+  
+  // Rotating reviews state
+  const [reviewStartIndex, setReviewStartIndex] = useState(0);
+  
+  // Auto-rotate reviews every 5 seconds
+  useEffect(() => {
+    if (fiveStarReviews.length <= 3) return;
+    const interval = setInterval(() => {
+      setReviewStartIndex(prev => (prev + 1) % fiveStarReviews.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [fiveStarReviews.length]);
+
+  // Get 3 reviews starting from current index (with wrap-around)
+  const displayReviews = fiveStarReviews.length > 0 
+    ? Array.from({ length: Math.min(3, fiveStarReviews.length) }, (_, i) => 
+        fiveStarReviews[(reviewStartIndex + i) % fiveStarReviews.length]
+      )
+    : [];
 
   const features = [
     { icon: ShieldCheck, title: "Orijinal Urun", desc: "100% garantili ve sertifikali" },

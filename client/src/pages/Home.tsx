@@ -83,8 +83,7 @@ export default function Home() {
             </button>
             
             {/* Center: Logo */}
-            <Link href="/" className="absolute left-[42%] -translate-x-1/2 flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
-              <span className="green-dot" />
+            <Link href="/" className="absolute left-[46%] -translate-x-1/2 flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
               <span>NaturPrime</span>
             </Link>
             
@@ -163,7 +162,6 @@ export default function Home() {
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
             <span className="flex items-center gap-2.5 font-extrabold tracking-wide text-[20px]">
-              <span className="green-dot" />
               <span>NaturPrime</span>
             </span>
             <button 
@@ -441,7 +439,6 @@ export default function Home() {
         <div className="max-w-[1100px] mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2.5 font-extrabold tracking-wide text-lg">
-              <span className="green-dot" />
               <span>NaturPrime</span>
             </div>
             <div className="flex items-center gap-6 text-white/50 text-sm">

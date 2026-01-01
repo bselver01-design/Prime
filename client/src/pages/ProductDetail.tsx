@@ -382,7 +382,7 @@ export default function ProductDetail() {
                         <>
                           <li>Kaliteli ve temiz kas goruntusu</li>
                           <li>Guclu erkeklik hissi</li>
-                          <li>Guc ve dayaniklilik artisi</li>
+                          <li>Yan etkisi olmayan steroid etkisi</li>
                         </>
                       ) : (
                         <>

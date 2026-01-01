@@ -6,7 +6,7 @@ const seedProducts = [
   {
     id: 9,
     title: "NP LITE",
-    description: "Proviron mesterolone - Piyasadaki en masum steroid. Ostrojeni dusurur, dogal testosteronu arttirir. Kandaki testosteronu serbest hale getirir. Libido, sertlik, guclu erkeksi his ve ozguven saglar. Kullanim: Gunde 1-2 tablet.",
+    description: "Proviron mesterolone - Piyasadaki en masum steroid. Ostrojeni dusurur, dogal testosteronu arttirir. Kandaki testosteronu serbest hale getirir. Libido, sertlik, guclu erkeksi his ve ozguven saglar. Unutma erkeklik sadece kas degil yatakta da belli olur.",
     price: "1450.00",
     originalPrice: null,
     image: "/attached_assets/IMG_7026_1766964512367.jpeg",

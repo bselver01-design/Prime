@@ -434,6 +434,21 @@ export default function Home() {
 
       </main>
 
+      {/* Products Button Section */}
+      <section className="py-8 px-4">
+        <div className="max-w-[1100px] mx-auto flex justify-center">
+          <Link href="/catalog">
+            <Button 
+              className="px-8 py-6 text-lg font-black uppercase tracking-wide rounded-2xl border border-[#c9a962]/40"
+              style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.28), rgba(200,168,106,.12))' }}
+              data-testid="button-products-bottom"
+            >
+              Urunleri Incele
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="border-t border-white/10 mt-8 py-8 bg-black/20">
         <div className="max-w-[1100px] mx-auto px-4">

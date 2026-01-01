@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { products, faqs, reviews } from "@shared/schema";
+import { products, faqs } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
 const seedProducts = [
@@ -53,28 +53,6 @@ const seedProducts = [
   },
 ];
 
-const seedReviews = [
-  // NP LITE reviews (productId: 9)
-  { id: 1, productId: 9, name: "Mehmet Y.", tag: "ONAYLI ALICI", rating: 5, content: "2 haftadir kullaniyorum, libido ve ozguven olarak cok fark ettim. Spor performansim da artti." },
-  { id: 2, productId: 9, name: "Ahmet K.", tag: "ONAYLI ALICI", rating: 5, content: "Yatakta fark yarattigindan emin olabilirsiniz. Esim de fark etti, cok memnunum." },
-  { id: 3, productId: 9, name: "Burak T.", tag: "ONAYLI ALICI", rating: 4, content: "Baslangic icin ideal urun. Yan etki gormedim, enerjim yukseldi." },
-  
-  // NP PRIME Ithal reviews (productId: 10)
-  { id: 4, productId: 10, name: "Emre S.", tag: "ONAYLI ALICI", rating: 5, content: "Fiyat performans urunu. 1 ayda 4 kilo saf kas aldim, damarlanma basladi." },
-  { id: 5, productId: 10, name: "Cem A.", tag: "ONAYLI ALICI", rating: 5, content: "Ekonomik ama etkili. Kuru kas gorunumu icin tam istedigim gibi." },
-  { id: 6, productId: 10, name: "Murat D.", tag: "ONAYLI ALICI", rating: 4, content: "Ilk kur icin memnunum. Guc artisi ve toparlanma suresi kisaldi." },
-  
-  // NP PRIME Premium reviews (productId: 11)
-  { id: 7, productId: 11, name: "Onur B.", tag: "ONAYLI ALICI", rating: 5, content: "Premium farkini hissettim. Patlayici guc artisi inanilmaz, benchte 20 kilo arttim." },
-  { id: 8, productId: 11, name: "Kaan M.", tag: "ONAYLI ALICI", rating: 5, content: "En iyi urun bu. Ithal versiyonu da denedim ama premium bambaske bir seviye." },
-  { id: 9, productId: 11, name: "Serkan Y.", tag: "ONAYLI ALICI", rating: 5, content: "6 haftada 7 kilo kas, yag orani dustu. Herkesin denemesi lazim." },
-  
-  // UP CORE reviews (productId: 12)
-  { id: 10, productId: 12, name: "Ali R.", tag: "ONAYLI ALICI", rating: 5, content: "Kalite urunu gercekten. Yavas ama saf kas, su tutmuyor. Karacigere de zarar vermedi." },
-  { id: 11, productId: 12, name: "Tolga H.", tag: "ONAYLI ALICI", rating: 5, content: "Enjeksiyon korkutmasin, haftada 1 kez cok rahat. Sonuclar kalici ve temiz." },
-  { id: 12, productId: 12, name: "Baris N.", tag: "ONAYLI ALICI", rating: 4, content: "Sabirli olmaniz lazim ama sonuc mukemmel. Kemik yogunlugum artti, daha saglam hissediyorum." },
-];
-
 const seedFaqs = [
   { id: 21, question: "Hormonlarımı baskılar mı?", answer: "Hormon baskılanması söz konusu değildir. DHT türevi olduğundan dolayı androjen reseptörlerine bağlanır ve beynindeki HPTA bölgesine hiçbir baskı yapmaz. Testosteron, L-Growth gibi dışarıdan giren maddeler vücudun kendi üretimini durdurur, HPTA'ya aşırı baskı yapar ve üretim sinyalini köreltir.", order: 1 },
   { id: 22, question: "PCT'ye ihtiyaç olur mu?", answer: "Hayır, testosteron hormonu almadığınız için ve vücut üretmeyi durdurmadığı için PCT'ye hiçbir gerek yoktur.", order: 2 },
@@ -95,7 +73,6 @@ export async function seedDatabase() {
 
     await db.delete(products).where(eq(products.id, products.id));
     await db.delete(faqs).where(eq(faqs.id, faqs.id));
-    await db.delete(reviews).where(eq(reviews.id, reviews.id));
 
     for (const product of seedProducts) {
       await db.insert(products).values(product).onConflictDoUpdate({
@@ -108,13 +85,6 @@ export async function seedDatabase() {
       await db.insert(faqs).values(faq).onConflictDoUpdate({
         target: faqs.id,
         set: faq
-      });
-    }
-
-    for (const review of seedReviews) {
-      await db.insert(reviews).values(review).onConflictDoUpdate({
-        target: reviews.id,
-        set: review
       });
     }
 

@@ -5,15 +5,16 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Phone, Mail, Instagram, Minus, Plus, Star, Send, Trash2, ArrowLeft } from "lucide-react";
 import type { Product, Review } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
+  const { user, isAuthenticated } = useAuth();
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState<"specs" | "benefits" | "shipping">("specs");
   const [cartCount, setCartCount] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState({ title: "", desc: "" });
-  const [reviewName, setReviewName] = useState("");
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
 
@@ -32,7 +33,6 @@ export default function ProductDetail() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products", id, "reviews"] });
-      setReviewName("");
       setReviewContent("");
       setReviewRating(5);
       showToastMessage("Yorum eklendi", "Yorumunuz icin tesekkurler!");
@@ -51,8 +51,10 @@ export default function ProductDetail() {
 
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!reviewName.trim() || !reviewContent.trim()) return;
-    createReviewMutation.mutate({ name: reviewName, content: reviewContent, rating: reviewRating });
+    if (!isAuthenticated || !user) return;
+    if (!reviewContent.trim()) return;
+    const userName = user.firstName || user.email?.split("@")[0] || "Uye";
+    createReviewMutation.mutate({ name: userName, content: reviewContent, rating: reviewRating });
   };
 
   useEffect(() => {
@@ -455,51 +457,58 @@ export default function ProductDetail() {
                   </h3>
 
                   {/* Review Form */}
-                  <form onSubmit={handleSubmitReview} className="mb-4">
-                    <input
-                      type="text"
-                      placeholder="Adiniz"
-                      value={reviewName}
-                      onChange={(e) => setReviewName(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] text-white placeholder:text-white/40 text-sm mb-2 outline-none focus:border-white/20"
-                      data-testid="input-review-name"
-                    />
-                    <textarea
-                      placeholder="Yorumunuz..."
-                      value={reviewContent}
-                      onChange={(e) => setReviewContent(e.target.value)}
-                      rows={3}
-                      className="w-full px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] text-white placeholder:text-white/40 text-sm mb-2 outline-none focus:border-white/20 resize-none"
-                      data-testid="input-review-content"
-                    />
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex gap-1">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            key={star}
-                            type="button"
-                            onClick={() => setReviewRating(star)}
-                            className="p-1"
-                            data-testid={`button-star-${star}`}
-                          >
-                            <Star 
-                              className={`w-4 h-4 ${star <= reviewRating ? "fill-[#c9a962] text-[#c9a962]" : "text-white/30"}`} 
-                            />
-                          </button>
-                        ))}
+                  {isAuthenticated ? (
+                    <form onSubmit={handleSubmitReview} className="mb-4">
+                      <div className="flex items-center gap-2 mb-2 text-sm text-white/70">
+                        <span>Yorum yapan:</span>
+                        <span className="font-bold text-white/90">{user?.firstName || user?.email?.split("@")[0]}</span>
                       </div>
-                      <Button
-                        type="submit"
-                        size="sm"
-                        disabled={createReviewMutation.isPending}
-                        className="bg-[#c9a962] text-black font-black hover:bg-[#c9a962]/90"
-                        data-testid="button-submit-review"
-                      >
-                        <Send className="w-3 h-3 mr-1.5" />
-                        Gonder
-                      </Button>
+                      <textarea
+                        placeholder="Yorumunuz..."
+                        value={reviewContent}
+                        onChange={(e) => setReviewContent(e.target.value)}
+                        rows={3}
+                        className="w-full px-3 py-2.5 rounded-[14px] border border-white/10 bg-white/[.04] text-white placeholder:text-white/40 text-sm mb-2 outline-none focus:border-white/20 resize-none"
+                        data-testid="input-review-content"
+                      />
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => setReviewRating(star)}
+                              className="p-1"
+                              data-testid={`button-star-${star}`}
+                            >
+                              <Star 
+                                className={`w-4 h-4 ${star <= reviewRating ? "fill-[#c9a962] text-[#c9a962]" : "text-white/30"}`} 
+                              />
+                            </button>
+                          ))}
+                        </div>
+                        <Button
+                          type="submit"
+                          size="sm"
+                          disabled={createReviewMutation.isPending}
+                          className="bg-[#c9a962] text-black font-black hover:bg-[#c9a962]/90"
+                          data-testid="button-submit-review"
+                        >
+                          <Send className="w-3 h-3 mr-1.5" />
+                          Gonder
+                        </Button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="mb-4 p-3 rounded-[14px] border border-white/10 bg-white/[.04] text-center">
+                      <p className="text-white/60 text-sm mb-2">Yorum yapmak icin giris yapin</p>
+                      <Link href="/giris">
+                        <Button size="sm" className="bg-[#c9a962] text-black font-black hover:bg-[#c9a962]/90" data-testid="button-login-to-review">
+                          Giris Yap
+                        </Button>
+                      </Link>
                     </div>
-                  </form>
+                  )}
 
                   {/* Reviews List */}
                   <div className="space-y-3 max-h-[300px] overflow-y-auto">

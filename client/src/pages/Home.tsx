@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu, X, User, LogOut } from "lucide-react";
+import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu, X, User, LogOut, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -146,13 +146,7 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Important Notice Banner */}
-          <div className="py-2 border-t border-white/10">
-            <p className="text-center text-[#c9a962] text-sm font-bold uppercase tracking-wide">
-              ONEMLI: Siparis vermeden once urunleri inceleyiniz
-            </p>
           </div>
-        </div>
       </header>
       
       {/* Slide-in Sidebar Menu */}

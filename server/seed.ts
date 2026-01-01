@@ -42,7 +42,7 @@ const seedProducts = [
   {
     id: 12,
     title: "UP CORE",
-    description: "Primo 100: Cok yavas ama gercek saf kas kutlesi ekler. Kalite ilaci olarak bilinir. NP Prime'a gore etkisi daha yavastir ama artilari vardir. Karaciger dostu, kolesterolu cok zorlamaz. Ozetle yavas ama cok kaliteli kas yapar. Yan etkisi yok denecek kadar az.",
+    description: "Primo 100: Cok yavas ama gercek saf kas kutlesi ekler. Kalite ilaci olarak bilinir. Karaciger dostu, kolesterolu cok zorlamaz. Ozetle yavas ama cok kaliteli kas yapar. Yan etkisi yok denecek kadar az.",
     price: "2700.00",
     originalPrice: null,
     image: "/attached_assets/IMG-20251231-WA0003_1767229047683.jpg",

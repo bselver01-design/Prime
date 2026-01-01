@@ -378,9 +378,19 @@ export default function ProductDetail() {
                   )}
                   {activeTab === "benefits" && (
                     <ul className="list-disc pl-[18px] space-y-1">
-                      <li>Yan etkisi olmayan steroid etkisi</li>
-                      <li>Kaliteli kas gelisimi destegi</li>
-                      <li>Guc ve dayaniklilik artisi</li>
+                      {product.title.includes("LITE") ? (
+                        <>
+                          <li>Kaliteli ve temiz kas goruntusu</li>
+                          <li>Guclu erkeklik hissi</li>
+                          <li>Yan etkisi yok denecek kadar az</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>Yan etkisi olmayan steroid etkisi</li>
+                          <li>Kaliteli kas gelisimi destegi</li>
+                          <li>Guc ve dayaniklilik artisi</li>
+                        </>
+                      )}
                     </ul>
                   )}
                   {activeTab === "shipping" && (

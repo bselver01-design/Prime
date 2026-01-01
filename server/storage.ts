@@ -1,4 +1,4 @@
-import { products, reviews, faqs, type Product, type InsertProduct, type Review, type InsertReview, type Faq, type InsertFaq } from "@shared/schema";
+import { products, reviews, faqs, users, type Product, type InsertProduct, type Review, type InsertReview, type Faq, type InsertFaq, type User, type UpsertUser } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -14,6 +14,10 @@ export interface IStorage {
   
   getFaqs(): Promise<Faq[]>;
   createFaq(faq: InsertFaq): Promise<Faq>;
+
+  getUserByEmail(email: string): Promise<User | undefined>;
+  getUserById(id: string): Promise<User | undefined>;
+  createUser(user: UpsertUser): Promise<User>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -55,6 +59,21 @@ export class DatabaseStorage implements IStorage {
   async createFaq(insertFaq: InsertFaq): Promise<Faq> {
     const [faq] = await db.insert(faqs).values(insertFaq).returning();
     return faq;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async getUserById(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async createUser(insertUser: UpsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
   }
 }
 

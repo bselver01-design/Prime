@@ -21,7 +21,7 @@ const seedProducts = [
     description: "Saf kas kutlesi ekler. Yag yakim surecini hizlandirir. Kuru ve damarli bir gorunum verir. Kemik dokusunda artis, daha iri bir vucut. Yan etkileri: Yanlis dozda ve duzensiz kullanimda kolesterolu yorar. Karaciğer enzimlerini arttırır. Genetikte varsa sac dokulmesi, akne.",
     price: "2250.00",
     originalPrice: null,
-    image: "/attached_assets/IMG_6991_1766968340529.jpeg",
+    image: "/attached_assets/Screenshot_2026-01-01-03-11-54-453_com.google.android.googlequ_1767231734738.jpg",
     category: "steroid",
     badge: null,
     tags: ["Ekonomik", "Baslangic"],

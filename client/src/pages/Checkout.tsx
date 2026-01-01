@@ -56,13 +56,6 @@ export default function Checkout() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-black/25 backdrop-blur-xl">
         <div className="max-w-[1140px] mx-auto px-[18px] py-3 flex items-center justify-between gap-4 flex-wrap">
           <Link href="/" className="flex items-center gap-2.5">
-            <div 
-              className="w-9 h-9 rounded-xl border border-white/16"
-              style={{
-                background: 'radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%), linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05))',
-                boxShadow: '0 10px 30px rgba(0,0,0,.35)'
-              }}
-            />
             <span className="font-black tracking-wide uppercase">NaturPrime</span>
             <span className="text-xs px-2 py-0.5 rounded-full border border-[#c9a962]/35 bg-[#c9a962]/10 text-white/90 font-black">
               Odeme

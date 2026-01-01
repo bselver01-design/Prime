@@ -49,9 +49,6 @@ export default function Catalog() {
       <header className="sticky top-0 z-50 border-b border-white/10 backdrop-blur-[10px]" style={{ background: 'rgba(0,0,0,.25)' }}>
         <div className="max-w-[1140px] mx-auto px-[18px] flex items-center justify-between min-h-[68px] gap-[14px] py-[10px] flex-wrap">
           <Link href="/" className="flex items-center gap-[10px] font-black tracking-[.9px] uppercase select-none" data-testid="link-home">
-            <span className="w-9 h-9 rounded-[12px] border border-white/16 relative overflow-hidden flex-shrink-0" style={{ background: 'radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%), linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05))', boxShadow: '0 10px 30px rgba(0,0,0,.35)' }}>
-              <span className="absolute inset-[-40%] animate-shine" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent)', transform: 'rotate(25deg)' }} />
-            </span>
             <span>NaturPrime</span>
             <span className="text-xs px-2 py-0.5 rounded-full border border-white/18 bg-black/25 text-white/85 font-black">Urunler</span>
           </Link>

@@ -164,12 +164,6 @@ export default function ProductDetail() {
       <header className="sticky top-0 z-50 border-b border-white/10 backdrop-blur-xl bg-black/25">
         <div className="max-w-[1140px] mx-auto px-[18px] flex items-center justify-between min-h-[68px] gap-[14px] flex-wrap py-[10px]">
           <Link href="/" className="flex items-center gap-[10px] font-black tracking-wider uppercase select-none">
-            <span className="w-9 h-9 rounded-xl border border-white/15 shadow-lg flex-shrink-0" style={{
-              background: `
-                radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,.35), transparent 55%),
-                linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05))
-              `
-            }} />
             <span>NaturPrime</span>
             <span className="text-xs px-2 py-0.5 rounded-full border border-white/[.18] bg-black/25 text-white/85 font-black">
               Urun

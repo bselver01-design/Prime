@@ -204,9 +204,9 @@ export default function Home() {
           <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Musteri Yorumlari</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { name: "Ahmet Komus", text: "2 haftadir kullaniyorum henuz buyuk fark gormedim ama enerji seviyem artti bekliyorum", rating: 3 },
-              { name: "Memati Bas", text: "kargo hizli geldi urun orijinal gorunuyor kullanima yeni basladim sonuclari bekleyecegim", rating: 4 },
-              { name: "Ahmet Simsek", text: "3 kutuyu bitirdim guc artisi ve kas sertligi gozle gorulur seviyede memnunum", rating: 5 },
+              { name: "Mehmet Y.", product: "NP LITE", text: "2 haftadir kullaniyorum, libido ve ozguven olarak cok fark ettim. Yatakta da fark yaratti, esim de memnun.", rating: 5 },
+              { name: "Onur B.", product: "NP PRIME Premium", text: "Premium farkini hissettim. Patlayici guc artisi inanilmaz, benchte 20 kilo arttim. 6 haftada 7 kilo kas aldim.", rating: 5 },
+              { name: "Ali R.", product: "UP CORE", text: "Kalite urunu gercekten. Yavas ama saf kas, su tutmuyor. Karacigere de zarar vermedi. Kemik yogunlugum artti.", rating: 5 },
             ].map((review, idx) => (
               <motion.div
                 key={idx}
@@ -223,7 +223,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-sm text-white/75 mb-3 leading-relaxed">"{review.text}"</p>
-                <p className="text-xs text-white/55 font-bold">— {review.name}</p>
+                <p className="text-xs text-white/55 font-bold">— {review.name} <span className="text-[#c9a962]">({review.product})</span></p>
               </motion.div>
             ))}
           </div>

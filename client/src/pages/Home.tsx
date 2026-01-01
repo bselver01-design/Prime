@@ -73,14 +73,25 @@ export default function Home() {
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-white/10" style={{ background: 'rgba(0,0,0,.35)' }}>
         <div className="max-w-[1100px] mx-auto px-4">
           <div className="flex items-center justify-between gap-4 py-4">
-            {/* Left: Menu Button */}
-            <button 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
-              data-testid="button-menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            {/* Left: Menu Button & Products */}
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
+                data-testid="button-menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+              <Link href="/catalog">
+                <Button 
+                  variant="outline"
+                  className="border-white/15 bg-white/[.06] text-white rounded-[14px] font-black text-xs uppercase tracking-wide"
+                  data-testid="button-products-header"
+                >
+                  Urunler
+                </Button>
+              </Link>
+            </div>
             
             {/* Center: Logo */}
             <Link href="/" className="absolute left-[46%] -translate-x-1/2 flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
@@ -433,21 +444,6 @@ export default function Home() {
         </section>
 
       </main>
-
-      {/* Products Button Section */}
-      <section className="py-8 px-4">
-        <div className="max-w-[1100px] mx-auto flex justify-center">
-          <Link href="/catalog">
-            <Button 
-              className="px-8 py-6 text-lg font-black uppercase tracking-wide rounded-2xl border border-[#c9a962]/40"
-              style={{ background: 'linear-gradient(180deg, rgba(200,168,106,.28), rgba(200,168,106,.12))' }}
-              data-testid="button-products-bottom"
-            >
-              Urunleri Incele
-            </Button>
-          </Link>
-        </div>
-      </section>
 
       {/* FOOTER */}
       <footer className="border-t border-white/10 mt-8 py-8 bg-black/20">

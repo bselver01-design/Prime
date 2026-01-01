@@ -80,3 +80,6 @@ Preferred communication style: Simple, everyday language.
 - **@replit/vite-plugin-runtime-error-modal**: Error overlay during development
 - **@replit/vite-plugin-cartographer**: Development tooling
 - **@replit/vite-plugin-dev-banner**: Development banner
+
+## TODO / Planned Features
+- **Email Verification**: Kayıt sırasında e-posta doğrulama kodu sistemi (Resend veya Gmail entegrasyonu gerekli)

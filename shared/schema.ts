@@ -55,3 +55,6 @@ export type InsertFaq = z.infer<typeof insertFaqSchema>;
 export type ProductResponse = Product;
 export type ReviewResponse = Review;
 export type FaqResponse = Faq;
+
+// Auth models
+export * from "./models/auth";

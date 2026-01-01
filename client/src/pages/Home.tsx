@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu, X } from "lucide-react";
+import { ArrowRight, Truck, ShieldCheck, Lock, HeadphonesIcon, ShoppingCart, Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -11,6 +11,7 @@ import {
 import { ProductCard } from "@/components/ProductCard";
 import { useProducts } from "@/hooks/use-products";
 import { useFaqs } from "@/hooks/use-faqs";
+import { useAuth } from "@/hooks/use-auth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import heroImage from "@assets/C3D93148-029D-42F8-932C-100E54E54328_1766964094516.png";
@@ -20,6 +21,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: products, isLoading: productsLoading } = useProducts();
   const { data: faqs, isLoading: faqsLoading } = useFaqs();
+  const { user, isLoading: authLoading, isAuthenticated, logout } = useAuth();
   const { data: allReviews = [] } = useQuery<Review[]>({
     queryKey: ["/api/reviews"],
   });
@@ -91,6 +93,29 @@ export default function Home() {
             </nav>
             
             <div className="flex items-center gap-3.5">
+              {/* Auth buttons */}
+              {!authLoading && (
+                isAuthenticated ? (
+                  <div className="hidden md:flex items-center gap-2">
+                    <span className="text-sm text-white/70">{user?.firstName || user?.email}</span>
+                    <button 
+                      onClick={() => logout()}
+                      className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
+                      data-testid="button-logout"
+                    >
+                      <LogOut className="w-5 h-5" />
+                    </button>
+                  </div>
+                ) : (
+                  <a 
+                    href="/api/login"
+                    className="hidden md:flex px-4 py-2 rounded-[12px] bg-[#c9a962] text-black font-extrabold text-sm hover:bg-[#d4b872] transition-colors"
+                    data-testid="button-login"
+                  >
+                    Giris Yap
+                  </a>
+                )
+              )}
               <Link href="/cart">
                 <button 
                   className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
@@ -141,6 +166,27 @@ export default function Home() {
                 >
                   Iletisim
                 </button>
+                {/* Mobile Auth */}
+                {!authLoading && (
+                  isAuthenticated ? (
+                    <button 
+                      onClick={() => { setMobileMenuOpen(false); logout(); }}
+                      className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left flex items-center gap-2"
+                      data-testid="mobile-logout"
+                    >
+                      <LogOut className="w-4 h-4" /> Cikis Yap
+                    </button>
+                  ) : (
+                    <a 
+                      href="/api/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-3 rounded-[12px] bg-[#c9a962] text-black text-sm font-extrabold uppercase tracking-wide transition-colors text-center"
+                      data-testid="mobile-login"
+                    >
+                      Giris Yap
+                    </a>
+                  )
+                )}
               </nav>
             </div>
           )}

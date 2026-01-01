@@ -9,6 +9,7 @@ import ProductDetail from "@/pages/ProductDetail";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Success from "@/pages/Success";
+import Auth from "@/pages/Auth";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/success" component={Success} />
+      <Route path="/giris" component={Auth} />
       <Route component={NotFound} />
     </Switch>
   );

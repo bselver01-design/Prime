@@ -73,31 +73,22 @@ export default function Home() {
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-white/10" style={{ background: 'rgba(0,0,0,.35)' }}>
         <div className="max-w-[1100px] mx-auto px-4">
           <div className="flex items-center justify-between gap-4 py-4">
-            <Link href="/" className="flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
+            {/* Left: Menu Button */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
+              data-testid="button-menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+            
+            {/* Center: Logo */}
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5 font-extrabold tracking-wide text-[22px]" data-testid="link-home">
               <span className="green-dot" />
               <span>NaturPrime</span>
             </Link>
             
-            <nav className="hidden md:flex items-center gap-2">
-              <Link href="/" className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" data-testid="nav-home">
-                Ana Sayfa
-              </Link>
-              <button 
-                onClick={() => document.getElementById("sss")?.scrollIntoView({ behavior: "smooth" })}
-                className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" 
-                data-testid="nav-faq"
-              >
-                S.S.S
-              </button>
-              <button 
-                onClick={() => document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" })}
-                className="px-3 py-2 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors" 
-                data-testid="nav-contact"
-              >
-                Iletisim
-              </button>
-            </nav>
-            
+            {/* Right: Profile & Cart */}
             <div className="flex items-center gap-3.5">
               {/* Profile Icon with Dropdown */}
               <DropdownMenu>
@@ -152,74 +143,98 @@ export default function Home() {
                   <ShoppingCart className="w-5 h-5" />
                 </button>
               </Link>
-              <button 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors md:hidden"
-                data-testid="button-menu"
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
             </div>
           </div>
           
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden border-t border-white/10 py-4">
-              <nav className="flex flex-col gap-2">
-                <Link 
-                  href="/" 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
-                  data-testid="mobile-nav-home"
-                >
-                  Ana Sayfa
-                </Link>
-                <button 
-                  onClick={() => { 
-                    setMobileMenuOpen(false); 
-                    document.getElementById("sss")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left"
-                  data-testid="mobile-nav-faq"
-                >
-                  S.S.S
-                </button>
-                <button 
-                  onClick={() => { 
-                    setMobileMenuOpen(false); 
-                    document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left"
-                  data-testid="mobile-nav-contact"
-                >
-                  Iletisim
-                </button>
-                {/* Mobile Auth */}
-                {!authLoading && (
-                  isAuthenticated ? (
-                    <button 
-                      onClick={() => { setMobileMenuOpen(false); logout(); }}
-                      className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left flex items-center gap-2"
-                      data-testid="mobile-logout"
-                    >
-                      <LogOut className="w-4 h-4" /> Cikis Yap
-                    </button>
-                  ) : (
-                    <a 
-                      href="/api/login"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="px-4 py-3 rounded-[12px] bg-[#c9a962] text-black text-sm font-extrabold uppercase tracking-wide transition-colors text-center"
-                      data-testid="mobile-login"
-                    >
-                      Giris Yap
-                    </a>
-                  )
-                )}
-              </nav>
-            </div>
-          )}
+          {/* Important Notice Banner */}
+          <div className="py-2 border-t border-white/10">
+            <p className="text-center text-[#c9a962] text-sm font-bold uppercase tracking-wide">
+              ONEMLI: Siparis vermeden once urunleri inceleyiniz
+            </p>
+          </div>
         </div>
       </header>
+      
+      {/* Slide-in Sidebar Menu */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 z-[60] bg-black/60"
+          onClick={() => setMobileMenuOpen(false)}
+          data-testid="menu-overlay"
+        />
+      )}
+      <div 
+        className={`fixed top-0 left-0 h-full w-72 z-[70] bg-black border-r border-white/10 transform transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-8">
+            <span className="flex items-center gap-2.5 font-extrabold tracking-wide text-[20px]">
+              <span className="green-dot" />
+              <span>NaturPrime</span>
+            </span>
+            <button 
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-10 h-10 rounded-[12px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
+              data-testid="button-close-menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          <nav className="flex flex-col gap-2">
+            <Link 
+              href="/" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors"
+              data-testid="mobile-nav-home"
+            >
+              Ana Sayfa
+            </Link>
+            <button 
+              onClick={() => { 
+                setMobileMenuOpen(false); 
+                document.getElementById("sss")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left"
+              data-testid="mobile-nav-faq"
+            >
+              S.S.S
+            </button>
+            <button 
+              onClick={() => { 
+                setMobileMenuOpen(false); 
+                document.getElementById("iletisim")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left"
+              data-testid="mobile-nav-contact"
+            >
+              Iletisim
+            </button>
+            {/* Auth in Sidebar */}
+            <div className="mt-4 pt-4 border-t border-white/10">
+              {!authLoading && (
+                isAuthenticated ? (
+                  <button 
+                    onClick={() => { setMobileMenuOpen(false); logout(); }}
+                    className="w-full px-4 py-3 rounded-[12px] text-white/70 hover:text-white hover:bg-white/5 text-sm font-extrabold uppercase tracking-wide transition-colors text-left flex items-center gap-2"
+                    data-testid="mobile-logout"
+                  >
+                    <LogOut className="w-4 h-4" /> Cikis Yap
+                  </button>
+                ) : (
+                  <a 
+                    href="/api/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-4 py-3 rounded-[12px] bg-[#c9a962] text-black text-sm font-extrabold uppercase tracking-wide transition-colors text-center"
+                    data-testid="mobile-login"
+                  >
+                    Giris Yap / Kayit Ol
+                  </a>
+                )
+              )}
+            </div>
+          </nav>
+        </div>
+      </div>
 
       <main className="max-w-[1100px] mx-auto px-4">
         {/* HERO SECTION */}

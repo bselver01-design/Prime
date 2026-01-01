@@ -11,13 +11,27 @@ import {
 import { ProductCard } from "@/components/ProductCard";
 import { useProducts } from "@/hooks/use-products";
 import { useFaqs } from "@/hooks/use-faqs";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import heroImage from "@assets/C3D93148-029D-42F8-932C-100E54E54328_1766964094516.png";
+import type { Review, Product } from "@shared/schema";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: products, isLoading: productsLoading } = useProducts();
   const { data: faqs, isLoading: faqsLoading } = useFaqs();
+  const { data: allReviews = [] } = useQuery<Review[]>({
+    queryKey: ["/api/reviews"],
+  });
+
+  // Get product name by ID
+  const getProductName = (productId: number) => {
+    const product = products?.find(p => p.id === productId);
+    return product?.title || "";
+  };
+
+  // Get 3 most recent reviews
+  const displayReviews = allReviews.slice(0, 3);
 
   const features = [
     { icon: ShieldCheck, title: "Orijinal Urun", desc: "100% garantili ve sertifikali" },
@@ -199,35 +213,33 @@ export default function Home() {
           )}
         </section>
 
-        {/* REVIEWS SECTION */}
-        <section className="py-6">
-          <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Musteri Yorumlari</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { name: "Mehmet Y.", product: "NP LITE", text: "2 haftadir kullaniyorum, libido ve ozguven olarak cok fark ettim. Yatakta da fark yaratti, esim de memnun.", rating: 5 },
-              { name: "Onur B.", product: "NP PRIME Premium", text: "Premium farkini hissettim. Patlayici guc artisi inanilmaz, benchte 20 kilo arttim. 6 haftada 7 kilo kas aldim.", rating: 5 },
-              { name: "Ali R.", product: "UP CORE", text: "Kalite urunu gercekten. Yavas ama saf kas, su tutmuyor. Karacigere de zarar vermedi. Kemik yogunlugum artti.", rating: 5 },
-            ].map((review, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-black/20 border border-white/10 rounded-[16px] p-5"
-                data-testid={`review-card-${idx}`}
-              >
-                <div className="flex items-center gap-1 mb-3">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <span key={i} className="text-[#c9a962] text-sm">★</span>
-                  ))}
-                </div>
-                <p className="text-sm text-white/75 mb-3 leading-relaxed">"{review.text}"</p>
-                <p className="text-xs text-white/55 font-bold">— {review.name} <span className="text-[#c9a962]">({review.product})</span></p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+        {/* REVIEWS SECTION - Only show if there are reviews */}
+        {displayReviews.length > 0 && (
+          <section className="py-6">
+            <h2 className="text-lg font-extrabold uppercase tracking-wide mb-5 text-center">Musteri Yorumlari</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {displayReviews.map((review, idx) => (
+                <motion.div
+                  key={review.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-black/20 border border-white/10 rounded-[16px] p-5"
+                  data-testid={`review-card-${review.id}`}
+                >
+                  <div className="flex items-center gap-1 mb-3">
+                    {[...Array(review.rating || 5)].map((_, i) => (
+                      <span key={i} className="text-[#c9a962] text-sm">★</span>
+                    ))}
+                  </div>
+                  <p className="text-sm text-white/75 mb-3 leading-relaxed">"{review.content}"</p>
+                  <p className="text-xs text-white/55 font-bold">— {review.name} <span className="text-[#c9a962]">({getProductName(review.productId)})</span></p>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* FAQ SECTION */}
         <section id="sss" className="py-6 max-w-3xl mx-auto">

@@ -119,16 +119,16 @@ export default function Home() {
                     ) : (
                       <>
                         <DropdownMenuItem asChild>
-                          <a href="/api/login" className="cursor-pointer" data-testid="dropdown-login">
+                          <Link href="/giris" className="cursor-pointer" data-testid="dropdown-login">
                             <User className="w-4 h-4 mr-2" />
                             Giris Yap
-                          </a>
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          <a href="/api/login" className="cursor-pointer" data-testid="dropdown-signup">
+                          <Link href="/giris" className="cursor-pointer" data-testid="dropdown-signup">
                             <User className="w-4 h-4 mr-2" />
                             Kayit Ol
-                          </a>
+                          </Link>
                         </DropdownMenuItem>
                       </>
                     )
@@ -215,14 +215,14 @@ export default function Home() {
                     <LogOut className="w-4 h-4" /> Cikis Yap
                   </button>
                 ) : (
-                  <a 
-                    href="/api/login"
+                  <Link 
+                    href="/giris"
                     onClick={() => setMobileMenuOpen(false)}
                     className="block px-4 py-3 rounded-[12px] bg-[#c9a962] text-black text-sm font-extrabold uppercase tracking-wide transition-colors text-center"
                     data-testid="mobile-login"
                   >
                     Giris Yap / Kayit Ol
-                  </a>
+                  </Link>
                 )
               )}
             </div>

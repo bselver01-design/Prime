@@ -89,51 +89,41 @@ export default function Home() {
             
             {/* Right: Profile & Cart */}
             <div className="flex items-center gap-3.5">
-              {/* Profile Icon with Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              {/* Profile Icon */}
+              {!authLoading && isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button 
+                      className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
+                      data-testid="button-profile"
+                    >
+                      <User className="w-5 h-5" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem className="text-muted-foreground text-sm" disabled>
+                      {user?.firstName || user?.email}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => logout()}
+                      className="cursor-pointer"
+                      data-testid="dropdown-logout"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Cikis Yap
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link href="/giris">
                   <button 
                     className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
                     data-testid="button-profile"
                   >
                     <User className="w-5 h-5" />
                   </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  {!authLoading && (
-                    isAuthenticated ? (
-                      <>
-                        <DropdownMenuItem className="text-muted-foreground text-sm" disabled>
-                          {user?.firstName || user?.email}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => logout()}
-                          className="cursor-pointer"
-                          data-testid="dropdown-logout"
-                        >
-                          <LogOut className="w-4 h-4 mr-2" />
-                          Cikis Yap
-                        </DropdownMenuItem>
-                      </>
-                    ) : (
-                      <>
-                        <DropdownMenuItem asChild>
-                          <Link href="/giris" className="cursor-pointer" data-testid="dropdown-login">
-                            <User className="w-4 h-4 mr-2" />
-                            Giris Yap
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/giris" className="cursor-pointer" data-testid="dropdown-signup">
-                            <User className="w-4 h-4 mr-2" />
-                            Kayit Ol
-                          </Link>
-                        </DropdownMenuItem>
-                      </>
-                    )
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </Link>
+              )}
               <Link href="/cart">
                 <button 
                   className="w-11 h-11 rounded-[14px] border border-white/10 bg-white/5 grid place-items-center text-white/85 hover:bg-white/10 transition-colors"
